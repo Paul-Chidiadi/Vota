@@ -1,0 +1,2 @@
+# Vota
+Voting application
