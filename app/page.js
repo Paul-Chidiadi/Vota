@@ -33,14 +33,34 @@ export default function Home() {
           </Link>
         </div>
         <div className="col-2">
-          <div class="image-container">
-            <span className="material-symbols-outlined image">task_alt</span>
-          </div>
+          <span className="material-symbols-outlined image">task_alt</span>
         </div>
       </section>
 
       <section>
-        <div></div>
+        <div className="home-page-body">
+          <div>
+            <h1>
+              This is how <br /> top organizations <br /> make top decisions.
+            </h1>
+            <p>
+              Have access to VOTA's top excellent tools to control your
+              workflow, make voting process easy, free and fair. <br />
+              Partner with VOTA for end-to-end support.
+            </p>
+            <Link className="btn-white links" href="/sign">
+              Get Started
+            </Link>
+          </div>
+          <div className="col-2">
+            <Image
+              className="img"
+              src="/images/Get-in-Front.png"
+              width={250}
+              height={250}
+            />
+          </div>
+        </div>
       </section>
     </main>
   );
