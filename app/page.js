@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
+
   return (
     <main>
       <section className="home-page-top">
@@ -15,7 +16,7 @@ export default function Home() {
           <Link className="join links" href="/login">
             Log in
           </Link>
-          <button className="btn" onClick={() => router.push('/sign')}>
+          <button className="btn" onClick={() => router.push('/signup')}>
             Sign Up
           </button>
         </div>
@@ -28,7 +29,7 @@ export default function Home() {
             Forget the old way, You can have the best process. <br /> Right
             here. Right now!
           </p>
-          <Link className="btn links" href="/sign">
+          <Link className="btn links" href="/signup">
             Get Started
           </Link>
         </div>
@@ -58,6 +59,7 @@ export default function Home() {
               src="/images/Get-in-Front.png"
               width={250}
               height={250}
+              alt="Get-in-Front"
             />
           </div>
         </div>

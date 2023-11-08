@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 :root {
   --black: #000;
   --black-a90: rgb(0 0 0/0.9);
@@ -277,4 +278,37 @@ section {
 .home-page-body .img {
   width: 400px;
   height: 260px;
+}
+
+/* MEDIA QUERY FOR HOME PAGE BODY SECTION */
+@media screen and (max-width: 950px) {
+  .home-page-body div h1 {
+    font-size: 36px;
+  }
+  .home-page-body div p {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 850px) {
+  .home-page-body {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 500px) {
+  .home-page-body {
+    margin: 40px auto;
+    padding: 20px;
+  }
+  .home-page-body div h1 {
+    font-size: 26px;
+  }
+  .home-page-body div p {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .home-page-body .img {
+    width: fit-content;
+    height: fit-content;
+  }
 }
