@@ -49,7 +49,7 @@ export default function Home() {
               workflow, make voting process easy, free and fair. <br />
               Partner with VOTA for end-to-end support.
             </p>
-            <Link className="btn-white links" href="/sign">
+            <Link className="btn-white links" href="/signup">
               Get Started
             </Link>
           </div>

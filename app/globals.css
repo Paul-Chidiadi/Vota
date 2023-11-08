@@ -312,3 +312,77 @@ section {
     height: fit-content;
   }
 }
+
+/* SIGNUP PAGE */
+.signup-page-body {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner-container {
+  width: 650px;
+  height: 400px;
+  padding: 25px 35px;
+  border-radius: 12px;
+  border: 1px solid var(--black-a15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+}
+.inner-container h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'ABeeZee', sans-serif;
+}
+.inner-container p {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  font-family: 'ABeeZee', sans-serif;
+}
+.signup-page-body .inner-container .choose {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.signup-page-body .inner-container .choose .col {
+  width: 220px;
+  height: 150px;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid var(--black-a15);
+  transition: 0.1s ease-in-out;
+  position: relative;
+}
+.signup-page-body .inner-container .choose .col.selected {
+  border: 2px solid var(--blue-70);
+  background-color: var(--black-a04);
+}
+.signup-page-body .inner-container .choose .col.selected .circle {
+  border: 2px solid var(--black-a15);
+  background-color: var(--blue-60);
+}
+.signup-page-body .inner-container .choose .col:hover {
+  border: 2px solid var(--blue-70);
+}
+.signup-page-body .inner-container .choose .col .circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--black-a15);
+}
+.signup-page-body .inner-container .choose .col h4 {
+  font-size: 13px;
+  font-weight: 100;
+}
