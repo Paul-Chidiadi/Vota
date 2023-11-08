@@ -321,9 +321,11 @@ section {
   justify-content: center;
   align-items: center;
 }
-.inner-container {
+.org.selected,
+.elect.selected,
+.inner-container.selected {
   width: 650px;
-  height: 400px;
+  height: fit-content;
   padding: 25px 35px;
   border-radius: 12px;
   border: 1px solid var(--black-a15);
@@ -331,8 +333,17 @@ section {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  transition: 2s ease-in-out;
 }
+.org,
+.elect,
+.inner-container {
+  display: none;
+  transition: 0.2s ease-in-out;
+}
+.org h1,
+.elect h1,
 .inner-container h1 {
   width: 100%;
   text-align: center;
@@ -340,6 +351,8 @@ section {
   font-weight: bold;
   font-family: 'ABeeZee', sans-serif;
 }
+.org p,
+.elect p,
 .inner-container p {
   width: 100%;
   text-align: center;
@@ -385,4 +398,27 @@ section {
 .signup-page-body .inner-container .choose .col h4 {
   font-size: 13px;
   font-weight: 100;
+}
+/* FORM SECTIONS */
+.forms {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 8px;
+}
+.forms input {
+  width: 100%;
+  height: 45px;
+  padding: 8px 15px;
+  border-radius: 22px;
+  outline: none;
+  border: 2px solid var(--black-a15);
+  transition: 0.1s ease-in-out;
+}
+.forms input:hover {
+  outline: none;
+  border: 2px solid var(--black-a30);
 }
