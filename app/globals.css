@@ -422,3 +422,50 @@ section {
   outline: none;
   border: 2px solid var(--black-a30);
 }
+
+/* MEDIA QUERY SIGN UP PAGE */
+@media screen and (max-width: 550px) {
+  .signup-page-body {
+    min-height: 90vh;
+  }
+  .org.selected,
+  .elect.selected,
+  .inner-container.selected {
+    margin: 40px auto;
+    padding: 20px 17px;
+    border-radius: 10px;
+    gap: 20px;
+  }
+  .org h1,
+  .elect h1,
+  .inner-container h1 {
+    font-size: 15px;
+  }
+  .org p,
+  .elect p,
+  .inner-container p {
+    font-size: 10px;
+  }
+  .signup-page-body .inner-container .choose {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .signup-page-body .inner-container .choose .col .circle {
+    width: 13px;
+    height: 13px;
+  }
+  .signup-page-body .inner-container .choose .col h4 {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .forms {
+    gap: 13px;
+    padding: 6px;
+  }
+  .forms input {
+    height: 40px;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+}
