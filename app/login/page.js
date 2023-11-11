@@ -20,7 +20,7 @@ export default function Login() {
             <input type="email" placeholder="email" />
             <input type="password" placeholder="password" />
             <button onClick={() => {}} className="btn">
-              Login
+              Login to my account
             </button>
           </form>
           <p>

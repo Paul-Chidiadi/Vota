@@ -1,0 +1,44 @@
+.dashboard-page-top .nav-menu {
+  width: fit-content;
+  height: 60px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+.dashboard-page-top .nav-menu .profile-img-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--black-a15);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.dashboard-page-top .nav-menu .profile-img-container .img {
+  object-fit: contain;
+}
+.dashboard-page-top .nav-search {
+  width: fit-content;
+  height: 40px;
+  border-radius: 30px;
+  border: 2px solid var(--black-a15);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard-page-top .nav-search input {
+  width: 300px;
+  height: 100%;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+.dashboard-page-top .nav-search .bx {
+  font-size: 21px;
+  font-weight: 100;
+}
