@@ -240,11 +240,23 @@ section {
   }
 }
 @media screen and (max-width: 700px) {
+  .dashboard-page-top .app-name,
+  .home-page-top .app-name {
+    font-size: 20px;
+  }
+  .dashboard-page-top .app-name span,
+  .home-page-top .app-name span {
+    font-size: 18px;
+  }
   .home-page-hero .col-2 {
     display: none;
   }
 }
 @media screen and (max-width: 400px) {
+  .dashboard-page-top,
+  .home-page-top {
+    padding: 0px 10px;
+  }
   .home-page-top div .btn {
     display: none;
   }
@@ -279,8 +291,8 @@ section {
   margin-bottom: 25px;
   width: 100%;
   font-size: 18px;
-  font-weight: 400;
-  color: var(--cool-gray-90);
+  font-weight: lighter;
+  color: var(--cool-gray-30);
 }
 .home-page-body .col-2 {
   display: flex;
@@ -336,7 +348,7 @@ section {
 .org.selected,
 .elect.selected,
 .inner-container.selected {
-  width: 650px;
+  width: fit-content;
   height: fit-content;
   padding: 25px 35px;
   border-radius: 12px;
@@ -413,7 +425,7 @@ section {
 }
 /* FORM SECTIONS */
 .forms {
-  width: 100%;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -433,6 +445,9 @@ section {
 .forms input:hover {
   outline: none;
   border: 2px solid var(--black-a30);
+}
+.forms button {
+  width: 100%;
 }
 
 /* MEDIA QUERY SIGN UP PAGE */
@@ -470,8 +485,9 @@ section {
     font-size: 12px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .forms {
+    width: fit-content;
     gap: 13px;
     padding: 6px;
   }
