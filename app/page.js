@@ -26,8 +26,9 @@ export default function Home() {
         <div>
           <h1>Making polling easy with VOTA</h1>
           <p>
-            Forget the old way, You can have the best process. <br /> Right
-            here. Right now!
+            Revolutionize your polling experience with VOTA – a fresh, intuitive approach that discards the old ways and
+            offers you the ultimate process. Say goodbye to outdated methods; embrace the future of polling right here,
+            right now!
           </p>
           <Link className="btn links" href="/signup">
             Get Started
@@ -45,22 +46,16 @@ export default function Home() {
               This is how <br /> top organizations <br /> make top decisions.
             </h1>
             <p>
-              Have access to VOTA's top excellent tools to control your
-              workflow, make voting process easy, free and fair. <br />
-              Partner with VOTA for end-to-end support.
+              Vota is your gateway to top-notch tools designed to streamline your workflow, simplify the voting process,
+              and ensure fairness. Our user-friendly platform ensures the best possible experience, making polling a
+              breeze. Welcome to a new era of simplicity and efficiency.
             </p>
             <Link className="btn-white links" href="/signup">
               Get Started
             </Link>
           </div>
           <div className="col-2">
-            <Image
-              className="img"
-              src="/images/Get-in-Front.png"
-              width={250}
-              height={250}
-              alt="Get-in-Front"
-            />
+            <Image className="img" src="/images/Get-in-Front.png" width={250} height={250} alt="Get-in-Front" />
           </div>
         </div>
       </section>

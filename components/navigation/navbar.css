@@ -36,7 +36,6 @@
 .dashboard-page-top .nav-search input {
   width: 300px;
   height: 100%;
-  border-radius: 30px;
   border: none;
   outline: none;
   padding: 5px;
@@ -71,6 +70,7 @@
   right: 0px;
   padding: 15px;
   z-index: 999;
+  background-color: var(--white);
   box-shadow: -7px 0px 5px 0px var(--black-a04);
 }
 .slide-in-menu .nav-search .bx {

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const Navbar = ({ userRole }) => {
-  userRole = 'elector';
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
   const [menu, setMenu] = useState(false);
@@ -32,7 +31,10 @@ const Navbar = ({ userRole }) => {
           VOTA<span className="material-symbols-outlined">task_alt</span>
         </Link>
         <div className="nav-search">
-          <i className="bx bx-search" onClick={() => router.push(`/dashboard/${userRole}/list?q=${searchText}`)}></i>
+          <i
+            className="bx bx-search"
+            onClick={() => (searchText !== '' ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : '')}
+          ></i>
           <input
             type="text"
             placeholder={userRole === 'elector' ? 'Search for organizations' : 'Search for electors'}
@@ -64,7 +66,7 @@ const Navbar = ({ userRole }) => {
         ) : (
           // Organization menu options
           <div className="nav-menu">
-            <i class="bx bx-poll bx-rotate-270" onClick={() => router.push('/')}></i>
+            <i className="bx bx-poll bx-rotate-270" onClick={() => router.push('/')}></i>
             <i className="bx bx-bell bx-tada-hover" onClick={() => router.push('/')}></i>
             <div className="profile-img-container">
               <Image
@@ -82,8 +84,8 @@ const Navbar = ({ userRole }) => {
           </div>
         )}
         <div className="menu-icons" onClick={toggleMenu}>
-          <i class="bx bx-menu" style={styleMenuOn}></i>
-          <i class="bx bx-x" style={styleMenuOff}></i>
+          <i className="bx bx-menu" style={styleMenuOn}></i>
+          <i className="bx bx-x" style={styleMenuOff}></i>
         </div>
       </section>
 
@@ -127,7 +129,7 @@ const Navbar = ({ userRole }) => {
         ) : (
           // Organization menu options
           <div className="nav-sliding-menu">
-            <i class="bx bx-poll" onClick={() => router.push('/')}>
+            <i className="bx bx-poll" onClick={() => router.push('/')}>
               <span>Events</span>
             </i>
             <i className="bx bx-bell" onClick={() => router.push('/')}>
