@@ -164,10 +164,16 @@ section {
   padding-left: 60px;
   padding-right: 60px;
 }
+@media screen and (max-width: 800px) {
+  section {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
 @media screen and (max-width: 500px) {
   section {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 .links {
@@ -616,7 +622,7 @@ section {
   color: var(--blue-70);
 }
 .elector-top-section .ongoing-event {
-  width: 100%;
+  min-width: 280px;
   height: 280px;
   display: flex;
   flex-direction: column;
@@ -625,7 +631,6 @@ section {
   border-radius: 20px;
   padding: 15px;
   border: 1px solid var(--black-a15);
-  /* background-color: var(--blue-70); */
 }
 .ongoing-event .ongoing-top {
   width: 100%;
@@ -724,4 +729,53 @@ section {
   font-size: 10px;
   font-weight: 100;
   color: var(--blue-30);
+}
+
+/* MEDIA QUERY FOR elector-top-section */
+@media screen and (max-width: 1230px) {
+  .elector-top-section {
+    gap: 25px;
+  }
+  .elector-top-section .ad-section {
+    gap: 20px;
+  }
+  .elector-top-section .ad-section .divide {
+    padding: 10px 20px;
+    gap: 10px;
+  }
+  .elector-top-section .ad-section .divide .col h1 {
+    font-size: 17px;
+  }
+  .elector-top-section .ad-section .divide .col p {
+    font-size: 10px;
+  }
+  .elector-top-section .ad-section .divide .col .btn {
+    font-size: 10px;
+  }
+  .elector-top-section .ad-section .col-2 .img {
+    width: 150px;
+    height: 150px;
+  }
+  .elector-top-section .ad-section .nav-search {
+    height: 35px;
+    gap: 8px;
+  }
+  .elector-top-section .ongoing-event {
+    height: 230px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .elector-top-section {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 500px) {
+  .elector-top-section .ad-section .col-2 {
+    display: none;
+  }
+}
+@media screen and (max-width: 320px) {
+  .elector-top-section .ongoing-event {
+    width: fit-content;
+  }
 }

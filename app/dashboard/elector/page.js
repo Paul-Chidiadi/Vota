@@ -59,7 +59,8 @@ export default function Page() {
           </div>
           {/* LIST OF EVENTS */}
           <div className="event-list">
-            {/* <div className="event-item">
+            {/* when event list is full */}
+            <div className="event-item">
               <div className="event-org">
                 <small>Axelrod Capitol</small>
                 <i className="bx bxs-circle"></i>
@@ -78,7 +79,8 @@ export default function Page() {
                 <i className="bx bx-dots-vertical-rounded"></i>
                 <h5>2023/2024 Election 6</h5>
               </div>
-            </div> */}
+            </div>
+            {/* when event list is empty */}
             <div className="empty-list">
               <i className="bx bxs-binoculars bx-tada"></i>
               <small>
@@ -88,6 +90,9 @@ export default function Page() {
           </div>
         </div>
       </div>
+
+      {/* list of organization section */}
+      <div className="elector-body-section"></div>
     </section>
   );
 }
