@@ -14,6 +14,7 @@ const Events = () => {
           <h4>Ongoing Events</h4>
           <i className="bx bx-poll bx-rotate-270"></i>
         </div>
+
         {/* LIST OF EVENTS */}
         <div className="event-list">
           {/* when event list is full */}
@@ -37,6 +38,7 @@ const Events = () => {
               <h5>2023/2024 Election 6</h5>
             </div>
           </div>
+
           {/* when event list is empty */}
           <div className="empty-list">
             <i className="bx bxs-binoculars bx-tada"></i>

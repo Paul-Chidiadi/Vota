@@ -21,6 +21,7 @@
   object-fit: contain;
   width: 35px;
   height: 35px;
+  cursor: pointer;
 }
 .dashboard-page-top .nav-search {
   width: fit-content;
