@@ -100,6 +100,7 @@ const Navbar = ({ userRole }) => {
             height={50}
             alt="Profile Image"
           />
+          <div className="hover-name">PC</div>
         </div>
         <h3>paulchidiadi@gmail.com</h3>
         <div className="nav-search">

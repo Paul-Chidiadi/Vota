@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Events from '/components/global/Events.js';
 import React, { useState } from 'react';
 
 export default function Page() {
@@ -52,47 +53,94 @@ export default function Page() {
             />
           </div>
         </div>
-        <div className="ongoing-event">
-          <div className="ongoing-top">
-            <h4>Ongoing Events</h4>
-            <i className="bx bx-poll bx-rotate-270"></i>
-          </div>
-          {/* LIST OF EVENTS */}
-          <div className="event-list">
-            {/* when event list is full */}
-            <div className="event-item">
-              <div className="event-org">
-                <small>Axelrod Capitol</small>
-                <i className="bx bxs-circle"></i>
-              </div>
-              <div className="event-name">
-                <i className="bx bx-dots-vertical-rounded"></i>
-                <h5>2023/2024 Election 6</h5>
-              </div>
-            </div>
-            <div className="event-item">
-              <div className="event-org">
-                <small>Axelrod Capitol</small>
-                <i className="bx bxs-circle"></i>
-              </div>
-              <div className="event-name">
-                <i className="bx bx-dots-vertical-rounded"></i>
-                <h5>2023/2024 Election 6</h5>
-              </div>
-            </div>
-            {/* when event list is empty */}
-            <div className="empty-list">
-              <i className="bx bxs-binoculars bx-tada"></i>
+        {/* ongoing events section */}
+        <Events />
+      </div>
+
+      {/* list of organization section */}
+      <div className="elector-body-section">
+        <h1 className="section-title">Organizations</h1>
+        <div className="list-of-orgs">
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/icon.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>Axelrod Capitol</h4>
               <small>
-                You have <br /> no ongoing event
+                axelrod@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>10</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>VOG</h4>
+              <small>
+                vogigal@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>5</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/rbicon.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>RB properties</h4>
+              <small>
+                rbproperties@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>7</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/icon2.jpg" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>Pointa</h4>
+              <small>
+                pointapointa@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>20</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>Wryte</h4>
+              <small>
+                wryte@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>9</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>Paystack</h4>
+              <small>
+                paystack@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>13</span>
+                </i>
               </small>
             </div>
           </div>
         </div>
       </div>
-
-      {/* list of organization section */}
-      <div className="elector-body-section"></div>
     </section>
   );
 }

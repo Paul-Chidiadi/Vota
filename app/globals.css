@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 @import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
 :root {
+  --extra: bisque;
   --black: #000;
   --black-a90: rgb(0 0 0/0.9);
   --black-a75: rgb(0 0 0/0.75);
@@ -576,14 +577,14 @@ section {
   gap: 10px;
 }
 .elector-top-section .ad-section .divide .col h1 {
-  color: var(--black-a60);
-  font-size: 28px;
-  font-weight: 100;
-  font-family: 'Titan One', sans-serif;
+  color: green;
+  font-size: 25px;
+  font-weight: bold;
+  /* font-family: 'Titan One', sans-serif; */
 }
 .elector-top-section .ad-section .divide .col p {
   color: var(--black-a75);
-  font-size: 13px;
+  font-size: 12px;
   text-align: justify;
 }
 .elector-top-section .ad-section .col-2 {
@@ -642,10 +643,14 @@ section {
   padding: 5px;
   border-bottom: 1px solid var(--black-a30);
 }
-.ongoing-event .ongoing-top i,
 .ongoing-event .ongoing-top h4 {
   font-weight: bold;
-  color: var(--black);
+  font-size: 18px;
+  color: var(--black-a60);
+}
+.ongoing-event .ongoing-top i {
+  font-weight: bold;
+  color: green;
 }
 .event-list {
   width: 100%;
@@ -721,7 +726,7 @@ section {
   padding-left: 30px;
 }
 .event-list .event-item .event-org i {
-  color: rgb(195, 183, 160);
+  color: var(--white);
   font-size: 12px;
   animation: flash 1.5s ease-in-out infinite;
 }
@@ -777,5 +782,117 @@ section {
 @media screen and (max-width: 320px) {
   .elector-top-section .ongoing-event {
     width: fit-content;
+  }
+}
+
+/* elector-body-section  */
+.elector-body-section {
+  width: 100%;
+  height: fit-content;
+  margin-top: 20px;
+  padding: 30px 0px;
+}
+.elector-body-section .section-title {
+  color: var(--black-a60);
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+}
+.list-of-orgs {
+  width: 100%;
+  margin-top: 20px;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.list-of-orgs .list-cards {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 5px 3px var(--black-a04);
+  background-color: var(--extra);
+  cursor: pointer;
+}
+.list-of-orgs .list-cards:hover {
+  background-color: var(--blue-40);
+}
+.list-of-orgs .list-cards .img {
+  border-radius: 0px 0px 10px 10px;
+  width: 100%;
+  height: 75%;
+  object-fit: scale-down;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--black-a15);
+}
+.list-of-orgs .list-cards div {
+  width: 100%;
+  height: 25%;
+  padding: 5px 10px;
+}
+.list-of-orgs .list-cards small {
+  width: 100%;
+  font-size: 9px;
+  color: var(--black-a30);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list-of-orgs .list-cards h4 {
+  width: 100%;
+  font-size: 11px;
+  color: var(--black-a60);
+}
+.list-of-orgs .list-cards small span {
+  font-size: 10px;
+  font-weight: bold;
+  color: orange;
+}
+.list-of-orgs .list-cards small i {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--black);
+}
+
+/* MEDIA QUERY FOR LIST SECTION */
+@media screen and (max-width: 1000px) {
+  .list-of-orgs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 680px) {
+  .list-of-orgs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 500px) {
+  .list-of-orgs .list-cards {
+    height: 160px;
+    gap: 10px;
+  }
+  .list-of-orgs .list-cards div {
+    padding: 3px 6px;
+  }
+  .list-of-orgs .list-cards small {
+    font-size: 7px;
+  }
+  .list-of-orgs .list-cards h4 {
+    font-size: 9px;
+  }
+  .list-of-orgs .list-cards small span {
+    font-size: 7px;
+  }
+  .list-of-orgs .list-cards small i {
+    font-size: 9px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .list-of-orgs {
+    gap: 5px;
   }
 }
