@@ -778,6 +778,26 @@ section {
   .elector-top-section .ad-section .col-2 {
     display: none;
   }
+  /* media query event-item */
+  .event-list .event-item .event-name i {
+    font-size: 16px;
+    margin-top: -11px;
+  }
+  .event-list .event-item .event-name h5 {
+    font-size: 10px;
+  }
+  .event-list .event-item .event-org {
+    padding-left: 24px;
+  }
+  .event-list .event-item .event-org i {
+    font-size: 10px;
+  }
+  .event-list .event-item .event-org small {
+    font-size: 7px;
+  }
+  .event-list .empty-list small {
+    font-size: 8px;
+  }
 }
 @media screen and (max-width: 320px) {
   .elector-top-section .ongoing-event {
@@ -838,7 +858,7 @@ section {
 .list-of-orgs .list-cards small {
   width: 100%;
   font-size: 9px;
-  color: var(--black-a30);
+  color: var(--black-a45);
   display: flex;
   justify-content: space-between;
   align-items: center;

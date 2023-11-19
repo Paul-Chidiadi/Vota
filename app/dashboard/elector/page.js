@@ -23,7 +23,7 @@ export default function Page() {
                 Join us on this journey where your voice matters, connections thrive, and the future unfolds. Start
                 exploring now!
               </p>
-              <Link className="btn links" href="/signup">
+              <Link className="btn links" href="#orgss">
                 Explore Vota
               </Link>
             </div>
@@ -58,7 +58,7 @@ export default function Page() {
       </div>
 
       {/* list of organization section */}
-      <div className="elector-body-section">
+      <div className="elector-body-section" id="orgss">
         <h1 className="section-title">Organizations</h1>
         <div className="list-of-orgs">
           <div className="list-cards" onClick={() => router.push('/')}>
