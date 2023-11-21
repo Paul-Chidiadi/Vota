@@ -60,6 +60,10 @@ export default function Page() {
       {/* list of organization section */}
       <div className="elector-body-section" id="orgss">
         <h1 className="section-title">Organizations</h1>
+        <small>
+          These organizations use vota for their poll processes. You can view these organizations, their public poll
+          events, request to join organizations which you belong to and follow up with their poll events.
+        </small>
         <div className="list-of-orgs">
           <div className="list-cards" onClick={() => router.push('/')}>
             <Image className="img" src="/images/icon.png" width={65} height={65} alt="Get-in-Front" />
@@ -75,14 +79,27 @@ export default function Page() {
             </div>
           </div>
           <div className="list-cards" onClick={() => router.push('/')}>
-            <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
+            <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
             <div>
-              <h4>VOG</h4>
+              <h4>Wryte</h4>
               <small>
-                vogigal@gmail.com
+                wryte@gmail.com
                 <i className="bx bx-poll">
                   {' '}
-                  <span>5</span>
+                  <span>9</span>
+                </i>
+              </small>
+            </div>
+          </div>
+          <div className="list-cards" onClick={() => router.push('/')}>
+            <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
+            <div>
+              <h4>Paystack</h4>
+              <small>
+                paystack@gmail.com
+                <i className="bx bx-poll">
+                  {' '}
+                  <span>13</span>
                 </i>
               </small>
             </div>
@@ -114,27 +131,14 @@ export default function Page() {
             </div>
           </div>
           <div className="list-cards" onClick={() => router.push('/')}>
-            <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
+            <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
             <div>
-              <h4>Wryte</h4>
+              <h4>VOG</h4>
               <small>
-                wryte@gmail.com
+                vogigal@gmail.com
                 <i className="bx bx-poll">
                   {' '}
-                  <span>9</span>
-                </i>
-              </small>
-            </div>
-          </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
-            <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
-            <div>
-              <h4>Paystack</h4>
-              <small>
-                paystack@gmail.com
-                <i className="bx bx-poll">
-                  {' '}
-                  <span>13</span>
+                  <span>5</span>
                 </i>
               </small>
             </div>

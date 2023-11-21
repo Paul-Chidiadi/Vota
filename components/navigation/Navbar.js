@@ -27,7 +27,10 @@ const Navbar = ({ userRole }) => {
   return (
     <>
       <section className="dashboard-page-top">
-        <Link className="app-name links" href="/">
+        <Link
+          className="app-name links"
+          href={userRole === 'elector' ? '/dashboard/elector' : '/dashboard/organization'}
+        >
           VOTA<span className="material-symbols-outlined">task_alt</span>
         </Link>
         <div className="nav-search">
@@ -47,8 +50,8 @@ const Navbar = ({ userRole }) => {
         {userRole === 'elector' ? (
           // Electors menu options
           <div className="nav-menu">
-            <i className="bx bx-bell bx-tada-hover" onClick={() => router.push('/')}></i>
-            <i className="bx bx-grid-alt" onClick={() => router.push('/')}></i>
+            <i className="bx bx-bell bx-tada-hover" onClick={() => router.push('/dashboard/elector/notifications')}></i>
+            <i className="bx bx-grid-alt" onClick={() => router.push('/dashboard/elector/organizations')}></i>
             <div className="profile-img-container">
               <Image
                 onClick={() => router.push('/')}
@@ -117,10 +120,22 @@ const Navbar = ({ userRole }) => {
         {userRole === 'elector' ? (
           // Electors menu options
           <div className="nav-sliding-menu">
-            <i className="bx bx-bell" onClick={() => router.push('/')}>
+            <i
+              className="bx bx-bell"
+              onClick={() => {
+                router.push('/dashboard/elector/notifications');
+                toggleMenu();
+              }}
+            >
               <span>Notifications</span>
             </i>
-            <i className="bx bx-grid-alt" onClick={() => router.push('/')}>
+            <i
+              className="bx bx-grid-alt"
+              onClick={() => {
+                router.push('/dashboard/elector/organizations');
+                toggleMenu();
+              }}
+            >
               <span>Organizations</span>
             </i>
             <button className="btn" onClick={() => router.push('/signup')}>
@@ -130,10 +145,22 @@ const Navbar = ({ userRole }) => {
         ) : (
           // Organization menu options
           <div className="nav-sliding-menu">
-            <i className="bx bx-poll" onClick={() => router.push('/')}>
+            <i
+              className="bx bx-poll"
+              onClick={() => {
+                router.push('/');
+                toggleMenu();
+              }}
+            >
               <span>Events</span>
             </i>
-            <i className="bx bx-bell" onClick={() => router.push('/')}>
+            <i
+              className="bx bx-bell"
+              onClick={() => {
+                router.push('/');
+                toggleMenu();
+              }}
+            >
               <span>Notifications</span>
             </i>
             <button className="btn" onClick={() => router.push('/signup')}>

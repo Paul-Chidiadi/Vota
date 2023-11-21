@@ -97,16 +97,16 @@
   }
 }
 @keyframes zoom {
-  10%,
-  30%,
-  80% {
+  10% {
     transform: scale(0.7);
   }
   20%,
+  30%,
   40%,
   50%,
   60%,
   70%,
+  80%,
   90%,
   100% {
     transform: scale(1);
@@ -596,7 +596,7 @@ section {
 }
 .elector-top-section .ad-section .col-2 .img {
   object-fit: contain;
-  animation: zoom 5s ease-in-out infinite;
+  animation: zoom 10s ease-in-out infinite;
   animation-delay: 10s;
 }
 .elector-top-section .ad-section .nav-search {
@@ -622,7 +622,7 @@ section {
   font-weight: bold;
   color: var(--blue-70);
 }
-.elector-top-section .ongoing-event {
+.ongoing-event {
   min-width: 280px;
   height: 280px;
   display: flex;
@@ -663,7 +663,7 @@ section {
   margin-top: 5px;
   gap: 8px;
 }
-.event-list .empty-list {
+.empty-list {
   width: 100%;
   height: 100%;
   border-radius: 8px;
@@ -673,12 +673,12 @@ section {
   justify-content: center;
   align-items: center;
 }
-.event-list .empty-list i {
+.empty-list i {
   color: var(--blue-70);
   font-size: 30px;
   font-weight: bold;
 }
-.event-list .empty-list small {
+.empty-list small {
   color: var(--black-a60);
   font-size: 10px;
   font-weight: bold;
@@ -728,7 +728,7 @@ section {
 .event-list .event-item .event-org i {
   color: var(--white);
   font-size: 12px;
-  animation: flash 1.5s ease-in-out infinite;
+  animation: flash 3s ease-in-out infinite;
 }
 .event-list .event-item .event-org small {
   font-size: 10px;
@@ -811,12 +811,18 @@ section {
   height: fit-content;
   margin-top: 20px;
   padding: 30px 0px;
+  border-top: 1px solid var(--black-a15);
 }
 .elector-body-section .section-title {
   color: var(--black-a60);
   width: 100%;
   font-size: 18px;
   font-weight: bold;
+}
+.elector-body-section small {
+  color: green;
+  width: 100%;
+  font-size: 10px;
 }
 .list-of-orgs {
   width: 100%;
@@ -835,7 +841,7 @@ section {
   align-items: center;
   gap: 10px;
   border-radius: 10px;
-  box-shadow: 0px 5px 5px 3px var(--black-a04);
+  box-shadow: 0px 5px 10px 8px var(--black-a04);
   background-color: var(--extra);
   cursor: pointer;
 }
@@ -843,7 +849,7 @@ section {
   background-color: var(--blue-40);
 }
 .list-of-orgs .list-cards .img {
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 10px 10px 0px 0px;
   width: 100%;
   height: 75%;
   object-fit: scale-down;
@@ -925,4 +931,59 @@ section {
   overflow-y: auto;
   padding-top: 45px;
   background-color: var(--white);
+}
+
+/* Elector organizations page */
+.my-organization-body {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 50px;
+}
+.my-organization-body .sectioning {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.my-organization-body .sectioning .empty-list {
+  height: 270px;
+}
+.my-organization-body .sectioning h1 {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--black-a60);
+  text-align: left;
+  width: 100%;
+}
+.my-organization-body .sectioning .small {
+  color: green;
+  width: 100%;
+  font-size: 10px;
+  text-align: left;
+}
+.sec {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+/* media query for elector organization page */
+@media screen and (max-width: 1100px) {
+  .my-organization-body {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .my-organization-body .sectioning {
+    grid-area: 2;
+  }
+  .my-organization-body .ongoing-event {
+    grid-area: 1;
+  }
+}
+@media screen and (max-width: 630px) {
+  .sec {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
