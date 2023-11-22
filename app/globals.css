@@ -167,14 +167,14 @@ section {
 }
 @media screen and (max-width: 800px) {
   section {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 @media screen and (max-width: 500px) {
   section {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 .links {
@@ -275,6 +275,10 @@ section {
   }
 }
 @media screen and (max-width: 700px) {
+  .dashboard-page-top,
+  .home-page-top {
+    padding: 0px 15px;
+  }
   .dashboard-page-top .app-name,
   .home-page-top .app-name {
     font-size: 20px;
@@ -775,6 +779,9 @@ section {
   }
 }
 @media screen and (max-width: 500px) {
+  .ongoing-event .ongoing-top h4 {
+    font-size: 15px;
+  }
   .elector-top-section .ad-section .col-2 {
     display: none;
   }
@@ -897,6 +904,9 @@ section {
   }
 }
 @media screen and (max-width: 500px) {
+  .elector-body-section .section-title {
+    font-size: 15px;
+  }
   .list-of-orgs .list-cards {
     height: 160px;
     gap: 10px;
@@ -985,5 +995,169 @@ section {
 @media screen and (max-width: 630px) {
   .sec {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .my-organization-body .sectioning h1 {
+    font-size: 15px;
+  }
+  .my-organization-body .sectioning .small {
+    font-size: 8px;
+  }
+}
+
+/* Elector notification page */
+.notification-section {
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.notification-section .empty-list {
+  height: 270px;
+}
+.notification-section .section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--black-a60);
+  text-align: left;
+  width: 100%;
+}
+.notification-section .small {
+  color: green;
+  width: 100%;
+  font-size: 10px;
+  text-align: left;
+}
+.list-of-notifications {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  /* padding-top: 20px; */
+  padding-bottom: 20px;
+  box-shadow: 0px 5px 10px 5px var(--black-a04);
+}
+.list-of-notifications .notify-item {
+  width: 100%;
+  height: 100px;
+  padding: 0px 20px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 5px;
+  border-bottom: 1px solid var(--black-a15);
+  transition: 0.2s ease-in-out;
+}
+.list-of-notifications .notify-item:hover {
+  background-color: var(--extra);
+}
+.list-of-notifications .notify-item .actions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+}
+.list-of-notifications .notify-item .actions .ignore {
+  background-color: transparent !important;
+  color: var(--black-a60) !important;
+  border-radius: 5px !important;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+.list-of-notifications .notify-item .actions .ignore:hover {
+  background-color: var(--black-a04) !important;
+  color: var(--black) !important;
+}
+.list-of-notifications .notify-item .content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.list-of-notifications .notify-item .content .img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: scale-down;
+  border: 1px solid var(--black-a08);
+  background-color: var(--white);
+  cursor: pointer;
+}
+.list-of-notifications .notify-item .content .text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.list-of-notifications .notify-item .content .text h1 {
+  width: fit-content;
+  height: fit-content;
+  font-size: 14px;
+  font-weight: bold;
+  color: green;
+  cursor: pointer;
+}
+.list-of-notifications .notify-item .content .text p {
+  width: 100%;
+  height: fit-content;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--black-a60);
+}
+.list-of-notifications .notify-item .content .text small {
+  width: 100%;
+  height: fit-content;
+  font-size: 10px;
+  color: var(--black-a45);
+}
+/* media query for elector notification page */
+@media screen and (max-width: 700px) {
+  .notification-section .section-title {
+    font-size: 15px;
+  }
+  .notification-section .small {
+    font-size: 8px;
+  }
+  .list-of-notifications {
+    margin-top: 15px;
+    padding-bottom: 15px;
+  }
+  .list-of-notifications .notify-item {
+    height: 80px;
+    padding: 0px 10px;
+    gap: 0px;
+  }
+  .list-of-notifications .notify-item .content {
+    gap: 5px;
+  }
+  .list-of-notifications .notify-item .content .img {
+    width: 50px;
+    height: 50px;
+  }
+  .list-of-notifications .notify-item .content .text h1 {
+    font-size: 10px;
+  }
+  .list-of-notifications .notify-item .content .text p {
+    font-size: 8px;
+  }
+  .list-of-notifications .notify-item .content .text small {
+    font-size: 6px;
+  }
+  .list-of-notifications .notify-item .actions button {
+    font-size: 7px !important;
+    padding: 5px 8px !important;
+    border-radius: 0px;
   }
 }

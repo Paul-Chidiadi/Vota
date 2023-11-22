@@ -169,5 +169,6 @@
     position: relative;
     top: 0px;
     right: 0px;
+    border-radius: 5px;
   }
 }
