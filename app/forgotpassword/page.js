@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Login() {
-  const [electClassName, setElectClassName] = useState('elect selected');
-
   return (
     <main>
       <section className="home-page-top">
@@ -14,26 +12,16 @@ export default function Login() {
       </section>
 
       <section className="signup-page-body">
-        <div className={electClassName}>
-          <h1>Login to Vota</h1>
+        <div className="elect selected">
+          <h1>Forgot Password</h1>
           <form className="forms">
             <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="New Password" />
+            <input type="password" placeholder="Confirm Password" />
             <button onClick={() => {}} className="btn">
-              Login to my account
+              confirm
             </button>
           </form>
-          <p>
-            <Link className="links" href="/forgotpassword">
-              forgot password
-            </Link>
-          </p>
-          <p>
-            Already have an account?{' '}
-            <Link className="links" href="/signup">
-              Sign Up
-            </Link>
-          </p>
         </div>
       </section>
     </main>

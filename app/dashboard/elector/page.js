@@ -28,20 +28,14 @@ export default function Page() {
               </Link>
             </div>
             <div className="col-2">
-              <Image
-                className="img"
-                src="/images/answer-chat-in-mobile-c.png"
-                width={200}
-                height={200}
-                alt="Get-in-Front"
-              />
+              <Image className="img" src="/images/Get-Close.png" width={200} height={200} alt="Get-in-Front" />
             </div>
           </div>
           {/* SEARCH SECTION */}
           <div className="nav-search">
             <i
               className="bx bx-search"
-              onClick={() => (searchText !== '' ? router.push(`/dashboard/elector/list?q=${searchText}`) : '')}
+              onClick={() => (searchText !== '' ? router.push(`/dashboard/elector/orgs?q=${searchText}`) : '')}
             ></i>
             <input
               type="text"

@@ -108,10 +108,10 @@ export default function Sign() {
         <div className={orgClassName}>
           <h1>Joining as an {account}</h1>
           <form className="forms">
-            <input type="name" placeholder="Organization name" />
-            <input type="email" placeholder="Work email address" />
-            <input type="password" placeholder="password" />
-            <input type="password" placeholder="confirm password" />
+            <input type="name" placeholder="Organization Name" />
+            <input type="email" placeholder="Work Email Address" />
+            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Confirm Password" />
             <button onClick={() => {}} className="btn">
               Create my account
             </button>
@@ -133,9 +133,9 @@ export default function Sign() {
         <div className={electClassName}>
           <h1>Joining as an {account}</h1>
           <form className="forms">
-            <input type="email" placeholder="email" />
-            <input type="password" placeholder="password" />
-            <input type="password" placeholder="confirm password" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Confirm Password" />
             <button onClick={() => {}} className="btn">
               Create my account
             </button>

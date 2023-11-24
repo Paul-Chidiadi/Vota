@@ -16,6 +16,20 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.org-single-top .bxs-camera {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 22px;
+  padding: 10px;
+  border-radius: 50%;
+  color: var(--black-a45);
+  background-color: var(--black-a08);
+  transition: 0.1s ease-in-out;
+}
+.org-single-top .bxs-camera:hover {
+  color: var(--black-a60);
+}
 .org-single-top .img {
   width: 150px;
   height: 120px;
@@ -170,5 +184,15 @@
     top: 0px;
     right: 0px;
     border-radius: 5px;
+  }
+  .org-single-top .bxs-camera {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
   }
 }

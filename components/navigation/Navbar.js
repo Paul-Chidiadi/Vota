@@ -36,7 +36,7 @@ const Navbar = ({ userRole }) => {
         <div className="nav-search">
           <i
             className="bx bx-search"
-            onClick={() => (searchText !== '' ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : '')}
+            onClick={() => (searchText !== '' ? router.push(`/dashboard/${userRole}/orgs?q=${searchText}`) : '')}
           ></i>
           <input
             type="text"
@@ -54,7 +54,7 @@ const Navbar = ({ userRole }) => {
             <i className="bx bx-grid-alt" onClick={() => router.push('/dashboard/elector/organizations')}></i>
             <div className="profile-img-container">
               <Image
-                onClick={() => router.push('/')}
+                onClick={() => router.push('/dashboard/elector/profile')}
                 className="img"
                 src="/images/Get-Close.png"
                 width={50}
@@ -96,7 +96,10 @@ const Navbar = ({ userRole }) => {
       <div className="slide-in-menu" style={menuSideBar}>
         <div className="profile-img-container">
           <Image
-            onClick={() => router.push('/')}
+            onClick={() => {
+              router.push(`/dashboard/${userRole}/profile`);
+              toggleMenu();
+            }}
             className="img"
             src="/images/Get-Close.png"
             width={50}
@@ -107,7 +110,13 @@ const Navbar = ({ userRole }) => {
         </div>
         <h3>paulchidiadi@gmail.com</h3>
         <div className="nav-search">
-          <i className="bx bx-search" onClick={() => router.push(`/dashboard/${userRole}/list?q=${searchText}`)}></i>
+          <i
+            className="bx bx-search"
+            onClick={() => {
+              router.push(`/dashboard/${userRole}/orgs?q=${searchText}`);
+              toggleMenu();
+            }}
+          ></i>
           <input
             type="text"
             placeholder={userRole === 'elector' ? 'Search for organizations' : 'Search for electors'}
