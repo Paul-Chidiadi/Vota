@@ -16,9 +16,16 @@ export default function Page() {
           {/* request */}
           <div className="notify-item">
             <div className="content">
-              <Image className="img" src="/images/icon2.jpg" width={80} height={80} alt="" />
+              <Image
+                className="img"
+                src="/images/icon2.jpg"
+                width={80}
+                height={80}
+                alt="image"
+                onClick={() => router.push('/dashboard/elector/orgs')}
+              />
               <div className="text">
-                <h1 className="">Pointa</h1>
+                <h1 onClick={() => router.push('/dashboard/elector/orgs')}>Pointa</h1>
                 <p>wants you to join their organization</p>
                 <small>pointa@gmail.com</small>
               </div>
@@ -35,9 +42,16 @@ export default function Page() {
           {/* new event */}
           <div className="notify-item">
             <div className="content">
-              <Image className="img" src="/images/logo.png" width={80} height={80} alt="" />
+              <Image
+                className="img"
+                src="/images/logo.png"
+                width={80}
+                height={80}
+                alt="image"
+                onClick={() => router.push('/dashboard/elector/orgs')}
+              />
               <div className="text">
-                <h1 className="">Wryte</h1>
+                <h1 onClick={() => router.push('/dashboard/elector/orgs')}>Wryte</h1>
                 <p>New upcoming event created.</p>
                 <small>wryte@gmail.com</small>
               </div>
@@ -51,9 +65,16 @@ export default function Page() {
           {/* confirmation */}
           <div className="notify-item">
             <div className="content">
-              <Image className="img" src="/images/rbicon.png" width={80} height={80} alt="" />
+              <Image
+                className="img"
+                src="/images/rbicon.png"
+                width={80}
+                height={80}
+                alt="image"
+                onClick={() => router.push('/dashboard/elector/orgs')}
+              />
               <div className="text">
-                <h1 className="">RB properties</h1>
+                <h1 onClick={() => router.push('/dashboard/elector/orgs')}>RB properties</h1>
                 <p>Request to join this organization has been confirmed</p>
                 <small>You are now a member of rbproperties@gmail.com</small>
               </div>
@@ -67,9 +88,16 @@ export default function Page() {
           {/* reschedule */}
           <div className="notify-item">
             <div className="content">
-              <Image className="img" src="/images/icon.png" width={80} height={80} alt="" />
+              <Image
+                className="img"
+                src="/images/icon.png"
+                width={80}
+                height={80}
+                alt="image"
+                onClick={() => router.push('/dashboard/elector/orgs')}
+              />
               <div className="text">
-                <h1 className="">Axelrod Capitol</h1>
+                <h1 onClick={() => router.push('/dashboard/elector/orgs')}>Axelrod Capitol</h1>
                 <p>There is a reshedule on an upcoming event.</p>
                 <small>axelrodcapitol@gmail.com</small>
               </div>

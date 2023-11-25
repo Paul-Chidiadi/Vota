@@ -59,56 +59,56 @@ export default function Page() {
           in your poll events. You can also set your events public so anyone can participate or view them.
         </small>
         <div className="list-of-orgs">
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>paulchidiadi@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>chidiadinwaokocha@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>michealkate@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>michealkate@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>michealkate@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>michealkate@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
               <small>michealkate@gmail.com</small>
             </div>
           </div>
-          <div className="member-cards">
+          <div className="member-cards" onClick={() => router.push('/dashboard/organization/elect')}>
             <Image className="img" src="/images/Get-Close.png" width={65} height={65} alt="member-pics" />
             <div>
               <h4>Micheal Kate</h4>
@@ -119,7 +119,7 @@ export default function Page() {
         {/* when members list is empty */}
         {/* <div className="empty-list organ">
           <i className="bx bxs-binoculars bx-tada"></i>
-          <small>You have no members added yet</small>
+          <small>You have no members yet</small>
         </div> */}
       </div>
     </section>

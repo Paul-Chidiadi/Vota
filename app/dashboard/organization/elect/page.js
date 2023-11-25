@@ -10,7 +10,7 @@ export default function Page() {
 
   return (
     <section className="orgs-single-page">
-      <Orgpage userRole="elector" />
+      <Orgpage userRole="organization" />
     </section>
   );
 }

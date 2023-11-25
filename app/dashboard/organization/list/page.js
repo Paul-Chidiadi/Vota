@@ -10,12 +10,10 @@ export default function Page() {
   return (
     <section className="org-main-page">
       <div className="notification-section">
-        <h1 className="section-title">My Notifications</h1>
-        <small className="small">
-          Notifications about request to join your organization, events and other activities appear here.
-        </small>
+        <h1 className="section-title">Search for Members</h1>
+        <small className="small">Click add and invite them to join your organization </small>
+        {/* LIST OF MEMBERS IN SEARCH */}
         <div className="list-of-notifications">
-          {/* request */}
           <div className="notify-item">
             <div className="content">
               <Image
@@ -23,25 +21,20 @@ export default function Page() {
                 src="/images/Get-Close.png"
                 width={80}
                 height={80}
-                alt=""
+                alt="image"
                 onClick={() => router.push('/dashboard/organization/elect')}
               />
               <div className="text">
                 <h1 onClick={() => router.push('/dashboard/organization/elect')}>Paul Chidiadi</h1>
-                <p>wants to join your organization</p>
                 <small>paulchidiadi@gmail.com</small>
               </div>
             </div>
             <div className="actions">
-              <button className="btn ignore" onClick={() => router.push('/')}>
-                ignore
-              </button>
-              <button className="btn" onClick={() => router.push('/')}>
-                accept
+              <button className="btn" onClick={() => {}}>
+                invite
               </button>
             </div>
           </div>
-          {/* confirmation */}
           <div className="notify-item">
             <div className="content">
               <Image
@@ -49,25 +42,27 @@ export default function Page() {
                 src="/images/answer-chat-in-mobile-c.png"
                 width={80}
                 height={80}
-                alt=""
+                alt="image"
                 onClick={() => router.push('/dashboard/organization/elect')}
               />
               <div className="text">
                 <h1 onClick={() => router.push('/dashboard/organization/elect')}>Kevin Lance</h1>
-                <p>has accepted your your invite to join your organization</p>
-                <small>kevinlance@gmail.com is now a member of your organizattion</small>
+                <small>kevinlance@gmail.com</small>
               </div>
+            </div>
+            <div className="actions">
+              <button className="btn" onClick={() => {}}>
+                invite
+              </button>
             </div>
           </div>
         </div>
 
-        {/* when notification list is empty */}
+        {/* when search is not found */}
         <div className="empty-list">
           <i className="bx bxs-binoculars bx-tada"></i>
           <small>
-            You do not
-            <br />
-            have any notifications yet
+            Your search does not exist <br /> Please try again
           </small>
         </div>
       </div>
