@@ -16,27 +16,32 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.org-single-top .bx-plus,
 .org-single-top .bxs-camera {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 22px;
+  font-weight: bold;
   padding: 10px;
   border-radius: 50%;
   color: var(--black-a45);
   background-color: var(--black-a08);
   transition: 0.1s ease-in-out;
 }
+.org-single-top .bx-plus:hover,
 .org-single-top .bxs-camera:hover {
   color: var(--black-a60);
 }
 .org-single-top .img {
-  width: 150px;
+  width: 120px;
   height: 120px;
+  border-radius: 50%;
   object-fit: contain;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid var(--black-a15);
 }
 .org-single-top .parted {
   display: flex;
@@ -130,8 +135,8 @@
     font-size: 10px;
   }
   .org-single-top .img {
-    width: 100px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
   }
   .org-single-top .parted {
     padding: 8px;
@@ -193,6 +198,11 @@
     padding: 4px;
     border-radius: 5px;
     width: 100%;
+    text-align: center;
+  }
+  .org-single-top .bx-plus {
+    font-size: 18px;
+    padding: 4px;
     text-align: center;
   }
 }

@@ -36,7 +36,7 @@ const Navbar = ({ userRole }) => {
         <div className="nav-search">
           <i
             className="bx bx-search"
-            onClick={() => (searchText !== '' ? router.push(`/dashboard/${userRole}/orgs?q=${searchText}`) : '')}
+            onClick={() => (searchText !== '' ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : '')}
           ></i>
           <input
             type="text"
@@ -69,11 +69,14 @@ const Navbar = ({ userRole }) => {
         ) : (
           // Organization menu options
           <div className="nav-menu">
-            <i className="bx bx-poll bx-rotate-270" onClick={() => router.push('/')}></i>
-            <i className="bx bx-bell bx-tada-hover" onClick={() => router.push('/')}></i>
+            <i className="bx bx-poll bx-rotate-270" onClick={() => router.push('/dashboard/organization/events')}></i>
+            <i
+              className="bx bx-bell bx-tada-hover"
+              onClick={() => router.push('/dashboard/organization/notifications')}
+            ></i>
             <div className="profile-img-container">
               <Image
-                onClick={() => router.push('/')}
+                onClick={() => router.push('/dashboard/organization/profile')}
                 className="img"
                 src="/images/Get-Organized.png"
                 width={50}
@@ -113,7 +116,7 @@ const Navbar = ({ userRole }) => {
           <i
             className="bx bx-search"
             onClick={() => {
-              router.push(`/dashboard/${userRole}/orgs?q=${searchText}`);
+              router.push(`/dashboard/${userRole}/list?q=${searchText}`);
               toggleMenu();
             }}
           ></i>
@@ -157,7 +160,7 @@ const Navbar = ({ userRole }) => {
             <i
               className="bx bx-poll"
               onClick={() => {
-                router.push('/');
+                router.push('/dashboard/organization/events');
                 toggleMenu();
               }}
             >
@@ -166,7 +169,7 @@ const Navbar = ({ userRole }) => {
             <i
               className="bx bx-bell"
               onClick={() => {
-                router.push('/');
+                router.push('/dashboard/organization/notifications');
                 toggleMenu();
               }}
             >

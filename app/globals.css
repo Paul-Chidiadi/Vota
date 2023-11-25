@@ -539,7 +539,8 @@ section {
 
 /* ELECTORS SECTION */
 .orgs-single-page,
-.elector-profile-page,
+.profile-page,
+.org-main-page,
 .elector-main-page {
   width: 100%;
   height: 90vh;
@@ -1229,5 +1230,70 @@ section {
   }
   .profile-forms .edits {
     width: 100%;
+  }
+}
+
+/* ORGANIZATIONS SECTION */
+.member-cards {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px 8px var(--black-a04);
+  /* background-color: var(--extra); */
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  overflow: hidden;
+}
+.member-cards:hover {
+  background-color: var(--blue-40);
+}
+.member-cards .img {
+  border-radius: 5px 0px 0px 5px;
+  height: 100%;
+  width: 40%;
+  object-fit: scale-down;
+  background-color: var(--white);
+  border-right: 1px solid var(--black-a15);
+}
+.member-cards div {
+  width: 60%;
+  height: 100%;
+  padding: 5px;
+  align-content: center;
+}
+.member-cards small {
+  width: 100%;
+  font-size: 9px;
+  color: var(--black-a45);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.member-cards h4 {
+  width: 100%;
+  font-size: 11px;
+  color: var(--black-a60);
+}
+.organ {
+  height: 300px;
+}
+/* media query organization main page */
+@media screen and (max-width: 500px) {
+  .member-cards {
+    gap: 2px;
+  }
+  .member-cards div {
+    padding-top: 10px;
+    padding-right: 3px;
+  }
+  .member-cards small {
+    font-size: 7px;
+  }
+  .member-cards h4 {
+    font-size: 9px;
   }
 }

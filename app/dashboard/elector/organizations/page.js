@@ -19,7 +19,7 @@ export default function Page() {
           </small>
           {/* list of organization section */}
           <div className="list-of-orgs sec">
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/icon.png" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>Axelrod Capitol</h4>
@@ -32,7 +32,7 @@ export default function Page() {
                 </small>
               </div>
             </div>
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>VOG</h4>
@@ -45,7 +45,7 @@ export default function Page() {
                 </small>
               </div>
             </div>
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/rbicon.png" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>RB properties</h4>
@@ -58,7 +58,7 @@ export default function Page() {
                 </small>
               </div>
             </div>
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/icon2.jpg" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>Pointa</h4>
@@ -71,7 +71,7 @@ export default function Page() {
                 </small>
               </div>
             </div>
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>Wryte</h4>
@@ -84,7 +84,7 @@ export default function Page() {
                 </small>
               </div>
             </div>
-            <div className="list-cards" onClick={() => router.push('/')}>
+            <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
               <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
               <div>
                 <h4>Paystack</h4>

@@ -35,7 +35,7 @@ export default function Page() {
           <div className="nav-search">
             <i
               className="bx bx-search"
-              onClick={() => (searchText !== '' ? router.push(`/dashboard/elector/orgs?q=${searchText}`) : '')}
+              onClick={() => (searchText !== '' ? router.push(`/dashboard/elector/list?q=${searchText}`) : '')}
             ></i>
             <input
               type="text"
@@ -59,7 +59,7 @@ export default function Page() {
           events, request to join organizations which you belong to and follow up with their poll events.
         </small>
         <div className="list-of-orgs">
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/icon.png" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>Axelrod Capitol</h4>
@@ -72,7 +72,7 @@ export default function Page() {
               </small>
             </div>
           </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>Wryte</h4>
@@ -85,7 +85,7 @@ export default function Page() {
               </small>
             </div>
           </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>Paystack</h4>
@@ -98,7 +98,7 @@ export default function Page() {
               </small>
             </div>
           </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/rbicon.png" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>RB properties</h4>
@@ -111,7 +111,7 @@ export default function Page() {
               </small>
             </div>
           </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/icon2.jpg" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>Pointa</h4>
@@ -124,7 +124,7 @@ export default function Page() {
               </small>
             </div>
           </div>
-          <div className="list-cards" onClick={() => router.push('/')}>
+          <div className="list-cards" onClick={() => router.push('/dashboard/elector/orgs')}>
             <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
             <div>
               <h4>VOG</h4>

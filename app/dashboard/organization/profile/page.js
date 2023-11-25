@@ -13,12 +13,12 @@ export default function Page() {
       <>
         {/* top section */}
         <div className="org-single-top">
-          <Image className="img" src="/images/Get-Close.png" width={150} height={150} alt="profile" />
+          <Image className="img" src="/images/Get-Organized.png" width={150} height={150} alt="profile" />
           <div className="parted">
-            <h1>Victor Rasheed</h1>
-            <small>victorrasheed@gmail.com</small>
+            <h1>Pointa</h1>
+            <small>pointa@gmail.com</small>
             <p>
-              <i className="bx bx-poll"></i> <span>20</span> events engaged
+              <i className="bx bx-poll"></i> <span>20</span> events conducted
             </p>
             <p>
               <i className="bx bx-poll"></i> <span>5</span> events ongoing
@@ -34,11 +34,10 @@ export default function Page() {
             <h1 className="edit-profile">
               Edit Profile <i className="bx bx-pencil"></i>
             </h1>
-            <input type="text" placeholder="Firstname" />
-            <input type="text" placeholder="Lastname" />
-            <input type="text" placeholder="Phone Number" />
-            <input type="text" placeholder="Organization" />
-            <input type="text" placeholder="Position Held" />
+            <input type="text" placeholder="Organization Name" />
+            <input type="text" placeholder="Address" />
+            <input type="text" placeholder="Contact Number" />
+            <input type="number" placeholder="Number of Staff" />
             <input type="text" placeholder="Country" />
             <button onClick={() => {}} className="btn">
               confirm
@@ -50,7 +49,7 @@ export default function Page() {
             <h1 className="edit-profile">
               Edit Account Settings <i className="bx bx-pencil"></i>
             </h1>
-            <input type="email" placeholder="Email" />
+            <input type="email" placeholder="Organization Email" />
             <button onClick={() => {}} className="btn edits">
               <i className="bx bx-pencil"></i> Edit Email
             </button>
