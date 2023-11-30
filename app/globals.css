@@ -60,6 +60,9 @@
   font-family: 'ABeeZee', sans-serif;
   color: var(--black-a90);
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 @keyframes change {
   10% {
     color: var(--black-a15);
@@ -188,7 +191,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 10vh;
   padding: 0px 25px;
   border-bottom: 1px solid var(--black-a15);
   background-color: var(--white);
@@ -422,14 +425,14 @@ section {
   font-size: 12px;
   font-family: 'ABeeZee', sans-serif;
 }
-.signup-page-body .inner-container .choose {
+.inner-container .choose {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
-.signup-page-body .inner-container .choose .col {
+.inner-container .choose .col {
   width: 220px;
   height: 150px;
   padding: 18px;
@@ -438,18 +441,18 @@ section {
   transition: 0.1s ease-in-out;
   position: relative;
 }
-.signup-page-body .inner-container .choose .col.selected {
+.inner-container .choose .col.selected {
   border: 2px solid var(--blue-70);
   background-color: var(--black-a04);
 }
-.signup-page-body .inner-container .choose .col.selected .circle {
+.inner-container .choose .col.selected .circle {
   border: 2px solid var(--black-a15);
   background-color: var(--blue-60);
 }
-.signup-page-body .inner-container .choose .col:hover {
+.inner-container .choose .col:hover {
   border: 2px solid var(--blue-70);
 }
-.signup-page-body .inner-container .choose .col .circle {
+.inner-container .choose .col .circle {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -458,7 +461,7 @@ section {
   border-radius: 50%;
   border: 2px solid var(--black-a15);
 }
-.signup-page-body .inner-container .choose .col h4 {
+.inner-container .choose .col h4 {
   font-size: 13px;
   font-weight: 100;
 }
@@ -490,7 +493,7 @@ section {
 }
 
 /* MEDIA QUERY SIGN UP PAGE */
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
   .signup-page-body {
     min-height: 90vh;
   }
@@ -512,15 +515,15 @@ section {
   .inner-container p {
     font-size: 10px;
   }
-  .signup-page-body .inner-container .choose {
+  .inner-container .choose {
     flex-direction: column;
     gap: 12px;
   }
-  .signup-page-body .inner-container .choose .col .circle {
+  .inner-container .choose .col .circle {
     width: 13px;
     height: 13px;
   }
-  .signup-page-body .inner-container .choose .col h4 {
+  .inner-container .choose .col h4 {
     font-size: 12px;
   }
 }
@@ -1295,5 +1298,151 @@ section {
   }
   .member-cards h4 {
     font-size: 9px;
+  }
+}
+
+/* ORGANIZATIONS NEW EVENT PAGE */
+.new-event-section {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 100% 100% 100% 100%;
+  gap: 6%;
+  transition: transform 0.5s ease;
+}
+.flow {
+  height: fit-content;
+  padding: 3%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px 8px var(--black-a04);
+}
+/* set name section */
+.set-name {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.set-name div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.set-name div h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: green;
+  text-align: left;
+  width: 100%;
+}
+.set-name div input {
+  width: 100%;
+  height: 45px;
+  padding: 8px 15px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--black-a15);
+  transition: 0.1s ease-in-out;
+}
+.set-name div input:hover {
+  outline: none;
+  border-bottom: 1px solid var(--black-a30);
+}
+.set-name div small {
+  color: var(--black-a60);
+  width: 100%;
+  font-size: 10px;
+  text-align: left;
+}
+.set-name .checkbox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.set-name .checkbox input {
+  width: 15px;
+  height: 15px;
+}
+.set-name .checkbox label {
+  font-size: 13px;
+}
+.flow .btnn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--blue-70);
+  font-weight: bold;
+  font-size: 16px;
+  align-self: flex-end;
+}
+/* media query for set name section */
+@media screen and (max-width: 500px) {
+  .set-name {
+    gap: 20px;
+  }
+  .set-name div {
+    gap: 5px;
+  }
+  .set-name div h3 {
+    font-size: 12px;
+  }
+  .set-name div input {
+    height: 40px;
+    padding: 5px 10px;
+  }
+  .set-name .checkbox {
+    gap: 8px;
+  }
+  .set-name .checkbox input {
+    width: 12px;
+    height: 12px;
+  }
+  .set-name .checkbox label {
+    font-size: 11px;
+  }
+}
+/* set-type section */
+.set-type {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+}
+.set-type .inner-container {
+  border: none;
+}
+.set-type h1 {
+  font-size: 18px;
+  font-weight: bold;
+  color: green;
+  text-align: center;
+  width: 100%;
+}
+.set-type small {
+  color: var(--black-a60);
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+}
+.set-type .actions {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+/* media query for set-type section */
+@media screen and (max-width: 600px) {
+  .set-type {
+    padding: 4%;
+    height: 90%;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    overflow-y: scroll;
   }
 }

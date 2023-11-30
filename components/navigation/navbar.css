@@ -1,6 +1,6 @@
 .dashboard-page-top .nav-menu {
   width: fit-content;
-  height: 60px;
+  height: 100%;
   padding: 15px;
   display: flex;
   justify-content: center;
@@ -70,7 +70,7 @@
   width: 270px;
   height: 90vh;
   position: absolute;
-  top: 60px;
+  top: 10vh;
   right: 0px;
   padding: 15px;
   z-index: 999;

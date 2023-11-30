@@ -20,7 +20,12 @@ const Orgpage = () => {
         <div className="parted">
           <h1>CREATE NEW EVENT</h1>
           <small>pointa@gmail.com</small>
-          <i className="bx bx-plus" onClick={() => {}}></i>
+          <i
+            className="bx bx-plus"
+            onClick={() => {
+              router.push('/dashboard/organization/newevent');
+            }}
+          ></i>
         </div>
       </div>
 
