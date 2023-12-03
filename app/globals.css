@@ -1311,7 +1311,7 @@ section {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 100% 100% 100% 100%;
+  grid-template-columns: repeat(5, 100%);
   gap: 6%;
   transition: transform 0.5s ease;
 }
@@ -1474,7 +1474,6 @@ section {
   font-size: 18px;
   font-weight: bold;
   color: green;
-  text-align: left;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -1486,11 +1485,12 @@ section {
   padding: 10px;
   border-radius: 50%;
   color: var(--black-a45);
-  background-color: var(--black-a08);
+  background-color: var(--black-a04);
   transition: 0.1s ease-in-out;
 }
 .poll-questions .bx:hover {
   color: var(--black-a90);
+  background-color: var(--black-a08);
 }
 .poll-questions div {
   width: 100%;
@@ -1531,6 +1531,37 @@ section {
   .poll-questions div input {
     height: 38px;
     padding: 5px 10px;
+  }
+}
+
+/* candidate-section */
+.candidate-type {
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 60vh;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start !important;
+}
+.candidate-type .divider {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding: 0px;
+  border-radius: 5px;
+  border: 1px solid var(--black-a15);
+  overflow: hidden;
+}
+.candidate-type h3 {
+  background-color: var(--extra);
+  color: var(--black-a60);
+  padding: 5px 10px;
+  font-size: 13px;
+}
+/* media query for candidate section */
+@media screen and (max-width: 650px) {
+  .candidate-type {
+    grid-template-columns: 1fr;
   }
 }
 

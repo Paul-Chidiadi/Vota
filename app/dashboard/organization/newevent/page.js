@@ -21,7 +21,7 @@ const page = () => {
   const [slideNum, setSlideNum] = useState(1);
 
   function nextSlide() {
-    if (slideNum < 4) {
+    if (slideNum < 5) {
       const translateNumber = slideNum * (100 + 6);
       myElementRef.current.style.transform = `translateX(-${translateNumber}%)`;
       setSlideNum((prev) => prev + 1);
@@ -36,6 +36,9 @@ const page = () => {
       setSlideNum((prev) => prev - 1);
     } else if (slideNum === 4) {
       myElementRef.current.style.transform = `translateX(-212%)`;
+      setSlideNum((prev) => prev - 1);
+    } else if (slideNum === 5) {
+      myElementRef.current.style.transform = `translateX(-318%)`;
       setSlideNum((prev) => prev - 1);
     }
   }
@@ -57,7 +60,6 @@ const page = () => {
       isSelected: false,
     },
   ]);
-  const [account, setAccount] = useState('');
   //Option elements
   const optionElements = options.map((option) => {
     return (
@@ -79,6 +81,7 @@ const page = () => {
         ...prev,
         eventType: id === 1 ? 'Poll' : 'Election',
         positions: id === 1 ? [{ id: uuidv4(), text: '' }] : prev.positions,
+        candidates: id === 1 ? [] : prev.candidates,
         pollQuestions: id === 1 ? prev.pollQuestions : [{ id: uuidv4(), text: '' }],
       };
     });
@@ -89,7 +92,6 @@ const page = () => {
     });
   }
 
-  console.log(eventDetails);
   return (
     <section className="org-main-page">
       <div className="new-event-section" id="myElement" ref={myElementRef}>
@@ -183,7 +185,7 @@ const page = () => {
         {/* set event proper section */}
         <div className="flow">
           {eventDetails.eventType === 'Election' ? (
-            //For election type
+            //For setting positions for election type
             <div className="poll-questions">
               <h3>
                 Set Election Positions{' '}
@@ -210,6 +212,11 @@ const page = () => {
                           setEventDetails((prev) => {
                             return {
                               ...prev,
+                              candidates: prev.candidates.map((candidate) => {
+                                return candidate.position === item.text
+                                  ? { ...candidate, position: e.target.value }
+                                  : candidate;
+                              }),
                               positions: prev.positions.map((poll) => {
                                 return poll.id === item.id ? { ...poll, text: e.target.value } : poll;
                               }),
@@ -223,6 +230,9 @@ const page = () => {
                           setEventDetails((prev) => {
                             return {
                               ...prev,
+                              candidates: prev.candidates.filter((option) => {
+                                return option.position !== item.text;
+                              }),
                               positions: prev.positions.filter((option) => {
                                 return option.id !== item.id;
                               }),
@@ -314,7 +324,12 @@ const page = () => {
                 </button>
                 <button
                   className="btnn"
-                  onClick={nextSlide}
+                  onClick={() => {
+                    //move to last side since candidate sectin doesn't need to be filled
+                    const translateNumber = 4 * (100 + 6);
+                    myElementRef.current.style.transform = `translateX(-${translateNumber}%)`;
+                    setSlideNum((prev) => prev + 2);
+                  }}
                   style={
                     eventDetails.pollQuestions.length !== 0 &&
                     eventDetails.pollQuestions.every((item) => item.text.length > 0)
@@ -335,6 +350,94 @@ const page = () => {
           )}
         </div>
 
+        {/* set candidate section */}
+        <div className="flow">
+          {/* For setting positions for election type */}
+          <div className="poll-questions">
+            <h3>Set Candidates for each Position </h3>
+            <div className="candidate-type">
+              {eventDetails.positions.map((item) => {
+                return (
+                  <div className="divider" key={item.id}>
+                    <h3>
+                      {item.text}
+                      <i
+                        className="bx bx-plus"
+                        onClick={() => {
+                          setEventDetails((prev) => {
+                            return {
+                              ...prev,
+                              candidates: [...prev.candidates, { id: uuidv4(), position: item.text, name: '' }],
+                            };
+                          });
+                        }}
+                      ></i>
+                    </h3>
+                    <div className="poll-list">
+                      {eventDetails.candidates.map((cand) => {
+                        return cand.position === item.text ? (
+                          <div key={cand.id}>
+                            <input
+                              type="text"
+                              placeholder="Set candidates"
+                              onChange={(e) => {
+                                setEventDetails((prev) => {
+                                  return {
+                                    ...prev,
+                                    candidates: prev.candidates.map((single) => {
+                                      return single.id === cand.id ? { ...single, name: e.target.value } : single;
+                                    }),
+                                  };
+                                });
+                              }}
+                            />
+                            <i
+                              className="bx bx-x"
+                              onClick={() => {
+                                setEventDetails((prev) => {
+                                  return {
+                                    ...prev,
+                                    candidates: prev.candidates.filter((option) => {
+                                      return option.id !== cand.id;
+                                    }),
+                                  };
+                                });
+                              }}
+                            ></i>
+                          </div>
+                        ) : (
+                          ''
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="actions">
+              <button className="btnn" onClick={prevSlide}>
+                {'<'} PREV
+              </button>
+              <button
+                className="btnn"
+                onClick={nextSlide}
+                style={
+                  eventDetails.candidates.length !== 0 && eventDetails.candidates.every((item) => item.name.length > 0)
+                    ? {}
+                    : { color: 'var(--black-a30)' }
+                }
+                disabled={
+                  eventDetails.candidates.length !== 0 && eventDetails.candidates.every((item) => item.name.length > 0)
+                    ? false
+                    : true
+                }
+              >
+                NEXT {'>'}
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* confirm section */}
         <div className="flow confirm-section">
           <div>
@@ -346,7 +449,15 @@ const page = () => {
           </div>
           <span className="material-symbols-outlined image">task_alt</span>
           <div className="actions">
-            <button className="btn" onClick={prevSlide}>
+            <button
+              className="btn"
+              onClick={() => {
+                if (eventDetails.eventType === 'Poll') {
+                  myElementRef.current.style.transform = `translateX(-212%)`;
+                  setSlideNum((prev) => prev - 2);
+                } else prevSlide();
+              }}
+            >
               back
             </button>
             <button className="btn">submit</button>
