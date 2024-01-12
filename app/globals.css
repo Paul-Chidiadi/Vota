@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+@import url("https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css");
 :root {
   --extra: bisque;
   --black: #000;
@@ -57,12 +57,12 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'ABeeZee', sans-serif;
+  font-family: "ABeeZee", sans-serif;
   color: var(--black-a90);
 }
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
   display: none;
-}
+} */
 @keyframes change {
   10% {
     color: var(--black-a15);
@@ -206,7 +206,7 @@ section {
   font-size: 30px;
   font-weight: 100;
   color: var(--blue-70);
-  font-family: 'Titan One', sans-serif;
+  font-family: "Titan One", sans-serif;
 }
 .dashboard-page-top .app-name span,
 .home-page-top .app-name span {
@@ -250,7 +250,7 @@ section {
   font-size: 65px;
   font-weight: 100;
   color: var(--blue-70);
-  font-family: 'Titan One', sans-serif;
+  font-family: "Titan One", sans-serif;
 }
 .home-page-hero div p {
   margin-bottom: 25px;
@@ -332,7 +332,7 @@ section {
   font-size: 50px;
   font-weight: 100;
   color: var(--cool-gray-30);
-  font-family: 'Titan One', sans-serif;
+  font-family: "Titan One", sans-serif;
 }
 .home-page-body div p {
   margin-bottom: 25px;
@@ -420,7 +420,7 @@ section {
   text-align: center;
   font-size: 30px;
   font-weight: bold;
-  font-family: 'ABeeZee', sans-serif;
+  font-family: "ABeeZee", sans-serif;
 }
 .org p,
 .elect p,
@@ -428,7 +428,7 @@ section {
   width: 100%;
   text-align: center;
   font-size: 12px;
-  font-family: 'ABeeZee', sans-serif;
+  font-family: "ABeeZee", sans-serif;
 }
 .inner-container .choose {
   width: 100%;
@@ -1621,5 +1621,121 @@ section {
   }
   .confirm-section small {
     font-size: 8px;
+  }
+}
+
+/* SINGLE EVENT PAGE */
+.poll-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+}
+.poll-view div {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: var(--black-a04);
+  padding: 10px 3px;
+}
+.poll-view h6 {
+  flex-basis: 90%;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  font-weight: 200;
+  color: var(--black-a60);
+}
+.poll-view h1 {
+  flex-basis: 10%;
+  width: 100%;
+  height: 100%;
+  text-align: right;
+  font-size: 25px;
+  font-weight: bold;
+  color: var(--black-a75);
+}
+.election-view {
+  width: 100%;
+  height: fit-content;
+}
+.result-display {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  align-items: flex-start;
+}
+.card-body {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.candidate-card {
+  width: 100%;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black-a04);
+}
+.candidate-card .cand-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--black-a08);
+}
+.candidate-card h1 {
+  font-size: 10px;
+  font-weight: bold;
+  color: green;
+}
+.candidate-card small {
+  font-size: 8px;
+  color: var(--black-a45);
+}
+
+/* MEDIA QUERY FOR SINGLE EVENT PAGE */
+@media screen and (max-width: 800px) {
+  .poll-view {
+    gap: 10px;
+  }
+  .poll-view h6 {
+    font-size: 11px;
+    font-weight: 100;
+  }
+  .poll-view h1 {
+    font-size: 20px;
+  }
+  .card-body {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .candidate-card {
+    padding: 5px 0px;
+  }
+  .candidate-card .cand-pic {
+    width: 50px;
+    height: 50px;
+  }
+  .candidate-card h1 {
+    font-size: 8px;
+  }
+  .candidate-card small {
+    font-size: 7px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .card-body {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
