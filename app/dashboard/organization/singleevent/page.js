@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const Page = () => {
   const [event, setEvent] = useState({
-    status: "history",
+    status: "ongoing",
     eventType: "Poll",
   });
   const router = useRouter();
@@ -24,6 +24,10 @@ const Page = () => {
     { name: "ada", position: "queen" },
     { name: "esther", position: "queen" },
     { name: "fatima", position: "queen" },
+  ];
+  const winners = [
+    { name: "paul", position: "king" },
+    { name: "joy", position: "queen" },
   ];
   //FAKE DATA TO LOOP THROUGH
 
@@ -124,6 +128,58 @@ const Page = () => {
           </div>
         )}
       </div>
+
+      {/* THIS SECTION DISPLAYS ONLY WHEN THE STATUS OF THE EVENT IS HISTORY */}
+      {event.status === "history" ? (
+        <div className="org-single-body">
+          <h4 style={{ marginBottom: "10px" }}>Final Result</h4>
+          <h5>Total number of votes: 150</h5>
+          {event.eventType === "Poll" ? (
+            <div className="poll-view">
+              <div>
+                <h6>Scientist should be paid only $5000</h6>
+                <h1> {event.status === "future" ? "..." : 70}</h1>
+                {event.status === "ongoing" && (
+                  <button className="vote-btn" onClick={() => {}}>
+                    vote
+                  </button>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="election-view">
+              <div className="card-body">
+                {winners.map((item) => {
+                  return (
+                    <div key={uuidv4()}>
+                      <h5>{item.position}</h5>
+                      <div className="candidate-card">
+                        <Image
+                          className="cand-pic"
+                          src="/images/Get-Close.png"
+                          width={60}
+                          height={60}
+                          alt="vog"
+                        />
+                        <h1>{item.name}</h1>
+                        <small>pointa@gmail.com</small>
+                        <h4>{event.status === "future" ? "..." : "60"}</h4>
+                        {event.status === "ongoing" && (
+                          <button className="vote-btn" onClick={() => {}}>
+                            vote
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 };
