@@ -167,6 +167,7 @@ section {
   display: block;
   padding-left: 60px;
   padding-right: 60px;
+  background-color: var(--black-a04) !important;
 }
 @media screen and (max-width: 800px) {
   section {
@@ -199,7 +200,7 @@ section {
   height: 10vh;
   padding: 0px 25px;
   border-bottom: 1px solid var(--black-a15);
-  background-color: var(--white);
+  background-color: var(--white) !important;
 }
 .dashboard-page-top .app-name,
 .home-page-top .app-name {
@@ -238,7 +239,7 @@ section {
   align-items: center;
   gap: 25px;
   height: 500px;
-  background-color: var(--black-a04);
+  background-color: var(--white) !important;
 }
 .home-page-hero div {
   width: 100%;
@@ -310,6 +311,10 @@ section {
 }
 
 /* HOME PAGE BODY */
+.home-body {
+  width: 100%;
+  background-color: var(--white) !important;
+}
 .home-page-body {
   width: 100%;
   display: flex;
@@ -406,6 +411,7 @@ section {
   align-items: center;
   gap: 20px;
   transition: 2s ease-in-out;
+  background-color: var(--white);
 }
 .org,
 .elect,
@@ -583,7 +589,7 @@ section {
   padding: 5px 50px;
   gap: 15px;
   border: 1px solid var(--black-a15);
-  background-color: var(--extra);
+  background-color: var(--white);
 }
 .elector-top-section .ad-section .divide .col {
   display: flex;
@@ -593,7 +599,7 @@ section {
   gap: 10px;
 }
 .elector-top-section .ad-section .divide .col h1 {
-  color: var(--blue-70);
+  color: green;
   font-size: 25px;
   font-weight: bold;
   /* font-family: 'Titan One', sans-serif; */
@@ -627,6 +633,7 @@ section {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  background-color: var(--white);
 }
 .elector-top-section .ad-section .nav-search input {
   width: 100%;
@@ -650,6 +657,7 @@ section {
   border-radius: 5px;
   padding: 15px;
   border: 1px solid var(--black-a15);
+  background-color: var(--white);
 }
 .ongoing-event .ongoing-top {
   width: 100%;
@@ -1048,6 +1056,7 @@ section {
   /* padding-top: 20px; */
   padding-bottom: 20px;
   box-shadow: 0px 5px 10px 5px var(--black-a04);
+  background-color: var(--white);
 }
 .list-of-notifications .notify-item {
   width: 100%;
@@ -1178,6 +1187,7 @@ section {
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 5px 8px 5px var(--black-a04);
+  background-color: var(--white);
 }
 .profile-forms {
   width: 100%;
@@ -1251,7 +1261,7 @@ section {
   gap: 5px;
   border-radius: 5px;
   box-shadow: 0px 5px 10px 8px var(--black-a04);
-  /* background-color: var(--extra); */
+  background-color: var(--white);
   cursor: pointer;
   transition: 0.2s ease-in-out;
   overflow: hidden;
@@ -1320,6 +1330,7 @@ section {
   padding: 3%;
   border-radius: 10px;
   box-shadow: 0px 5px 10px 8px var(--black-a04);
+  background-color: var(--white);
 }
 /* set name section */
 .set-name {
