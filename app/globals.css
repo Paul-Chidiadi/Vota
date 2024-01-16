@@ -1327,11 +1327,20 @@ section {
   flex-direction: column;
   gap: 20px;
 }
-.set-name div {
+.option-sec {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__input-container {
+  display: block;
+}
+.react-datepicker__time-container {
+  margin-top: 0px;
 }
 .set-name div h3 {
   font-size: 18px;
@@ -1391,7 +1400,7 @@ section {
   .set-name {
     gap: 20px;
   }
-  .set-name div {
+  .option-sec {
     gap: 5px;
   }
   .set-name div h3 {

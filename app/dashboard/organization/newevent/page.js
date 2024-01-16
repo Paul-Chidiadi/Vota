@@ -1,22 +1,24 @@
-'use client';
-import React, { useState, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import '../../../../components/global/orgpage.css';
-import { useRouter } from 'next/navigation';
-import { v4 as uuidv4 } from 'uuid';
+"use client";
+import React, { useState, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import "../../../../components/global/orgpage.css";
+import { useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const page = () => {
   const router = useRouter();
   const myElementRef = useRef(null);
   const [eventDetails, setEventDetails] = useState({
-    eventName: '',
-    schedule: '',
+    eventName: "",
+    schedule: new Date(),
     public: false,
-    eventType: '',
-    positions: [{ id: uuidv4(), text: '' }],
+    eventType: "",
+    positions: [{ id: uuidv4(), text: "" }],
     candidates: [],
-    pollQuestions: [{ id: uuidv4(), text: '' }],
+    pollQuestions: [{ id: uuidv4(), text: "" }],
   });
   const [slideNum, setSlideNum] = useState(1);
 
@@ -47,16 +49,16 @@ const page = () => {
   const [options, setOptions] = useState([
     {
       id: 1,
-      title: 'Poll',
-      text: 'Set up a Poll where members can choose from different options.',
-      image: '/images/Get-Organized.png',
+      title: "Poll",
+      text: "Set up a Poll where members can choose from different options.",
+      image: "/images/Get-Organized.png",
       isSelected: false,
     },
     {
       id: 2,
-      title: 'Election',
-      text: 'Set up Election where members choose a candidate for different positions',
-      image: '/images/Get-in-Front.png',
+      title: "Election",
+      text: "Set up Election where members choose a candidate for different positions",
+      image: "/images/Get-in-Front.png",
       isSelected: false,
     },
   ]);
@@ -64,12 +66,18 @@ const page = () => {
   const optionElements = options.map((option) => {
     return (
       <div
-        className={option.isSelected ? 'col selected' : 'col'}
+        className={option.isSelected ? "col selected" : "col"}
         key={option.id}
         onClick={() => handleClick(option.id)}
       >
         <div className="circle"></div>
-        <Image className="choose-img" src={option.image} alt="image info" width={100} height={70} />
+        <Image
+          className="choose-img"
+          src={option.image}
+          alt="image info"
+          width={100}
+          height={70}
+        />
         <h4>{option.text}</h4>
       </div>
     );
@@ -79,15 +87,18 @@ const page = () => {
     setEventDetails((prev) => {
       return {
         ...prev,
-        eventType: id === 1 ? 'Poll' : 'Election',
-        positions: id === 1 ? [{ id: uuidv4(), text: '' }] : prev.positions,
+        eventType: id === 1 ? "Poll" : "Election",
+        positions: id === 1 ? [{ id: uuidv4(), text: "" }] : prev.positions,
         candidates: id === 1 ? [] : prev.candidates,
-        pollQuestions: id === 1 ? prev.pollQuestions : [{ id: uuidv4(), text: '' }],
+        pollQuestions:
+          id === 1 ? prev.pollQuestions : [{ id: uuidv4(), text: "" }],
       };
     });
     setOptions((prev) => {
       return prev.map((item) => {
-        return item.id === id ? { ...item, isSelected: true } : { ...item, isSelected: false };
+        return item.id === id
+          ? { ...item, isSelected: true }
+          : { ...item, isSelected: false };
       });
     });
   }
@@ -97,7 +108,7 @@ const page = () => {
       <div className="new-event-section" id="myElement" ref={myElementRef}>
         {/* set name section */}
         <div className="flow set-name">
-          <div>
+          <div className="option-sec">
             <h3>Set Event Name</h3>
             <input
               type="text"
@@ -111,9 +122,9 @@ const page = () => {
               }}
             />
           </div>
-          <div>
+          <div className="option-sec">
             <h3>Schedule</h3>
-            <input
+            {/* <input
               type="text"
               name="schedule"
               value={eventDetails.schedule}
@@ -123,14 +134,30 @@ const page = () => {
                   return { ...prev, schedule: e.target.value };
                 });
               }}
+              disabled
+            /> */}
+            <DatePicker
+              selected={eventDetails.schedule}
+              onChange={(date) => {
+                setEventDetails((prev) => {
+                  return { ...prev, schedule: date };
+                });
+              }}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              timeCaption="Time"
+              minDate={new Date()}
             />
           </div>
-          <div>
+          <div className="option-sec">
             <h3>Do you want this event to be public?</h3>
             <small>
-              Events set to public are visible to everyone(this includes people who are not members of your
-              Organization). Every user can participate and view your event process when it is live.
-            </small>{' '}
+              Events set to public are visible to everyone(this includes people
+              who are not members of your Organization). Every user can
+              participate and view your event process when it is live.
+            </small>{" "}
             <div className="checkbox">
               <input
                 type="checkbox"
@@ -143,59 +170,75 @@ const page = () => {
                   });
                 }}
               />
-              <label htmlFor="isPublic">Yes, I want this Event to be Public</label>
+              <label htmlFor="isPublic">
+                Yes, I want this Event to be Public
+              </label>
             </div>
           </div>
           <button
             className="btnn"
             onClick={nextSlide}
             style={
-              eventDetails.eventName === '' || eventDetails.schedule === ''
-                ? { color: 'var(--black-a30)' }
-                : { color: 'var(--blue-70)' }
+              eventDetails.eventName === "" || eventDetails.schedule === ""
+                ? { color: "var(--black-a30)" }
+                : { color: "var(--blue-70)" }
             }
-            disabled={eventDetails.eventName === '' || eventDetails.schedule === '' ? true : false}
+            disabled={
+              eventDetails.eventName === "" || eventDetails.schedule === ""
+                ? true
+                : false
+            }
           >
-            NEXT {'>'}
+            NEXT {">"}
           </button>
         </div>
 
         {/* set event type section */}
         <div className="flow set-type">
           <h1>Choose Event Type</h1>
-          <small>Choose which event type you are creating. Poll event or proper Election event.</small>
+          <small>
+            Choose which event type you are creating. Poll event or proper
+            Election event.
+          </small>
           <div className="inner-container selected">
             <div className="choose">{optionElements}</div>
           </div>
           <div className="actions">
             <button className="btnn" onClick={prevSlide}>
-              {'<'} PREV
+              {"<"} PREV
             </button>
             <button
               className="btnn"
               onClick={nextSlide}
-              style={eventDetails.eventType === '' ? { color: 'var(--black-a30)' } : {}}
-              disabled={eventDetails.eventType === '' ? true : false}
+              style={
+                eventDetails.eventType === ""
+                  ? { color: "var(--black-a30)" }
+                  : {}
+              }
+              disabled={eventDetails.eventType === "" ? true : false}
             >
-              NEXT {'>'}
+              NEXT {">"}
             </button>
           </div>
         </div>
 
         {/* set event proper section */}
         <div className="flow">
-          {eventDetails.eventType === 'Election' ? (
+          {eventDetails.eventType === "Election" ? (
             //For setting positions for election type
             <div className="poll-questions">
               <h3>
-                Set Election Positions{' '}
+                Set Election Positions{" "}
                 <i
                   className="bx bx-plus"
                   onClick={() => {
                     setEventDetails((prev) => {
                       return {
                         ...prev,
-                        positions: [...prev.positions, { id: uuidv4(), text: '' }],
+                        positions: [
+                          ...prev.positions,
+                          { id: uuidv4(), text: "" },
+                        ],
                       };
                     });
                   }}
@@ -218,7 +261,9 @@ const page = () => {
                                   : candidate;
                               }),
                               positions: prev.positions.map((poll) => {
-                                return poll.id === item.id ? { ...poll, text: e.target.value } : poll;
+                                return poll.id === item.id
+                                  ? { ...poll, text: e.target.value }
+                                  : poll;
                               }),
                             };
                           });
@@ -246,23 +291,25 @@ const page = () => {
               </div>
               <div className="actions">
                 <button className="btnn" onClick={prevSlide}>
-                  {'<'} PREV
+                  {"<"} PREV
                 </button>
                 <button
                   className="btnn"
                   onClick={nextSlide}
                   style={
-                    eventDetails.positions.length !== 0 && eventDetails.positions.every((item) => item.text.length > 0)
+                    eventDetails.positions.length !== 0 &&
+                    eventDetails.positions.every((item) => item.text.length > 0)
                       ? {}
-                      : { color: 'var(--black-a30)' }
+                      : { color: "var(--black-a30)" }
                   }
                   disabled={
-                    eventDetails.positions.length !== 0 && eventDetails.positions.every((item) => item.text.length > 0)
+                    eventDetails.positions.length !== 0 &&
+                    eventDetails.positions.every((item) => item.text.length > 0)
                       ? false
                       : true
                   }
                 >
-                  NEXT {'>'}
+                  NEXT {">"}
                 </button>
               </div>
             </div>
@@ -270,14 +317,17 @@ const page = () => {
             //For Poll type
             <div className="poll-questions">
               <h3>
-                Set Poll Questions{' '}
+                Set Poll Questions{" "}
                 <i
                   className="bx bx-plus"
                   onClick={() => {
                     setEventDetails((prev) => {
                       return {
                         ...prev,
-                        pollQuestions: [...prev.pollQuestions, { id: uuidv4(), text: '' }],
+                        pollQuestions: [
+                          ...prev.pollQuestions,
+                          { id: uuidv4(), text: "" },
+                        ],
                       };
                     });
                   }}
@@ -295,7 +345,9 @@ const page = () => {
                             return {
                               ...prev,
                               pollQuestions: prev.pollQuestions.map((poll) => {
-                                return poll.id === item.id ? { ...poll, text: e.target.value } : poll;
+                                return poll.id === item.id
+                                  ? { ...poll, text: e.target.value }
+                                  : poll;
                               }),
                             };
                           });
@@ -307,9 +359,11 @@ const page = () => {
                           setEventDetails((prev) => {
                             return {
                               ...prev,
-                              pollQuestions: prev.pollQuestions.filter((option) => {
-                                return option.id !== item.id;
-                              }),
+                              pollQuestions: prev.pollQuestions.filter(
+                                (option) => {
+                                  return option.id !== item.id;
+                                }
+                              ),
                             };
                           });
                         }}
@@ -320,7 +374,7 @@ const page = () => {
               </div>
               <div className="actions">
                 <button className="btnn" onClick={prevSlide}>
-                  {'<'} PREV
+                  {"<"} PREV
                 </button>
                 <button
                   className="btnn"
@@ -332,18 +386,22 @@ const page = () => {
                   }}
                   style={
                     eventDetails.pollQuestions.length !== 0 &&
-                    eventDetails.pollQuestions.every((item) => item.text.length > 0)
+                    eventDetails.pollQuestions.every(
+                      (item) => item.text.length > 0
+                    )
                       ? {}
-                      : { color: 'var(--black-a30)' }
+                      : { color: "var(--black-a30)" }
                   }
                   disabled={
                     eventDetails.pollQuestions.length !== 0 &&
-                    eventDetails.pollQuestions.every((item) => item.text.length > 0)
+                    eventDetails.pollQuestions.every(
+                      (item) => item.text.length > 0
+                    )
                       ? false
                       : true
                   }
                 >
-                  NEXT {'>'}
+                  NEXT {">"}
                 </button>
               </div>
             </div>
@@ -367,7 +425,10 @@ const page = () => {
                           setEventDetails((prev) => {
                             return {
                               ...prev,
-                              candidates: [...prev.candidates, { id: uuidv4(), position: item.text, name: '' }],
+                              candidates: [
+                                ...prev.candidates,
+                                { id: uuidv4(), position: item.text, name: "" },
+                              ],
                             };
                           });
                         }}
@@ -384,9 +445,13 @@ const page = () => {
                                 setEventDetails((prev) => {
                                   return {
                                     ...prev,
-                                    candidates: prev.candidates.map((single) => {
-                                      return single.id === cand.id ? { ...single, name: e.target.value } : single;
-                                    }),
+                                    candidates: prev.candidates.map(
+                                      (single) => {
+                                        return single.id === cand.id
+                                          ? { ...single, name: e.target.value }
+                                          : single;
+                                      }
+                                    ),
                                   };
                                 });
                               }}
@@ -397,16 +462,18 @@ const page = () => {
                                 setEventDetails((prev) => {
                                   return {
                                     ...prev,
-                                    candidates: prev.candidates.filter((option) => {
-                                      return option.id !== cand.id;
-                                    }),
+                                    candidates: prev.candidates.filter(
+                                      (option) => {
+                                        return option.id !== cand.id;
+                                      }
+                                    ),
                                   };
                                 });
                               }}
                             ></i>
                           </div>
                         ) : (
-                          ''
+                          ""
                         );
                       })}
                     </div>
@@ -416,23 +483,25 @@ const page = () => {
             </div>
             <div className="actions">
               <button className="btnn" onClick={prevSlide}>
-                {'<'} PREV
+                {"<"} PREV
               </button>
               <button
                 className="btnn"
                 onClick={nextSlide}
                 style={
-                  eventDetails.candidates.length !== 0 && eventDetails.candidates.every((item) => item.name.length > 0)
+                  eventDetails.candidates.length !== 0 &&
+                  eventDetails.candidates.every((item) => item.name.length > 0)
                     ? {}
-                    : { color: 'var(--black-a30)' }
+                    : { color: "var(--black-a30)" }
                 }
                 disabled={
-                  eventDetails.candidates.length !== 0 && eventDetails.candidates.every((item) => item.name.length > 0)
+                  eventDetails.candidates.length !== 0 &&
+                  eventDetails.candidates.every((item) => item.name.length > 0)
                     ? false
                     : true
                 }
               >
-                NEXT {'>'}
+                NEXT {">"}
               </button>
             </div>
           </div>
@@ -443,8 +512,9 @@ const page = () => {
           <div>
             <h4>Good job setting up a new event!</h4>
             <small>
-              When you click on submit, you can view this event and make changes to it in the future. Completed events
-              become history and can't be edited.
+              When you click on submit, you can view this event and make changes
+              to it in the future. Completed events become history and can't be
+              edited.
             </small>
           </div>
           <span className="material-symbols-outlined image">task_alt</span>
@@ -452,7 +522,7 @@ const page = () => {
             <button
               className="btn"
               onClick={() => {
-                if (eventDetails.eventType === 'Poll') {
+                if (eventDetails.eventType === "Poll") {
                   myElementRef.current.style.transform = `translateX(-212%)`;
                   setSlideNum((prev) => prev - 2);
                 } else prevSlide();
