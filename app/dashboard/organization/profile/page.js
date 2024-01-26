@@ -1,9 +1,9 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import '../../../../components/global/orgpage.css';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import "../../../../components/global/orgpage.css";
 
 export default function Page() {
   const router = useRouter();
@@ -13,7 +13,13 @@ export default function Page() {
       <>
         {/* top section */}
         <div className="org-single-top">
-          <Image className="img" src="/images/Get-Organized.png" width={150} height={150} alt="profile" />
+          <Image
+            className="img"
+            src="/images/Get-Organized.png"
+            width={150}
+            height={150}
+            alt="profile"
+          />
           <div className="parted">
             <h1>Pointa</h1>
             <small>pointa@gmail.com</small>
@@ -38,7 +44,7 @@ export default function Page() {
             <input type="text" placeholder="Address" />
             <input type="text" placeholder="Contact Number" />
             <input type="number" placeholder="Number of Staff" />
-            <input type="text" placeholder="Country" />
+            <input type="text" placeholder="Location" />
             <button onClick={() => {}} className="btn">
               confirm
             </button>

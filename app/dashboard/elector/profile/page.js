@@ -44,7 +44,7 @@ export default function Page() {
             <input type="text" placeholder="Phone Number" />
             <input type="text" placeholder="Organization" />
             <input type="text" placeholder="Position Held" />
-            <input type="text" placeholder="Country" />
+            <input type="text" placeholder="Location" />
             <button onClick={() => {}} className="btn">
               confirm
             </button>
