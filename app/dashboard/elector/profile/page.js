@@ -1,9 +1,9 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import '../../../../components/global/orgpage.css';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import "../../../../components/global/orgpage.css";
 
 export default function Page() {
   const router = useRouter();
@@ -13,7 +13,13 @@ export default function Page() {
       <>
         {/* top section */}
         <div className="org-single-top">
-          <Image className="img" src="/images/Get-Close.png" width={150} height={150} alt="profile" />
+          <Image
+            className="img"
+            src="/images/Get-Close.png"
+            width={150}
+            height={150}
+            alt="profile"
+          />
           <div className="parted">
             <h1>Victor Rasheed</h1>
             <small>victorrasheed@gmail.com</small>
@@ -34,8 +40,7 @@ export default function Page() {
             <h1 className="edit-profile">
               Edit Profile <i className="bx bx-pencil"></i>
             </h1>
-            <input type="text" placeholder="Firstname" />
-            <input type="text" placeholder="Lastname" />
+            <input type="text" placeholder="Full Name" />
             <input type="text" placeholder="Phone Number" />
             <input type="text" placeholder="Organization" />
             <input type="text" placeholder="Position Held" />
