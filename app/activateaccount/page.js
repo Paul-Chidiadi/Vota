@@ -13,11 +13,12 @@ export default function Login() {
 
       <section className="signup-page-body">
         <div className="elect selected">
-          <h1>Forgot Password</h1>
+          <h1>Activate Account</h1>
           <form className="forms">
             <input type="email" placeholder="Email" />
+            <input type="text" placeholder="OTP" />{" "}
             <button onClick={() => {}} className="btn">
-              Send Mail
+              Activate
             </button>
           </form>
         </div>

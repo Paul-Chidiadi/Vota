@@ -16,8 +16,11 @@ export default function Login() {
           <h1>Forgot Password</h1>
           <form className="forms">
             <input type="email" placeholder="Email" />
+            <input type="text" placeholder="OTP" />
+            <input type="password" placeholder="New Password" />
+            <input type="password" placeholder="Confirm Password" />
             <button onClick={() => {}} className="btn">
-              Send Mail
+              Reset
             </button>
           </form>
         </div>
