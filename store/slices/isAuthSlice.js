@@ -8,15 +8,16 @@ const initialState = {
   isAuth: checkAuthStatus(),
   accessToken: null,
   refreshToken: null,
+  email: "",
 };
 
 // Function to check authentication status based on the presence of access and refresh tokens
 function checkAuthStatus() {
   const accessToken = getDataFromLocalStorage("accessToken");
   const refreshToken = getDataFromLocalStorage("refreshToken");
-
   return !!accessToken && !!refreshToken;
 }
+
 export const isAuthSlice = createSlice({
   name: "auth",
   initialState,

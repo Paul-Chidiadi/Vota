@@ -151,6 +151,9 @@ body {
 .btn:hover {
   background-color: var(--blue-60);
 }
+.btn i {
+  color: var(--white);
+}
 .btn-white {
   height: fit-content;
   width: fit-content;
@@ -1832,4 +1835,31 @@ section {
 
 .drag-and-drop-zone.dragging {
   border: 3px dashed var(--blue-70);
+}
+
+/* NOTIFICATION SECTION */
+.notify-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  max-width: 200px;
+  height: fit-content;
+  box-shadow: 0px 5px 10px 8px var(--black-a04);
+  border-radius: 5px;
+  position: absolute;
+  top: 10.5vh;
+  right: 10px;
+}
+.notify-box .icon i {
+  color: var(--white);
+  font-size: 18px;
+  font-weight: normal;
+  cursor: none;
+}
+.notify-box p {
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--white);
 }
