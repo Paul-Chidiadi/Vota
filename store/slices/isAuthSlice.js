@@ -6,7 +6,7 @@ import {
 } from "../../utils/localStorage";
 
 const initialState = {
-  isAuth: checkAuthStatus(),
+  isAuth: false,
   accessToken: null,
   refreshToken: null,
   id: "",
@@ -14,13 +14,6 @@ const initialState = {
   email: "",
   role: "",
 };
-
-// Function to check authentication status based on the presence of access and refresh tokens
-function checkAuthStatus() {
-  const accessToken = getDataFromLocalStorage("accessToken");
-  const refreshToken = getDataFromLocalStorage("refreshToken");
-  return !!accessToken && !!refreshToken;
-}
 
 export const isAuthSlice = createSlice({
   name: "auth",
@@ -41,6 +34,7 @@ export const isAuthSlice = createSlice({
         accessToken !== undefined &&
         user !== undefined
       ) {
+        saveDataToLocalStorage("isAuth", isAuth);
         saveDataToLocalStorage("accessToken", accessToken);
         saveDataToLocalStorage("refreshToken", refreshToken);
         saveDataToLocalStorage("id", user.id);
@@ -56,6 +50,7 @@ export const isAuthSlice = createSlice({
       state.isAuth = false;
       state.accessToken = null;
       state.refreshToken = null;
+      deleteDataFromLocalStorage("isAuth");
       deleteDataFromLocalStorage("accessToken");
       deleteDataFromLocalStorage("refreshToken");
       deleteDataFromLocalStorage("id");

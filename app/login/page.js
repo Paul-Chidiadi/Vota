@@ -108,7 +108,8 @@ export default function Login() {
     }
   }
 
-  const isAuthenticated = useSelector((state) => state.isAuth.isAuth);
+  //CHECK IF USER IS AUTHENTICATED BASED ON WHAT IS STORED ON LOCAL STORAGE
+  const isAuthenticated = getDataFromLocalStorage("isAuth") === true;
 
   useEffect(() => {
     if (isAuthenticated) {
