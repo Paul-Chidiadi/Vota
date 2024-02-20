@@ -23,9 +23,7 @@ export default function Sign() {
     },
   ]);
   const [account, setAccount] = useState("");
-  const [selectAccountClassName, setSelectAccountClassName] = useState(
-    "inner-container selected"
-  );
+  const [selectAccountClassName, setSelectAccountClassName] = useState("inner-container selected");
   const [orgClassName, setOrgClassName] = useState("org");
   const [electClassName, setElectClassName] = useState("elect");
   const [notification, setNotification] = useState({
@@ -67,8 +65,7 @@ export default function Sign() {
     const hasCapitalLetter = /[A-Z]/.test(password);
     const hasSmallLetter = /[a-z]/.test(password);
     const hasNumber = /\d/.test(password);
-    const isPasswordValid =
-      hasCapitalLetter && hasSmallLetter && hasNumber && password.length > 6;
+    const isPasswordValid = hasCapitalLetter && hasSmallLetter && hasNumber && password.length > 6;
 
     // Confirm password validation
     const isConfirmPasswordValid = password === confirmPassword;
@@ -82,8 +79,7 @@ export default function Sign() {
       return;
     } else if (isPasswordValid === false) {
       setNotification({
-        message:
-          "Password must have capital & small letters with numbers & at least 7 characters",
+        message: "Password must have capital & small letters with numbers & at least 7 characters",
         status: "error",
         show: true,
       });
@@ -142,7 +138,9 @@ export default function Sign() {
           router.push(`/activateaccount?email=${data.email}`);
         } else {
           setNotification({
-            message: request?.error?.data?.error,
+            message: request?.error?.data?.error
+              ? request?.error?.data?.error
+              : "Check Internet Connection and try again",
             status: "error",
             show: true,
           });
@@ -187,7 +185,9 @@ export default function Sign() {
           router.push(`/activateaccount?email=${data.email}`);
         } else {
           setNotification({
-            message: request?.error?.data?.error,
+            message: request?.error?.data?.error
+              ? request?.error?.data?.error
+              : "Check Internet Connection and try again",
             status: "error",
             show: true,
           });
@@ -205,9 +205,7 @@ export default function Sign() {
     }
     setOptions((prev) => {
       return prev.map((item) => {
-        return item.id === id
-          ? { ...item, isSelected: true }
-          : { ...item, isSelected: false };
+        return item.id === id ? { ...item, isSelected: true } : { ...item, isSelected: false };
       });
     });
   }
@@ -241,16 +239,9 @@ export default function Sign() {
       <div
         className={option.isSelected ? "col selected" : "col"}
         key={option.id}
-        onClick={() => handleClick(option.id)}
-      >
+        onClick={() => handleClick(option.id)}>
         <div className="circle"></div>
-        <Image
-          className="choose-img"
-          src={option.image}
-          alt="image info"
-          width={100}
-          height={70}
-        />
+        <Image className="choose-img" src={option.image} alt="image info" width={100} height={70} />
         <h4>{option.text}</h4>
       </div>
     );
@@ -348,16 +339,8 @@ export default function Sign() {
                 });
               }}
             />
-            <button
-              onClick={createAccount}
-              className="btn"
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? (
-                <i className="bx bx-loader-alt bx-spin"></i>
-              ) : (
-                "Create my account"
-              )}
+            <button onClick={createAccount} className="btn" disabled={isLoading ? true : false}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Create my account"}
             </button>
           </form>
           <p>
@@ -421,16 +404,8 @@ export default function Sign() {
                 });
               }}
             />
-            <button
-              onClick={createAccount}
-              className="btn"
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? (
-                <i className="bx bx-loader-alt bx-spin"></i>
-              ) : (
-                "Create my account"
-              )}
+            <button onClick={createAccount} className="btn" disabled={isLoading ? true : false}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Create my account"}
             </button>
           </form>
           <p>

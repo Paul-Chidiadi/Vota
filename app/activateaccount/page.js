@@ -82,7 +82,9 @@ export default function Activate() {
         router.push(`/login`);
       } else {
         setNotification({
-          message: request?.error?.data?.error,
+          message: request?.error?.data?.error
+            ? request?.error?.data?.error
+            : "Check Internet Connection and try again",
           status: "error",
           show: true,
         });
@@ -108,7 +110,9 @@ export default function Activate() {
       });
     } else {
       setNotification({
-        message: request?.error?.data?.error,
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
         status: "error",
         show: true,
       });
@@ -146,6 +150,7 @@ export default function Activate() {
             <input
               type="text"
               placeholder="OTP"
+              value={userData.OTP}
               required
               onChange={(e) => {
                 setUserData((prev) => {

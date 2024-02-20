@@ -66,10 +66,7 @@ export default function Login() {
       });
       return;
     }
-    const validationResult = validateRegistration(
-      userData.email,
-      userData.password
-    );
+    const validationResult = validateRegistration(userData.email, userData.password);
     if (validationResult) {
       const request = await userAuth({
         url: "auth/login",
@@ -80,8 +77,7 @@ export default function Login() {
         type: "POST",
       });
       if (request?.data) {
-        const { data, message, success, accessToken, refreshToken, user } =
-          request?.data;
+        const { data, message, success, accessToken, refreshToken, user } = request?.data;
         setNotification({
           message: message,
           status: "success",
@@ -100,10 +96,15 @@ export default function Login() {
           : router.push(`/dashboard/organization`);
       } else {
         setNotification({
-          message: request?.error?.data?.error,
+          message: request?.error?.data?.error
+            ? request?.error?.data?.error
+            : "Check Internet Connection and try again",
           status: "error",
           show: true,
         });
+        request?.error?.data?.error === "User account is not active, Kindly activate account"
+          ? router.push(`/activateaccount?email=${userData.email}`)
+          : "";
       }
     }
   }
@@ -169,16 +170,8 @@ export default function Login() {
                 });
               }}
             />
-            <button
-              onClick={login}
-              className="btn"
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? (
-                <i className="bx bx-loader-alt bx-spin"></i>
-              ) : (
-                " Login to my account"
-              )}
+            <button onClick={login} className="btn" disabled={isLoading ? true : false}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : " Login to my account"}
             </button>
           </form>
           <p>

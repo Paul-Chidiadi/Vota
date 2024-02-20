@@ -69,7 +69,9 @@ export default function ForgotPassword() {
         router.push("/resetpassword");
       } else {
         setNotification({
-          message: request?.error?.data?.error,
+          message: request?.error?.data?.error
+            ? request?.error?.data?.error
+            : "Check Internet Connection and try again",
           status: "error",
           show: true,
         });
