@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Notification from "../../components/global/Notification.js";
 import { useSendDataMutation } from "../../store/api/api.js";
 
@@ -154,27 +153,11 @@ export default function Activate() {
                 });
               }}
             />
-            <button
-              onClick={resendOTP}
-              className="btn"
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? (
-                <i className="bx bx-loader-alt bx-spin"></i>
-              ) : (
-                "Resend OTP "
-              )}
+            <button onClick={resendOTP} className="btn" disabled={isLoading ? true : false}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Resend OTP "}
             </button>
-            <button
-              onClick={activateUser}
-              className="btn"
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? (
-                <i className="bx bx-loader-alt bx-spin"></i>
-              ) : (
-                "Activate"
-              )}
+            <button onClick={activateUser} className="btn" disabled={isLoading ? true : false}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Activate"}
             </button>
           </form>
         </div>
