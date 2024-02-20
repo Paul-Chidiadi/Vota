@@ -23,7 +23,7 @@ export default function ForgotPassword() {
   }
 
   //VALIDATE INPUTS
-  function validateRegistration(email, OTP) {
+  function validateRegistration(email) {
     // Email validation using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isEmailValid = emailRegex.test(email);
