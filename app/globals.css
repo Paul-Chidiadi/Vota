@@ -165,6 +165,15 @@ body {
   color: var(--blue-70) !important;
   background-color: var(--white);
 }
+.img.prof {
+  border-radius: 50%;
+  background-color: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  text-transform: uppercase;
+}
 section {
   width: 100%;
   display: block;

@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../../store/slices/isAuthSlice";
 import { useRouter } from "next/navigation";
+import { useGetElectorQuery, useGetOrganizationQuery } from "../../store/api/api.js";
+import { getDataFromLocalStorage } from "../../utils/localStorage";
 
 const Navbar = ({ userRole }) => {
   const router = useRouter();
@@ -17,6 +19,14 @@ const Navbar = ({ userRole }) => {
   const styleMenuOn = menu ? { display: "none" } : { display: "block" };
   const styleMenuOff = menu ? { display: "block" } : { display: "none" };
   const menuSideBar = menu ? { display: "flex" } : { display: "none" };
+  const userId = getDataFromLocalStorage("id");
+
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userError,
+  } = userRole === "elector" ? useGetElectorQuery(userId) : useGetOrganizationQuery(userId);
+  const user = userRole === "elector" ? userData?.data?.elector : userData?.data?.organization;
 
   function toggleMenu() {
     setMenu((prev) => {
@@ -75,9 +85,7 @@ const Navbar = ({ userRole }) => {
             }></i>
           <input
             type="text"
-            placeholder={
-              userRole === "elector" ? "Search for organizations" : "Search for electors"
-            }
+            placeholder={userRole === "elector" ? "Search for organizations" : "Search for elector"}
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -96,11 +104,11 @@ const Navbar = ({ userRole }) => {
             <div className="profile-img-container">
               <Image
                 onClick={() => router.push("/dashboard/elector/profile")}
-                className="img"
-                src="/images/Get-Close.png"
+                className="img prof"
+                src={`https://vota.onrender.com/${user && user.displayPicture}`}
                 width={50}
                 height={50}
-                alt="Profile Image"
+                alt={user && user.fullName ? user.fullName[0] + user.fullName[1] : ""}
               />
             </div>
             <button
@@ -123,11 +131,11 @@ const Navbar = ({ userRole }) => {
             <div className="profile-img-container">
               <Image
                 onClick={() => router.push("/dashboard/organization/profile")}
-                className="img"
-                src="/images/Get-Organized.png"
+                className="img prof"
+                src={`https://vota.onrender.com/${user && user.logo}`}
                 width={50}
                 height={50}
-                alt="Profile Image"
+                alt={user && user.companyName ? user.companyName[0] + user.companyName[1] : ""}
               />
             </div>
             <button
@@ -153,15 +161,29 @@ const Navbar = ({ userRole }) => {
               router.push(`/dashboard/${userRole}/profile`);
               toggleMenu();
             }}
-            className="img"
-            src="/images/Get-Close.png"
+            className="img prof"
+            src={`https://vota.onrender.com/${
+              (user && user.displayPicture) || (user && user.logo)
+            }`}
             width={50}
             height={50}
-            alt="Profile Image"
+            alt={
+              user && user.fullName
+                ? user.fullName[0] + user.fullName[1]
+                : user && user.companyName
+                ? user.companyName[0] + user.companyName[1]
+                : ""
+            }
           />
-          <div className="hover-name">PC</div>
+          <div className="hover-name">
+            {user && user.fullName
+              ? user.fullName[0] + user.fullName[1]
+              : user && user.companyName
+              ? user.companyName[0] + user.companyName[1]
+              : ""}
+          </div>
         </div>
-        <h3>paulchidiadi@gmail.com</h3>
+        <h3>{user && user.email}</h3>
         <div className="nav-search">
           <i
             className="bx bx-search"
