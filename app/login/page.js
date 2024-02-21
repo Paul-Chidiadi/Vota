@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Notification from "../../components/global/Notification.js";
 import { useSendDataMutation } from "../../store/api/api.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsAuth } from "../../store/slices/isAuthSlice";
 import { getDataFromLocalStorage } from "../../utils/localStorage";
-import { useEffect } from "react";
 
 export default function Login() {
   const [electClassName, setElectClassName] = useState("elect selected");
@@ -77,7 +76,7 @@ export default function Login() {
         type: "POST",
       });
       if (request?.data) {
-        const { data, message, success, accessToken, refreshToken, user } = request?.data;
+        const { message, accessToken, refreshToken, user } = request?.data;
         setNotification({
           message: message,
           status: "success",
@@ -85,7 +84,6 @@ export default function Login() {
         });
         dispatch(
           setIsAuth({
-            isAuth: true,
             accessToken: accessToken,
             refreshToken: refreshToken,
             user: user,
@@ -109,8 +107,8 @@ export default function Login() {
     }
   }
 
-  //CHECK IF USER IS AUTHENTICATED BASED ON WHAT IS STORED ON LOCAL STORAGE
-  const isAuthenticated = getDataFromLocalStorage("isAuth") === true;
+  //CHECK IF USER IS AUTHENTICATED
+  const isAuthenticated = useSelector((state) => state.isAuth.isAuth);
 
   useEffect(() => {
     if (isAuthenticated) {

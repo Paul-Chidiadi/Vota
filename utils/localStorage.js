@@ -1,4 +1,4 @@
-export const saveDataToLocalStorage = async (key, value) => {
+export const saveDataToLocalStorage = (key, value) => {
   try {
     localStorage.setItem(key, value);
   } catch (error) {
@@ -6,7 +6,7 @@ export const saveDataToLocalStorage = async (key, value) => {
   }
 };
 
-export const getDataFromLocalStorage = async (key) => {
+export const getDataFromLocalStorage = (key) => {
   try {
     const value = localStorage.getItem(key);
     return value;
@@ -16,7 +16,7 @@ export const getDataFromLocalStorage = async (key) => {
   }
 };
 
-export const deleteDataFromLocalStorage = async (key) => {
+export const deleteDataFromLocalStorage = (key) => {
   try {
     localStorage.removeItem(key);
   } catch (error) {

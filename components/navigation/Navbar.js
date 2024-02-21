@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import "./navbar.css";
 import Image from "next/image";
@@ -28,24 +28,25 @@ const Navbar = ({ userRole }) => {
     });
   }
 
+  //CHECK IF USER IS AUTHENTICATED BASED ON WHAT IS STORED ON LOCAL STORAGE
+  const isAuthenticated = useSelector((state) => state.isAuth.isAuth);
+
+  useEffect(() => {
+    isAuthenticated ? "" : router.push(`/login`);
+  }, [isAuthenticated]);
+
   return (
     <>
       {/* POP UP */}
       <div className="overlay" id="logoutOverlay" ref={overlayRef}>
         <div className="popup">
-          <span
-            className="close-btn"
-            onClick={() => (overlayRef.current.style.display = `none`)}
-          >
+          <span className="close-btn" onClick={() => (overlayRef.current.style.display = `none`)}>
             &times;
           </span>
           <h1>Confirm Logout</h1>
           <small>Do you wish to continue to logout</small>
           <div className="logout-btns">
-            <button
-              onClick={() => (overlayRef.current.style.display = `none`)}
-              className="btn"
-            >
+            <button onClick={() => (overlayRef.current.style.display = `none`)} className="btn">
               cancel
             </button>
             <button
@@ -53,8 +54,7 @@ const Navbar = ({ userRole }) => {
                 dispatch(logOut());
                 router.push("/login");
               }}
-              className="btn"
-            >
+              className="btn">
               continue
             </button>
           </div>
@@ -64,29 +64,19 @@ const Navbar = ({ userRole }) => {
       <section className="dashboard-page-top">
         <Link
           className="app-name links"
-          href={
-            userRole === "elector"
-              ? "/dashboard/elector"
-              : "/dashboard/organization"
-          }
-        >
+          href={userRole === "elector" ? "/dashboard/elector" : "/dashboard/organization"}>
           VOTA<span className="material-symbols-outlined">task_alt</span>
         </Link>
         <div className="nav-search">
           <i
             className="bx bx-search"
             onClick={() =>
-              searchText !== ""
-                ? router.push(`/dashboard/${userRole}/list?q=${searchText}`)
-                : ""
-            }
-          ></i>
+              searchText !== "" ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : ""
+            }></i>
           <input
             type="text"
             placeholder={
-              userRole === "elector"
-                ? "Search for organizations"
-                : "Search for electors"
+              userRole === "elector" ? "Search for organizations" : "Search for electors"
             }
             value={searchText}
             onChange={(e) => {
@@ -99,12 +89,10 @@ const Navbar = ({ userRole }) => {
           <div className="nav-menu">
             <i
               className="bx bx-bell bx-tada-hover"
-              onClick={() => router.push("/dashboard/elector/notifications")}
-            ></i>
+              onClick={() => router.push("/dashboard/elector/notifications")}></i>
             <i
               className="bx bx-grid-alt"
-              onClick={() => router.push("/dashboard/elector/organizations")}
-            ></i>
+              onClick={() => router.push("/dashboard/elector/organizations")}></i>
             <div className="profile-img-container">
               <Image
                 onClick={() => router.push("/dashboard/elector/profile")}
@@ -119,8 +107,7 @@ const Navbar = ({ userRole }) => {
               className="btn"
               onClick={() => {
                 overlayRef.current.style.display = `flex`;
-              }}
-            >
+              }}>
               Logout
             </button>
           </div>
@@ -129,14 +116,10 @@ const Navbar = ({ userRole }) => {
           <div className="nav-menu">
             <i
               className="bx bx-poll bx-rotate-270"
-              onClick={() => router.push("/dashboard/organization/events")}
-            ></i>
+              onClick={() => router.push("/dashboard/organization/events")}></i>
             <i
               className="bx bx-bell bx-tada-hover"
-              onClick={() =>
-                router.push("/dashboard/organization/notifications")
-              }
-            ></i>
+              onClick={() => router.push("/dashboard/organization/notifications")}></i>
             <div className="profile-img-container">
               <Image
                 onClick={() => router.push("/dashboard/organization/profile")}
@@ -151,8 +134,7 @@ const Navbar = ({ userRole }) => {
               className="btn"
               onClick={() => {
                 overlayRef.current.style.display = `flex`;
-              }}
-            >
+              }}>
               Logout
             </button>
           </div>
@@ -186,14 +168,11 @@ const Navbar = ({ userRole }) => {
             onClick={() => {
               router.push(`/dashboard/${userRole}/list?q=${searchText}`);
               toggleMenu();
-            }}
-          ></i>
+            }}></i>
           <input
             type="text"
             placeholder={
-              userRole === "elector"
-                ? "Search for organizations"
-                : "Search for electors"
+              userRole === "elector" ? "Search for organizations" : "Search for electors"
             }
             value={searchText}
             onChange={(e) => {
@@ -209,8 +188,7 @@ const Navbar = ({ userRole }) => {
               onClick={() => {
                 router.push("/dashboard/elector/notifications");
                 toggleMenu();
-              }}
-            >
+              }}>
               <span>Notifications</span>
             </i>
             <i
@@ -218,16 +196,14 @@ const Navbar = ({ userRole }) => {
               onClick={() => {
                 router.push("/dashboard/elector/organizations");
                 toggleMenu();
-              }}
-            >
+              }}>
               <span>Organizations</span>
             </i>
             <button
               className="btn"
               onClick={() => {
                 overlayRef.current.style.display = `flex`;
-              }}
-            >
+              }}>
               Logout
             </button>
           </div>
@@ -239,8 +215,7 @@ const Navbar = ({ userRole }) => {
               onClick={() => {
                 router.push("/dashboard/organization/events");
                 toggleMenu();
-              }}
-            >
+              }}>
               <span>Events</span>
             </i>
             <i
@@ -248,16 +223,14 @@ const Navbar = ({ userRole }) => {
               onClick={() => {
                 router.push("/dashboard/organization/notifications");
                 toggleMenu();
-              }}
-            >
+              }}>
               <span>Notifications</span>
             </i>
             <button
               className="btn"
               onClick={() => {
                 overlayRef.current.style.display = `flex`;
-              }}
-            >
+              }}>
               Logout
             </button>
           </div>
