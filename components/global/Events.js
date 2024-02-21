@@ -1,10 +1,10 @@
-'use client';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const Events = () => {
+const Events = ({ data, isLoading, error }) => {
   const router = useRouter();
 
   return (
@@ -17,35 +17,51 @@ const Events = () => {
 
         {/* LIST OF EVENTS */}
         <div className="event-list">
-          {/* when event list is full */}
-          <div className="event-item">
-            <div className="event-org">
-              <small>Axelrod Capitol</small>
-              <i className="bx bxs-circle"></i>
+          {/* checking if data exists */}
+          {isLoading ? (
+            // IF FETCH IS STILL LOADING
+            <div className="empty-list" style={{ height: "250px" }}>
+              <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
             </div>
-            <div className="event-name">
-              <i className="bx bx-dots-vertical-rounded"></i>
-              <h5>2023/2024 Election 6</h5>
+          ) : error ? (
+            //IF THEIR IS AN ERROR FETCHING
+            <div className="empty-list" style={{ height: "250px" }}>
+              <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+              <small>NetworkError</small>
             </div>
-          </div>
-          <div className="event-item">
-            <div className="event-org">
-              <small>Axelrod Capitol</small>
-              <i className="bx bxs-circle"></i>
+          ) : data && data.length !== 0 ? (
+            data.map((item) => {
+              //if events are ongoing then display them
+              return item.status === "ongoing" ? (
+                <div
+                  className="event-item"
+                  onClick={() => router.push(`/dashboard/elector/singleevent?${item._id}`)}>
+                  <div className="event-org">
+                    <small>{item.schedule}</small>
+                    <i className="bx bxs-circle"></i>
+                  </div>
+                  <div className="event-name">
+                    <i className="bx bx-dots-vertical-rounded"></i>
+                    <h5>{item.eventName}</h5>
+                  </div>
+                </div>
+              ) : (
+                <div className="empty-list">
+                  <i className="bx bxs-binoculars bx-tada"></i>
+                  <small>
+                    You have <br /> no ongoing event
+                  </small>
+                </div>
+              );
+            })
+          ) : (
+            <div className="empty-list">
+              <i className="bx bxs-binoculars bx-tada"></i>
+              <small>
+                You have <br /> no ongoing event
+              </small>
             </div>
-            <div className="event-name">
-              <i className="bx bx-dots-vertical-rounded"></i>
-              <h5>2023/2024 Election 6</h5>
-            </div>
-          </div>
-
-          {/* when event list is empty */}
-          <div className="empty-list">
-            <i className="bx bxs-binoculars bx-tada"></i>
-            <small>
-              You have <br /> no ongoing event
-            </small>
-          </div>
+          )}
         </div>
       </div>
     </>

@@ -4,10 +4,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Events from "/components/global/Events.js";
 import React, { useState, useEffect } from "react";
+import { useGetElectorQuery } from "../../../store/api/api.js";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 export default function Page() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
+  const userId = getDataFromLocalStorage("id");
+
+  const {
+    data: electorData,
+    isLoading: electorIsLoading,
+    error: electorError,
+  } = useGetElectorQuery(userId);
+  const electorsOrganizations = electorData?.data?.elector?.organizations;
+  const electorsEvents = electorData?.data?.eventData;
 
   return (
     <section className="elector-main-page">
@@ -55,7 +66,7 @@ export default function Page() {
           </div>
         </div>
         {/* ongoing events section */}
-        <Events />
+        <Events data={electorsEvents} isLoading={electorIsLoading} error={electorError} />
       </div>
 
       {/* list of organization section */}
@@ -66,122 +77,47 @@ export default function Page() {
           their public poll events, request to join organizations which you belong to and follow up
           with their poll events.
         </small>
-        <div className="list-of-orgs">
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/icon.png"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>Axelrod Capitol</h4>
-              <small>
-                axelrod@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>10</span>
-                </i>
-              </small>
-            </div>
+        {electorIsLoading ? (
+          // IF FETCH IS STILL LOADING
+          <div className="empty-list" style={{ height: "250px" }}>
+            <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
           </div>
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/logo.png"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>Wryte</h4>
-              <small>
-                wryte@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>9</span>
-                </i>
-              </small>
-            </div>
+        ) : electorError ? (
+          //IF THEIR IS AN ERROR FETCHING
+          <div className="empty-list" style={{ height: "250px" }}>
+            <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+            <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
           </div>
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/pay_logo.png"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>Paystack</h4>
-              <small>
-                paystack@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>13</span>
-                </i>
-              </small>
-            </div>
+        ) : electorsOrganizations && electorsOrganizations.length !== 0 ? (
+          <div className="list-of-orgs">
+            {electorsOrganizations.map((item) => {
+              return (
+                <div
+                  className="list-cards"
+                  onClick={() => router.push(`/dashboard/elector/orgs?${item._id}`)}>
+                  <Image className="img" src={item.logo} width={65} height={65} alt="orgs image" />
+                  <div>
+                    <h4>{item.companyName}</h4>
+                    <small>
+                      {item.email}
+                      <i className="bx bx-poll">
+                        {" "}
+                        <span>{item.companyName[0] + item.companyName[1]}</span>
+                      </i>
+                    </small>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/rbicon.png"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>RB properties</h4>
-              <small>
-                rbproperties@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>7</span>
-                </i>
-              </small>
-            </div>
+        ) : (
+          <div className="empty-list" style={{ height: "250px" }}>
+            <i className="bx bxs-binoculars bx-tada"></i>
+            <small style={{ color: "var(--cool-gray-80)" }}>
+              You have <br /> no organizations yet
+            </small>
           </div>
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/icon2.jpg"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>Pointa</h4>
-              <small>
-                pointapointa@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>20</span>
-                </i>
-              </small>
-            </div>
-          </div>
-          <div className="list-cards" onClick={() => router.push("/dashboard/elector/orgs")}>
-            <Image
-              className="img"
-              src="/images/VOG.png"
-              width={65}
-              height={65}
-              alt="Get-in-Front"
-            />
-            <div>
-              <h4>VOG</h4>
-              <small>
-                vogigal@gmail.com
-                <i className="bx bx-poll">
-                  {" "}
-                  <span>5</span>
-                </i>
-              </small>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );
