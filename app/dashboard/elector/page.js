@@ -95,7 +95,13 @@ export default function Page() {
                 <div
                   className="list-cards"
                   onClick={() => router.push(`/dashboard/elector/orgs?${item._id}`)}>
-                  <Image className="img" src={item.logo} width={65} height={65} alt="orgs image" />
+                  <Image
+                    className="img"
+                    src={`https://vota.onrender.com/${item.logo}`}
+                    width={65}
+                    height={65}
+                    alt="orgs image"
+                  />
                   <div>
                     <h4>{item.companyName}</h4>
                     <small>
