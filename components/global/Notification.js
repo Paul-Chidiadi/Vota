@@ -6,16 +6,12 @@ const Notification = ({ message, status, switchShowOff }) => {
   const router = useRouter();
 
   const color =
-    status === "error"
-      ? "#ff3333"
-      : status === "success"
-      ? "#4BB543"
-      : "var(--blue-70)";
+    status === "error" ? "#ff3333" : status === "success" ? "#4BB543" : "var(--blue-70)";
 
-  //REMOVE NOTIFICATION AFTER 30SECS
-  //   setTimeout(() => {
-  //     switchShowOff();
-  //   }, 30000);
+  // REMOVE NOTIFICATION AFTER 30SECS
+  setTimeout(() => {
+    switchShowOff();
+  }, 10000);
 
   return (
     <div className="notify-box" style={{ backgroundColor: color }}>

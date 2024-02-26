@@ -29,13 +29,14 @@ const Events = ({ data, isLoading, error }) => {
               <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
               <small>NetworkError</small>
             </div>
-          ) : data && data.length !== 0 ? (
+          ) : data && data.length !== 0 && data.some((item) => item.status === "ongoing") ? (
             data.map((item) => {
               //if events are ongoing then display them
               return item.status === "ongoing" ? (
                 <div
+                  key={item._id}
                   className="event-item"
-                  onClick={() => router.push(`/dashboard/elector/singleevent?${item._id}`)}>
+                  onClick={() => router.push(`/dashboard/elector/singleevent?id=${item._id}`)}>
                   <div className="event-org">
                     <small>{item.schedule}</small>
                     <i className="bx bxs-circle"></i>
@@ -46,12 +47,7 @@ const Events = ({ data, isLoading, error }) => {
                   </div>
                 </div>
               ) : (
-                <div className="empty-list">
-                  <i className="bx bxs-binoculars bx-tada"></i>
-                  <small>
-                    You have <br /> no ongoing event
-                  </small>
-                </div>
+                ""
               );
             })
           ) : (

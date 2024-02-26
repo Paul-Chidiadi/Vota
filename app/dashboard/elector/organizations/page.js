@@ -45,8 +45,9 @@ export default function Page() {
               {electorsOrganizations.map((item) => {
                 return (
                   <div
+                    key={item._id}
                     className="list-cards"
-                    onClick={() => router.push(`/dashboard/elector/orgs?${item._id}`)}>
+                    onClick={() => router.push(`/dashboard/elector/orgs?id=${item._id}`)}>
                     <Image
                       className="img"
                       src={`https://vota.onrender.com/${item.logo}`}

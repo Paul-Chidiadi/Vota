@@ -1,9 +1,15 @@
-'use client';
-import React, { useState, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import './orgpage.css';
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useState, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import "./orgpage.css";
+import { useRouter, useSearchParams } from "next/navigation";
+import Notification from "../../components/global/Notification.js";
+import {
+  useGetElectorQuery,
+  useGetOrganizationQuery,
+  useSendDataMutation,
+} from "../../store/api/api.js";
 
 const Orgpage = ({ userRole }) => {
   const [ongoing, setOngoing] = useState(true);
@@ -12,79 +18,193 @@ const Orgpage = ({ userRole }) => {
   const [history, setHistory] = useState(false);
   const myElementRef = useRef(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = String(searchParams.get("id"));
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+    show: false,
+  });
+
+  //IF USER IS ELECTOR THEN WE ARWE FETCHING ORGANIZATION DATA ELSE WE ARE FETCHING ELECTOR DATA
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userError,
+  } = userRole === "elector" ? useGetOrganizationQuery(id) : useGetElectorQuery(id);
+  const user = userRole === "elector" ? userData?.data?.organization : userData?.data?.elector;
+  const events = userRole === "elector" ? userData?.data?.arrayOfEvents : "";
+  const organizationList = userRole === "elector" ? "" : userData?.data?.elector?.organizations;
+
+  const [makeRequest, { isLoading, reset }] = useSendDataMutation();
+
+  //REQUEST TO JOIN ORGANIZATION
+  async function joinOrganization() {
+    const request = await makeRequest({
+      url: `elector/joinOrganizationRequest/${id}`,
+      type: "POST",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
+  //REQUEST TO INVITE A MEMBER
+  async function inviteMember() {
+    const request = await makeRequest({
+      url: `organization/addMemberRequest/${id}`,
+      type: "POST",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
 
   return (
     <>
-      {userRole === 'elector' ? (
+      {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
+      {notification.show ? (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          switchShowOff={() => {
+            setNotification((prev) => {
+              return { ...prev, show: false };
+            });
+          }}
+        />
+      ) : (
+        ""
+      )}
+
+      {userRole === "elector" ? (
         <>
           {/* top section for elector */}
-          <div className="org-single-top">
-            <Image className="img" src="/images/icon2.jpg" width={150} height={150} alt="vog" />
-            <div className="parted">
-              <h1>Pointa Axelrod Capitol</h1>
-              <small>pointa@gmail.com</small>
-              <p>
-                <i className="bx bx-poll"></i> <span>20</span> events conducted
-              </p>
-              <p>
-                <i className="bx bx-poll"></i> <span>5</span> events ongoing
-              </p>
-              <button className="btn" onClick={() => {}}>
-                JOIN
-              </button>
+          {userIsLoading ? (
+            <div className="org-single-top">
+              <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
             </div>
-          </div>
+          ) : userError ? (
+            <div className="org-single-top">
+              <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+              <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+            </div>
+          ) : (
+            <div className="org-single-top">
+              <Image
+                className="img prof"
+                src={`https://vota.onrender.com/${user && user.logo}`}
+                width={50}
+                height={50}
+                alt={user && user.companyName ? user.companyName[0] + user.companyName[1] : ""}
+              />
+              <div className="parted">
+                <h1>{user && user.companyName}</h1>
+                <small>{user && user.email}</small>
+                <p>
+                  <i className="bx bx-poll"></i> <span>20</span> events conducted
+                </p>
+                <p>
+                  <i className="bx bx-poll"></i> <span>5</span> events ongoing
+                </p>
+                <button
+                  className="btn"
+                  disabled={isLoading ? true : false}
+                  onClick={joinOrganization}>
+                  {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* body section for elector */}
           <div className="org-single-body">
             <div className="navigation">
               <h3
-                style={ongoing ? { fontWeight: 'bold', color: 'black', borderBottom: '3px solid orange' } : {}}
+                style={
+                  ongoing
+                    ? { fontWeight: "bold", color: "black", borderBottom: "3px solid orange" }
+                    : {}
+                }
                 onClick={() => {
                   setOngoing(true);
                   setPub(false);
                   setFuture(false);
                   setHistory(false);
                   myElementRef.current.style.transform = `translateX(-0%)`;
-                }}
-              >
-                {' '}
+                }}>
+                {" "}
                 ONGOING
               </h3>
               <h3
-                style={pub ? { fontWeight: 'bold', color: 'black', borderBottom: '3px solid orange' } : {}}
+                style={
+                  pub
+                    ? { fontWeight: "bold", color: "black", borderBottom: "3px solid orange" }
+                    : {}
+                }
                 onClick={() => {
                   setOngoing(false);
                   setPub(true);
                   setFuture(false);
                   setHistory(false);
                   myElementRef.current.style.transform = `translateX(-100%)`;
-                }}
-              >
+                }}>
                 PUBLIC
               </h3>
               <h3
-                style={future ? { fontWeight: 'bold', color: 'black', borderBottom: '3px solid orange' } : {}}
+                style={
+                  future
+                    ? { fontWeight: "bold", color: "black", borderBottom: "3px solid orange" }
+                    : {}
+                }
                 onClick={() => {
                   setOngoing(false);
                   setPub(false);
                   setFuture(true);
                   setHistory(false);
                   myElementRef.current.style.transform = `translateX(-200%)`;
-                }}
-              >
+                }}>
                 FUTURE
               </h3>
               <h3
-                style={history ? { fontWeight: 'bold', color: 'black', borderBottom: '3px solid orange' } : {}}
+                style={
+                  history
+                    ? { fontWeight: "bold", color: "black", borderBottom: "3px solid orange" }
+                    : {}
+                }
                 onClick={() => {
                   setOngoing(false);
                   setPub(false);
                   setFuture(false);
                   setHistory(true);
                   myElementRef.current.style.transform = `translateX(-300%)`;
-                }}
-              >
+                }}>
                 HISTORY
               </h3>
             </div>
@@ -93,88 +213,209 @@ const Orgpage = ({ userRole }) => {
               {/* ONGOING */}
               <div className="slide">
                 <div className="event-list">
-                  {/* when event list is full */}
-                  <div className="event-item">
-                    <div className="event-org">
-                      <small>Axelrod Capitol</small>
-                      <i className="bx bxs-circle"></i>
+                  {/* checking if data exists */}
+                  {userIsLoading ? (
+                    // IF FETCH IS STILL LOADING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i
+                        className="bx bx-loader-alt bx-spin"
+                        style={{ color: "var(--cool-gray-60)" }}></i>
                     </div>
-                    <div className="event-name">
-                      <i className="bx bx-dots-vertical-rounded"></i>
-                      <h5>2023/2024 Election 6</h5>
+                  ) : userError ? (
+                    //IF THEIR IS AN ERROR FETCHING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+                      <small>NetworkError</small>
                     </div>
-                  </div>
-                  {/* when event list is empty */}
-                  <div className="empty-list">
-                    <i className="bx bxs-binoculars bx-tada"></i>
-                    <small>No ongoing event</small>
-                  </div>
+                  ) : events &&
+                    events.length !== 0 &&
+                    events.some((item) => item.status === "ongoing") ? (
+                    events.map((item) => {
+                      //if events are ongoing then display them
+                      return item.status === "ongoing" ? (
+                        <div
+                          key={item._id}
+                          className="event-item"
+                          onClick={() =>
+                            router.push(`/dashboard/elector/singleevent?id=${item._id}`)
+                          }>
+                          <div className="event-org">
+                            <small>{item.schedule}</small>
+                            <i className="bx bxs-circle"></i>
+                          </div>
+                          <div className="event-name">
+                            <i className="bx bx-dots-vertical-rounded"></i>
+                            <h5>{item.eventName}</h5>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      );
+                    })
+                  ) : (
+                    <div className="empty-list">
+                      <i className="bx bxs-binoculars bx-tada"></i>
+                      <small>
+                        Organization has <br /> no ongoing event
+                      </small>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* PUBLIC */}
               <div className="slide">
                 <div className="event-list">
-                  {/* when event list is full */}
-                  <div className="event-item">
-                    <div className="event-org">
-                      <small>Axelrod Capitol</small>
-                      <small>9am. Mon 16th Nov, 2023</small>
+                  {/* checking if data exists */}
+                  {userIsLoading ? (
+                    // IF FETCH IS STILL LOADING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i
+                        className="bx bx-loader-alt bx-spin"
+                        style={{ color: "var(--cool-gray-60)" }}></i>
                     </div>
-                    <div className="event-name">
-                      <i className="bx bx-dots-vertical-rounded"></i>
-                      <h5>2023/2024 Election 6</h5>
+                  ) : userError ? (
+                    //IF THEIR IS AN ERROR FETCHING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+                      <small>NetworkError</small>
                     </div>
-                  </div>
-                  {/* when event list is empty */}
-                  <div className="empty-list">
-                    <i className="bx bxs-binoculars bx-tada"></i>
-                    <small>No Public event</small>
-                  </div>
+                  ) : events &&
+                    events.length !== 0 &&
+                    events.some((item) => item.isPublic === true) ? (
+                    events.map((item) => {
+                      //if events are public then display them
+                      return item.isPublic === true ? (
+                        <div
+                          key={item._id}
+                          className="event-item"
+                          onClick={() =>
+                            router.push(`/dashboard/elector/singleevent?id=${item._id}`)
+                          }>
+                          <div className="event-org">
+                            <small>{item.schedule}</small>
+                          </div>
+                          <div className="event-name">
+                            <i className="bx bx-dots-vertical-rounded"></i>
+                            <h5>{item.eventName}</h5>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      );
+                    })
+                  ) : (
+                    <div className="empty-list">
+                      <i className="bx bxs-binoculars bx-tada"></i>
+                      <small>
+                        Organization has <br /> no public event
+                      </small>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* FUTURE */}
               <div className="slide">
                 <div className="event-list">
-                  {/* when event list is full */}
-                  <div className="event-item">
-                    <div className="event-org">
-                      <small>Axelrod Capitol</small>
-                      <small>9am. Mon 16th Nov, 2023</small>
+                  {/* checking if data exists */}
+                  {userIsLoading ? (
+                    // IF FETCH IS STILL LOADING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i
+                        className="bx bx-loader-alt bx-spin"
+                        style={{ color: "var(--cool-gray-60)" }}></i>
                     </div>
-                    <div className="event-name">
-                      <i className="bx bx-dots-vertical-rounded"></i>
-                      <h5>2023/2024 Election 6</h5>
+                  ) : userError ? (
+                    //IF THEIR IS AN ERROR FETCHING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+                      <small>NetworkError</small>
                     </div>
-                  </div>
-                  {/* when event list is empty */}
-                  <div className="empty-list">
-                    <i className="bx bxs-binoculars bx-tada"></i>
-                    <small>No Future event</small>
-                  </div>
+                  ) : events &&
+                    events.length !== 0 &&
+                    events.some((item) => item.status === "future") ? (
+                    events.map((item) => {
+                      //if events are future then display them
+                      return item.status === "future" ? (
+                        <div
+                          key={item._id}
+                          className="event-item"
+                          onClick={() =>
+                            router.push(`/dashboard/elector/singleevent?id=${item._id}`)
+                          }>
+                          <div className="event-org">
+                            <small>{item.schedule}</small>
+                          </div>
+                          <div className="event-name">
+                            <i className="bx bx-dots-vertical-rounded"></i>
+                            <h5>{item.eventName}</h5>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      );
+                    })
+                  ) : (
+                    <div className="empty-list">
+                      <i className="bx bxs-binoculars bx-tada"></i>
+                      <small>
+                        Organization has <br /> no ongoing event
+                      </small>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* HISTORY */}
               <div className="slide">
                 <div className="event-list">
-                  {/* when event list is full */}
-                  <div className="event-item">
-                    <div className="event-org">
-                      <small>Axelrod Capitol</small>
-                      <small>9am. Mon 16th Nov, 2023</small>
+                  {/* checking if data exists */}
+                  {userIsLoading ? (
+                    // IF FETCH IS STILL LOADING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i
+                        className="bx bx-loader-alt bx-spin"
+                        style={{ color: "var(--cool-gray-60)" }}></i>
                     </div>
-                    <div className="event-name">
-                      <i className="bx bx-dots-vertical-rounded"></i>
-                      <h5>2023/2024 Election 6</h5>
+                  ) : userError ? (
+                    //IF THEIR IS AN ERROR FETCHING
+                    <div className="empty-list" style={{ height: "250px" }}>
+                      <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+                      <small>NetworkError</small>
                     </div>
-                  </div>
-                  {/* when event list is empty */}
-                  <div className="empty-list">
-                    <i className="bx bxs-binoculars bx-tada"></i>
-                    <small>No history event</small>
-                  </div>
+                  ) : events &&
+                    events.length !== 0 &&
+                    events.some((item) => item.status === "history") ? (
+                    events.map((item) => {
+                      //if events are history then display them
+                      return item.status === "history" ? (
+                        <div
+                          className="event-item"
+                          key={item._id}
+                          onClick={() =>
+                            router.push(`/dashboard/elector/singleevent?id=${item._id}`)
+                          }>
+                          <div className="event-org">
+                            <small>{item.schedule}</small>
+                          </div>
+                          <div className="event-name">
+                            <i className="bx bx-dots-vertical-rounded"></i>
+                            <h5>{item.eventName}</h5>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      );
+                    })
+                  ) : (
+                    <div className="empty-list">
+                      <i className="bx bxs-binoculars bx-tada"></i>
+                      <small>
+                        Organization has <br /> no ongoing event
+                      </small>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -183,117 +424,97 @@ const Orgpage = ({ userRole }) => {
       ) : (
         <>
           {/* top section for organization */}
-          <div className="org-single-top">
-            <Image className="img" src="/images/Get-Close.png" width={150} height={150} alt="vog" />
-            <div className="parted">
-              <h1>Paul Chidiadi</h1>
-              <small>paulchidiadi@gmail.com</small>
-              <p>
-                <i className="bx bx-poll"></i> <span>10</span> events engaged
-              </p>
-              <p>
-                <i className="bx bx-poll"></i> <span>5</span> events ongoing
-              </p>
-              <button className="btn" onClick={() => {}}>
-                invite
-              </button>
+          {userIsLoading ? (
+            <div className="org-single-top">
+              <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
             </div>
-          </div>
+          ) : userError ? (
+            <div className="org-single-top">
+              <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+              <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+            </div>
+          ) : (
+            <div className="org-single-top">
+              <Image
+                className="img prof"
+                src={`https://vota.onrender.com/${user && user.displayPicture}`}
+                width={50}
+                height={50}
+                alt={user && user.fullName ? user.fullName[0] + user.fullName[1] : ""}
+              />
+              <div className="parted">
+                <h1>{user && user.fullName}</h1>
+                <small>{user && user.email}</small>
+                <p>
+                  <i className="bx bx-poll"></i> <span>20</span> events conducted
+                </p>
+                <p>
+                  <i className="bx bx-poll"></i> <span>5</span> events ongoing
+                </p>
+                <button className="btn" disabled={isLoading ? true : false} onClick={inviteMember}>
+                  {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* body section for organization */}
           <div className="elector-body-section" id="orgss">
             <h1 className="section-title">Member's Organizations</h1>
             <small>This elector is a member of the following organizations</small>
 
-            <div className="list-of-orgs">
-              <div className="list-cards">
-                <Image className="img" src="/images/icon.png" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>Axelrod Capitol</h4>
-                  <small>
-                    axelrod@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>10</span>
-                    </i>
-                  </small>
+            {/* list of organization section */}
+            {userIsLoading ? (
+              // IF FETCH IS STILL LOADING
+              <div className="empty-list" style={{ height: "250px" }}>
+                <i
+                  className="bx bx-loader-alt bx-spin"
+                  style={{ color: "var(--cool-gray-60)" }}></i>
+              </div>
+            ) : userError ? (
+              //IF THEIR IS AN ERROR FETCHING
+              <div className="empty-list" style={{ height: "250px" }}>
+                <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+                <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+              </div>
+            ) : organizationList && organizationList.length !== 0 ? (
+              <div className="list-of-orgs">
+                <div className="list-of-orgs">
+                  {organizationList.map((item) => {
+                    return (
+                      <div className="list-cards" key={item._id}>
+                        <Image
+                          className="img"
+                          src={`https://vota.onrender.com/${item.logo}`}
+                          width={65}
+                          height={65}
+                          alt="orgs image"
+                        />
+                        <div>
+                          <h4>{item.companyName}</h4>
+                          <small>
+                            {item.email}
+                            <i className="bx bx-poll">
+                              {" "}
+                              <span>{item.companyName[0] + item.companyName[1]}</span>
+                            </i>
+                          </small>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-              <div className="list-cards">
-                <Image className="img" src="/images/logo.png" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>Wryte</h4>
-                  <small>
-                    wryte@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>9</span>
-                    </i>
-                  </small>
-                </div>
+            ) : (
+              // when member's organization list is empty
+              <div className="empty-list organ">
+                <i className="bx bxs-binoculars bx-tada"></i>
+                <small>
+                  This user has not
+                  <br /> joined any organization yet
+                </small>
               </div>
-              <div className="list-cards">
-                <Image className="img" src="/images/pay_logo.png" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>Paystack</h4>
-                  <small>
-                    paystack@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>13</span>
-                    </i>
-                  </small>
-                </div>
-              </div>
-              <div className="list-cards">
-                <Image className="img" src="/images/rbicon.png" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>RB properties</h4>
-                  <small>
-                    rbproperties@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>7</span>
-                    </i>
-                  </small>
-                </div>
-              </div>
-              <div className="list-cards">
-                <Image className="img" src="/images/icon2.jpg" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>Pointa</h4>
-                  <small>
-                    pointapointa@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>20</span>
-                    </i>
-                  </small>
-                </div>
-              </div>
-              <div className="list-cards">
-                <Image className="img" src="/images/VOG.png" width={65} height={65} alt="Get-in-Front" />
-                <div>
-                  <h4>VOG</h4>
-                  <small>
-                    vogigal@gmail.com
-                    <i className="bx bx-poll">
-                      {' '}
-                      <span>5</span>
-                    </i>
-                  </small>
-                </div>
-              </div>
-            </div>
-
-            {/* when member's organization list is empty */}
-            <div className="empty-list organ">
-              <i className="bx bxs-binoculars bx-tada"></i>
-              <small>
-                This user has not
-                <br /> joined any organization yet
-              </small>
-            </div>
+            )}
           </div>
         </>
       )}
