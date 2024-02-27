@@ -1742,6 +1742,15 @@ section {
   object-fit: cover;
   border: 1px solid var(--black-a08);
 }
+.cand-pic.prof {
+  border-radius: 50%;
+  background-color: var(--blue-60);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  text-transform: uppercase;
+}
 .candidate-card h1 {
   font-size: 10px;
   font-weight: bold;
