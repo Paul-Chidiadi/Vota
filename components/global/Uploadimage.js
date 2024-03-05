@@ -1,11 +1,18 @@
 "use client";
 import React, { useState, useRef } from "react";
+import Notification from "../../components/global/Notification.js";
+import { useSendDataMutation } from "../../store/api/api.js";
 
-const Uploadimage = () => {
+const UploadImage = ({ closeModal }) => {
   const [dragging, setDragging] = useState(false);
   const [text, setText] = useState("Drag and drop images here");
   const [file, setFile] = useState([]);
   const fileInputRef = useRef(null);
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+    show: false,
+  });
 
   const handleFileInputChange = (e) => {
     e.preventDefault();
@@ -17,7 +24,8 @@ const Uploadimage = () => {
     });
   };
 
-  console.log(file);
+  const [uploadImage, { isLoading, reset }] = useSendDataMutation();
+
   return (
     <>
       <h1>Upload Image</h1>
@@ -36,8 +44,7 @@ const Uploadimage = () => {
         onDragLeave={() => {
           setDragging(false);
         }}
-        onDrop={handleFileInputChange}
-      >
+        onDrop={handleFileInputChange}>
         <p>{text}</p>
         <input
           type="file"
@@ -48,20 +55,66 @@ const Uploadimage = () => {
         />
       </div>
       <button
-        onClick={() => {
+        onClick={async () => {
           //Handle the dropped files (e.g., upload to a server or process them)
-          const formData = new FormData();
-          formData.append("file", file[0]);
-
-          console.log(formData);
+          if (file.length === 0) {
+            setNotification({
+              message: "No image choosen yet",
+              status: "error",
+              show: true,
+            });
+          } else {
+            const formData = new FormData();
+            formData.append("image", file[0]);
+            //MAKE IMAGE UPLOAD REQUEST
+            const request = await uploadImage({
+              url: "elector/uploadProfileImage",
+              data: formData,
+              type: "PATCH",
+            });
+            if (request?.data) {
+              const { data, message, success } = request?.data;
+              setNotification({
+                message: message,
+                status: "success",
+                show: true,
+              });
+              setTimeout(() => {
+                closeModal();
+              }, 4000);
+            } else {
+              setNotification({
+                message: request?.error?.data?.error
+                  ? request?.error?.data?.error
+                  : "Check Internet Connection and try again",
+                status: "error",
+                show: true,
+              });
+            }
+          }
         }}
         className="btn"
         style={{ width: "100%", marginTop: "10px" }}
-      >
-        Upload
+        disabled={isLoading ? true : false}>
+        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Upload"}
       </button>
+
+      {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
+      {notification.show ? (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          switchShowOff={() => {
+            setNotification((prev) => {
+              return { ...prev, show: false };
+            });
+          }}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
 
-export default Uploadimage;
+export default UploadImage;

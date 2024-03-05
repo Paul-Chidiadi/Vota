@@ -447,7 +447,11 @@ export default function Page() {
               &times;
             </span>
             {edit === "image" ? (
-              <Uploadimage />
+              <Uploadimage
+                closeModal={() => {
+                  overlayRef.current.style.display = `none`;
+                }}
+              />
             ) : (
               <>
                 <h1>Confirm Request</h1>
