@@ -9,7 +9,7 @@ export default function Activate() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
-  const [userData, setUserData] = useState({ email: email, OTP: "" });
+  const [userData, setUserData] = useState({ email: email ? email : "", OTP: "" });
   const [notification, setNotification] = useState({
     message: "",
     status: "",
@@ -146,7 +146,7 @@ export default function Activate() {
         <div className="elect selected">
           <h1>Activate Account</h1>
           <form className="forms">
-            <input type="email" placeholder="Email" value={email} readOnly />
+            <input type="email" placeholder="Email" value={userData.email} readOnly />
             <input
               type="text"
               placeholder="OTP"

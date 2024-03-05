@@ -1877,6 +1877,7 @@ section {
   position: absolute;
   top: 10.5vh;
   right: 10px;
+  z-index: 1000000;
 }
 .notify-box .icon i {
   color: var(--white);
