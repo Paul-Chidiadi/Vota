@@ -167,12 +167,17 @@ body {
 }
 .img.prof {
   border-radius: 50%;
-  background-color: orange;
+  background-color: orange !important;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--white);
   text-transform: uppercase;
+}
+@media screen and (max-width: 800px) {
+  .img.prof {
+    object-fit: cover !important;
+  }
 }
 section {
   width: 100%;
