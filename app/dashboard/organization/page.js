@@ -4,10 +4,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Events from "/components/global/Events.js";
 import React, { useState, useEffect } from "react";
+import { useGetOrganizationQuery } from "../../../store/api/api.js";
+import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 export default function Page() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
+  const userId = getDataFromLocalStorage("id");
+
+  const {
+    data: organizationData,
+    isLoading: organizationIsLoading,
+    error: organizationError,
+  } = useGetOrganizationQuery(userId);
+  const organizationsMembers = organizationData?.data?.organization?.members;
+  const organizationsEvents = organizationData?.data?.arrayOfEvents;
 
   return (
     <section className="org-main-page">
@@ -56,7 +67,12 @@ export default function Page() {
           </div>
         </div>
         {/* ongoing events section */}
-        <Events />
+        <Events
+          data={organizationsEvents}
+          isLoading={organizationIsLoading}
+          error={organizationError}
+          role="Organization"
+        />
       </div>
 
       {/* list of organization section */}
@@ -67,133 +83,45 @@ export default function Page() {
           and can participate in your poll events. You can also set your events public so anyone can
           participate or view them.
         </small>
-        <div className="list-of-orgs">
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>paulchidiadi@gmail.com</small>
-            </div>
+        {organizationIsLoading ? (
+          // IF FETCH IS STILL LOADING
+          <div className="empty-list" style={{ height: "250px" }}>
+            <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
           </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>chidiadinwaokocha@gmail.com</small>
-            </div>
+        ) : organizationError ? (
+          //IF THEIR IS AN ERROR FETCHING
+          <div className="empty-list" style={{ height: "250px" }}>
+            <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+            <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
           </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
+        ) : organizationsMembers && organizationsMembers.length !== 0 ? (
+          <div className="list-of-orgs">
+            {organizationsMembers.map((item) => {
+              return (
+                <div
+                  className="member-cards"
+                  onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}>
+                  <Image
+                    className="img prof"
+                    src={`https://vota.onrender.com/${item.displayPicture}`}
+                    width={65}
+                    height={65}
+                    alt={item.fullName[0] + item.fullName[1]}
+                  />
+                  <div>
+                    <h4>{item.fulName}</h4>
+                    <small>{item.email}</small>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
+        ) : (
+          <div className="empty-list organ">
+            <i className="bx bxs-binoculars bx-tada"></i>
+            <small>You have no members yet</small>
           </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
-          </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
-          </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
-          </div>
-          <div
-            className="member-cards"
-            onClick={() => router.push("/dashboard/organization/elect")}>
-            <Image
-              className="img"
-              src="/images/Get-Close.png"
-              width={65}
-              height={65}
-              alt="member-pics"
-            />
-            <div>
-              <h4>Micheal Kate</h4>
-              <small>michealkate@gmail.com</small>
-            </div>
-          </div>
-        </div>
-        {/* when members list is empty */}
-        {/* <div className="empty-list organ">
-          <i className="bx bxs-binoculars bx-tada"></i>
-          <small>You have no members yet</small>
-        </div> */}
+        )}
       </div>
     </section>
   );

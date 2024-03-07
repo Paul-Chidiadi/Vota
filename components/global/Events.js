@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Events = ({ data, isLoading, error }) => {
+const Events = ({ data, isLoading, error, role }) => {
   const router = useRouter();
 
   return (
@@ -36,7 +36,13 @@ const Events = ({ data, isLoading, error }) => {
                 <div
                   key={item._id}
                   className="event-item"
-                  onClick={() => router.push(`/dashboard/elector/singleevent?id=${item._id}`)}>
+                  onClick={() =>
+                    router.push(
+                      `/dashboard/${
+                        role === "elector" ? "elector" : "organization"
+                      }/singleevent?id=${item._id}`
+                    )
+                  }>
                   <div className="event-org">
                     <small>{item.schedule}</small>
                     <i className="bx bxs-circle"></i>

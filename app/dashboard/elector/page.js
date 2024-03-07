@@ -66,7 +66,12 @@ export default function Page() {
           </div>
         </div>
         {/* ongoing events section */}
-        <Events data={electorsEvents} isLoading={electorIsLoading} error={electorError} />
+        <Events
+          data={electorsEvents}
+          isLoading={electorIsLoading}
+          error={electorError}
+          role="elector"
+        />
       </div>
 
       {/* list of organization section */}
@@ -96,11 +101,11 @@ export default function Page() {
                   className="list-cards"
                   onClick={() => router.push(`/dashboard/elector/orgs?${item._id}`)}>
                   <Image
-                    className="img"
+                    className="img prof"
                     src={`https://vota.onrender.com/${item.logo}`}
                     width={65}
                     height={65}
-                    alt="orgs image"
+                    alt={item.companyName[0] + item.companyName[1]}
                   />
                   <div>
                     <h4>{item.companyName}</h4>
