@@ -1,69 +1,148 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { useGetAllElectorQuery } from "../../../../store/api/api.js";
+import { getDataFromLocalStorage } from "../../../../utils/localStorage";
 
 export default function Page() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+  const userId = getDataFromLocalStorage("id");
+
+  const { data: listData, isLoading: listIsLoading, error: listError } = useGetAllElectorQuery();
+  const listOfElectors = listData?.data;
+
+  //SEARCH FOR ELECTOR BY NAME
+  const searchResult =
+    listOfElectors &&
+    query &&
+    listOfElectors.filter((item) => {
+      return item.fullName.toLowerCase().includes(query.toLowerCase());
+    });
 
   return (
     <section className="org-main-page">
       <div className="notification-section">
-        <h1 className="section-title">Search for Members</h1>
+        <h1 className="section-title">Search Result for Members</h1>
+        <small className="small">Click add and invite them to join your organization </small>
+        {/* LIST OF MEMBERS IN SEARCH */}
+        {listIsLoading ? (
+          // IF FETCH IS STILL LOADING
+          <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
+        ) : listError ? (
+          //IF THEIR IS AN ERROR FETCHING
+          <>
+            <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+            <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+          </>
+        ) : searchResult && searchResult.length !== 0 ? (
+          <div className="list-of-notifications">
+            {searchResult &&
+              searchResult.map((item) => {
+                return (
+                  <div className="notify-item" key={item._id}>
+                    <div className="content">
+                      <Image
+                        className="img prof"
+                        src={`https://vota.onrender.com/${item.displayPicture}`}
+                        width={80}
+                        height={80}
+                        alt={item.fullName[0] + item.fullName[1]}
+                        onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}
+                      />
+                      <div className="text">
+                        <h1
+                          onClick={() =>
+                            router.push(`/dashboard/organization/elect?id=${item._id}`)
+                          }>
+                          {item.fullName}
+                        </h1>
+                        <small>{item.email}</small>
+                      </div>
+                    </div>
+                    <div className="actions">
+                      {item.organizations.length === 0 ||
+                      item.organizations.some((orgs) => orgs._id !== userId) ? (
+                        <button className="btn" onClick={() => {}}>
+                          invite
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        ) : (
+          <div className="empty-list">
+            <i className="bx bxs-binoculars bx-tada"></i>
+            <small>
+              Your search does not exist <br /> Please try again
+            </small>
+          </div>
+        )}
+      </div>
+
+      <div className="notification-section">
+        <h1 className="section-title">Members You may know</h1>
         <small className="small">Click add and invite them to join your organization </small>
         {/* LIST OF MEMBERS IN SEARCH */}
         <div className="list-of-notifications">
-          <div className="notify-item">
-            <div className="content">
-              <Image
-                className="img"
-                src="/images/Get-Close.png"
-                width={80}
-                height={80}
-                alt="image"
-                onClick={() => router.push('/dashboard/organization/elect')}
-              />
-              <div className="text">
-                <h1 onClick={() => router.push('/dashboard/organization/elect')}>Paul Chidiadi</h1>
-                <small>paulchidiadi@gmail.com</small>
-              </div>
+          {listIsLoading ? (
+            // IF FETCH IS STILL LOADING
+            <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
+          ) : listError ? (
+            //IF THEIR IS AN ERROR FETCHING
+            <>
+              <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+              <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+            </>
+          ) : listOfElectors && listOfElectors.length !== 0 ? (
+            listOfElectors.map((item) => {
+              return (
+                <div className="notify-item" key={item._id}>
+                  <div className="content">
+                    <Image
+                      className="img prof"
+                      src={`https://vota.onrender.com/${item.displayPicture}`}
+                      width={80}
+                      height={80}
+                      alt={item.fullName[0] + item.fullName[1]}
+                      onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}
+                    />
+                    <div className="text">
+                      <h1
+                        onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}>
+                        {item.fullName}
+                      </h1>
+                      <small>{item.email}</small>
+                    </div>
+                  </div>
+                  <div className="actions">
+                    {item.organizations.length === 0 ||
+                    item.organizations.some((orgs) => orgs._id !== userId) ? (
+                      <button className="btn" onClick={() => {}}>
+                        invite
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="empty-list">
+              <i className="bx bxs-binoculars bx-tada"></i>
+              <small>
+                No elector <br /> available yet
+              </small>
             </div>
-            <div className="actions">
-              <button className="btn" onClick={() => {}}>
-                invite
-              </button>
-            </div>
-          </div>
-          <div className="notify-item">
-            <div className="content">
-              <Image
-                className="img"
-                src="/images/answer-chat-in-mobile-c.png"
-                width={80}
-                height={80}
-                alt="image"
-                onClick={() => router.push('/dashboard/organization/elect')}
-              />
-              <div className="text">
-                <h1 onClick={() => router.push('/dashboard/organization/elect')}>Kevin Lance</h1>
-                <small>kevinlance@gmail.com</small>
-              </div>
-            </div>
-            <div className="actions">
-              <button className="btn" onClick={() => {}}>
-                invite
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* when search is not found */}
-        <div className="empty-list">
-          <i className="bx bxs-binoculars bx-tada"></i>
-          <small>
-            Your search does not exist <br /> Please try again
-          </small>
+          )}
         </div>
       </div>
     </section>

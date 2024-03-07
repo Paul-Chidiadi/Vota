@@ -66,6 +66,9 @@ export const api = createApi({
     getElector: builder.query({
       query: (id) => `elector/${id}`,
     }),
+    getAllElector: builder.query({
+      query: (id) => `elector/getElector`,
+    }),
     getOrganization: builder.query({
       query: (id) => `organization/${id}`,
     }),
@@ -91,6 +94,7 @@ export const api = createApi({
 
 export const {
   useGetElectorQuery,
+  useGetAllElectorQuery,
   useGetOrganizationQuery,
   useGetAllOrganizationQuery,
   useGetEventQuery,

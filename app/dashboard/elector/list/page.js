@@ -22,6 +22,7 @@ export default function Page() {
   //SEARCH FOR ORGANIZATION BY NAME
   const searchResult =
     listOfOrganizations &&
+    query &&
     listOfOrganizations.filter((item) => {
       return item.companyName.toLowerCase().includes(query.toLowerCase());
     });
