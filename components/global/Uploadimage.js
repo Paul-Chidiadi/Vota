@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import Notification from "../../components/global/Notification.js";
 import { useSendDataMutation } from "../../store/api/api.js";
 
-const UploadImage = ({ closeModal }) => {
+const UploadImage = ({ closeModal, role }) => {
   const [dragging, setDragging] = useState(false);
   const [text, setText] = useState("Drag and drop images here");
   const [file, setFile] = useState([]);
@@ -68,7 +68,8 @@ const UploadImage = ({ closeModal }) => {
             formData.append("image", file[0]);
             //MAKE IMAGE UPLOAD REQUEST
             const request = await uploadImage({
-              url: "elector/uploadProfileImage",
+              url:
+                role === "elector" ? "elector/uploadProfileImage" : "organization/uploadLogoImage",
               data: formData,
               type: "PATCH",
             });

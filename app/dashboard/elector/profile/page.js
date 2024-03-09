@@ -415,7 +415,7 @@ export default function Page() {
                   hasCapitalLetter &&
                   hasSmallLetter &&
                   hasNumber.newPassword &&
-                  password.length > 6;
+                  editPasswordData.newPassword.length > 6;
                 if (dataIsEmpty || isPasswordValid === false || isConfirmPasswordValid === false) {
                   setNotification({
                     message: "Passwords are invalid",
@@ -448,6 +448,7 @@ export default function Page() {
             </span>
             {edit === "image" ? (
               <Uploadimage
+                role="elector"
                 closeModal={() => {
                   overlayRef.current.style.display = `none`;
                 }}
