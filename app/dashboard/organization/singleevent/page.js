@@ -3,176 +3,259 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import "../../../../components/global/orgpage.css";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Notification from "../../../../components/global/Notification.js";
+import { useGetEventQuery } from "../../../../store/api/api.js";
 import { v4 as uuidv4 } from "uuid";
 
 const Page = () => {
-  const [event, setEvent] = useState({
-    status: "ongoing",
-    eventType: "Poll",
-  });
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = String(searchParams.get("id"));
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+    show: false,
+  });
 
-  //FAKE DATA TO LOOP THROUGH
-  const positions = ["king", "queen"];
-  const candidates = [
-    { name: "paul", position: "king" },
-    { name: "Dan", position: "king" },
-    { name: "shedy", position: "king" },
-    { name: "chris", position: "king" },
-    { name: "joy", position: "queen" },
-    { name: "ada", position: "queen" },
-    { name: "esther", position: "queen" },
-    { name: "fatima", position: "queen" },
-  ];
-  const winners = [
-    { name: "paul", position: "king" },
-    { name: "joy", position: "queen" },
-  ];
-  //FAKE DATA TO LOOP THROUGH
+  const { data: eventData, isLoading: eventIsLoading, error: eventError } = useGetEventQuery(id);
+  const event = eventData?.data;
+
+  /* ------------------------RESULT CALCULATIONS------------------------------------- */
+  // Check if all objects have the same voteCount value
+  const allHaveSameVoteCount =
+    event &&
+    event.pollQuestions &&
+    event.pollQuestions.every((obj) => obj.voteCount === event.pollQuestions[0].voteCount);
+  //GET POLLQUESTION WITH HIGHEST VOTES
+  const maxPollVote =
+    event &&
+    event.pollQuestions &&
+    event.pollQuestions.reduce((maxObj, currentObj) => {
+      return currentObj.voteCount > maxObj.voteCount ? currentObj : maxObj;
+    }, event.pollQuestions[0]);
+  //GET THE SUM OF ALL VOTES FOR POLLQUESTIONS
+  const totalVotes =
+    event &&
+    event.pollQuestions &&
+    event.pollQuestions.reduce((sum, currentObj) => {
+      return sum + currentObj.voteCount;
+    }, 0);
+
+  // GET RESULTS FOR ELECTION TYPE
+  const result = [];
+  // Iterate over positions
+  event &&
+    event.positions.forEach((position) => {
+      // Filter objects for the current position
+      const positionVotes = event && event.candidates.filter((obj) => obj.runfor === position);
+
+      // Find the object with the highest voteCount for the current position
+      const maxVoteObject = positionVotes.reduce((maxObj, currentObj) => {
+        return currentObj.voteCount > maxObj.voteCount ? currentObj : maxObj;
+      }, positionVotes[0]);
+
+      // Store the result for the current position
+      result.push(maxVoteObject);
+    });
+  //GET THE SUM OF ALL VOTES FOR ELECTION
+  const totalElectionVotes =
+    event &&
+    event.candidates &&
+    event.candidates.reduce((sum, currentObj) => {
+      return sum + currentObj.voteCount;
+    }, 0);
+  /* ------------------------RESULT CALCULATIONS------------------------------------- */
 
   const title =
-    event.eventType === "Poll"
-      ? event.status === "future"
+    event && event.eventType === "Poll"
+      ? event && event.status === "future"
         ? "Poll Questions"
         : "Poll Results"
-      : event.status === "future"
+      : event && event.status === "future"
       ? "Election"
       : "Election Results";
 
   return (
     <section className="org-main-page">
       {/* top section */}
-      <div className="org-single-top">
-        <div className="parted">
-          <h1>Pointa Axelrod Capitol</h1>
-          <small>pointa@gmail.com</small>
-          <p>
-            <i className="bx bxs-award"></i> Event Name
-          </p>
-          <p>
-            <i className="bx bx-time"></i> Event Schedule
-          </p>
-          <p>
-            <i className="bx bx-poll"></i>{" "}
-            <span>
-              {event.status === "future"
-                ? "Pending"
-                : event.status === "ongoing"
-                ? "Ongoing"
-                : "Completed"}
-            </span>
-          </p>
-          {event.status === "future" ? (
-            <button className="btn" onClick={() => {}}>
-              EDIT
-            </button>
-          ) : event.status === "ongoing" ? (
-            <button className="btn" onClick={() => {}}>
-              CANCEL
-            </button>
-          ) : (
-            // if events status is history show nothing
-            ""
-          )}
+      {eventIsLoading ? (
+        <div className="org-single-top">
+          <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
         </div>
-      </div>
+      ) : eventError ? (
+        <div className="org-single-top">
+          <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+          <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+        </div>
+      ) : (
+        <div className="org-single-top">
+          <div className="parted">
+            <h1>{event && event?.owner?.companyName}</h1>
+            <small>{event && event?.owner?.email}</small>
+            <p>
+              <i className="bx bxs-award"></i> {event && event?.eventName}
+            </p>
+            <p>
+              <i className="bx bx-time"></i> {event && event?.schedule}
+            </p>
+            <p>
+              <i className="bx bx-poll"></i>{" "}
+              <span>
+                {event.status === "future"
+                  ? "Pending"
+                  : event.status === "ongoing"
+                  ? "Ongoing"
+                  : "Completed"}
+              </span>
+            </p>
+            {event.status === "future" ? (
+              <button className="btn" onClick={() => {}}>
+                EDIT
+              </button>
+            ) : event.status === "ongoing" ? (
+              <button className="btn" onClick={() => {}}>
+                CANCEL
+              </button>
+            ) : (
+              // if events status is history show nothing
+              ""
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
+      {notification.show ? (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          switchShowOff={() => {
+            setNotification((prev) => {
+              return { ...prev, show: false };
+            });
+          }}
+        />
+      ) : (
+        ""
+      )}
 
       {/* body section */}
       <div className="org-single-body">
-        <h4 style={{ marginBottom: "10px" }}>{title}</h4>
-        {event.eventType === "Poll" ? (
-          <div className="poll-view">
-            <div>
-              <h6>Scientist should be paid above $5000</h6>
-              <h1> {event.status === "future" ? "..." : 23}</h1>
+        {eventIsLoading ? (
+          <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
+        ) : eventError ? (
+          <>
+            <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+            <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+          </>
+        ) : event && event.eventType === "Poll" ? (
+          <>
+            <h4 style={{ marginBottom: "10px" }}>{title}</h4>
+            <div className="poll-view">
+              {event &&
+                event.pollQuestions.map((item) => {
+                  return (
+                    <div key={item._id}>
+                      <h6>{item.question}</h6>
+                      <h1> {event && event.status === "future" ? "..." : item.voteCount}</h1>
+                    </div>
+                  );
+                })}
             </div>
-            <div>
-              <h6>Scientist should be paid below $5000</h6>
-              <h1> {event.status === "future" ? "..." : "19"}</h1>
-            </div>
-            <div>
-              <h6>Scientist should be paid only $5000</h6>
-              <h1> {event.status === "future" ? "..." : 70}</h1>
-            </div>
-          </div>
+          </>
         ) : (
           <div className="election-view">
-            {positions.map((item) => {
-              return (
-                <div className="result-display" key={uuidv4()}>
-                  <h5>{item}</h5>
-                  <div className="card-body">
-                    {candidates.map((cand) => {
-                      return cand.position === item ? (
-                        <div className="candidate-card" key={uuidv4()}>
-                          <Image
-                            className="cand-pic"
-                            src="/images/Get-Close.png"
-                            width={60}
-                            height={60}
-                            alt="vog"
-                          />
-                          <h1>{cand.name}</h1>
-                          <small>pointa@gmail.com</small>
-                          <h4>{event.status === "future" ? "..." : "60"}</h4>
-                        </div>
-                      ) : (
-                        ""
-                      );
-                    })}
+            {event &&
+              event.positions.map((item) => {
+                return (
+                  <div className="result-display" key={uuidv4()}>
+                    <h5>{item}</h5>
+                    <div className="card-body">
+                      {event &&
+                        event.candidates.map((cand) => {
+                          return cand.runfor === item ? (
+                            <div className="candidate-card" key={uuidv4()}>
+                              <Image
+                                className="cand-pic prof"
+                                src={`https://vota.onrender.com/${cand?.candidateId?.displayPicture}`}
+                                width={60}
+                                height={60}
+                                alt={
+                                  cand?.candidateId &&
+                                  `${cand?.candidateId?.fullName[0]}${cand?.candidateId?.fullName[1]}`
+                                }
+                              />
+                              <h1>{cand?.candidateId?.fullName}</h1>
+                              <small>{cand?.candidateId?.email}</small>
+                              <h4>{event.status === "future" ? "..." : cand?.voteCount}</h4>
+                              {event.status === "ongoing" && (
+                                <button className="vote-btn" onClick={() => {}}>
+                                  vote
+                                </button>
+                              )}
+                            </div>
+                          ) : (
+                            ""
+                          );
+                        })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         )}
       </div>
 
       {/* THIS SECTION DISPLAYS ONLY WHEN THE STATUS OF THE EVENT IS HISTORY */}
-      {event.status === "history" ? (
+      {event && event.status === "history" ? (
         <div className="org-single-body">
           <h4 style={{ marginBottom: "10px" }}>Final Result</h4>
-          <h5>Total number of votes: 150</h5>
-          {event.eventType === "Poll" ? (
-            <div className="poll-view">
-              <div>
-                <h6>Scientist should be paid only $5000</h6>
-                <h1> {event.status === "future" ? "..." : 70}</h1>
-                {event.status === "ongoing" && (
-                  <button className="vote-btn" onClick={() => {}}>
-                    vote
-                  </button>
-                )}
+          <h5>
+            Total number of votes: {event.eventType === "Poll" ? totalVotes : totalElectionVotes}
+          </h5>
+          {event && event.eventType === "Poll" ? (
+            allHaveSameVoteCount ? (
+              <div className="poll-view">
+                <div>
+                  <h6>We have a tile. All questions have same votes</h6>
+                  <h1>{maxPollVote.voteCount}</h1>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="poll-view">
+                <div>
+                  <h6>{maxPollVote.question}</h6>
+                  <h1>{maxPollVote.voteCount}</h1>
+                </div>
+              </div>
+            )
           ) : (
             <div className="election-view">
               <div className="card-body">
-                {winners.map((item) => {
-                  return (
-                    <div key={uuidv4()}>
-                      <h5>{item.position}</h5>
-                      <div className="candidate-card">
-                        <Image
-                          className="cand-pic"
-                          src="/images/Get-Close.png"
-                          width={60}
-                          height={60}
-                          alt="vog"
-                        />
-                        <h1>{item.name}</h1>
-                        <small>pointa@gmail.com</small>
-                        <h4>{event.status === "future" ? "..." : "60"}</h4>
-                        {event.status === "ongoing" && (
-                          <button className="vote-btn" onClick={() => {}}>
-                            vote
-                          </button>
-                        )}
+                {result &&
+                  result.map((item) => {
+                    return (
+                      <div key={uuidv4()}>
+                        <h5>{item.runfor}</h5>
+                        <div className="candidate-card" key={uuidv4()}>
+                          <Image
+                            className="cand-pic prof"
+                            src={`https://vota.onrender.com/${item?.candidateId?.displayPicture}`}
+                            width={60}
+                            height={60}
+                            alt={
+                              item?.candidateId &&
+                              `${item?.candidateId?.fullName[0]}${item?.candidateId?.fullName[1]}`
+                            }
+                          />
+                          <h1>{item?.candidateId?.fullName}</h1>
+                          <small>{item?.candidateId?.email}</small>
+                          <h4>{event.status === "future" ? "..." : item?.voteCount}</h4>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           )}

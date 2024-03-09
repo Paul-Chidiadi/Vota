@@ -144,7 +144,7 @@ const Page = () => {
               {event &&
                 event.pollQuestions.map((item) => {
                   return (
-                    <div key={item.id}>
+                    <div key={item._id}>
                       <h6>{item.question}</h6>
                       <h1> {event && event.status === "future" ? "..." : item.voteCount}</h1>
                       {event && event.status === "ongoing" && (
