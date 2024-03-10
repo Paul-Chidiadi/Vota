@@ -1537,6 +1537,7 @@ section {
   align-items: center;
   padding: 10px;
 }
+.poll-questions div select,
 .poll-questions div input {
   width: 100%;
   height: 45px;
@@ -1544,7 +1545,9 @@ section {
   outline: none;
   border-radius: 5px;
   border: 1px solid var(--black-a15);
+  background-color: transparent;
 }
+.poll-questions div select:hover,
 .poll-questions div input:hover {
   outline: none;
   border: 1px solid var(--black-a30);
