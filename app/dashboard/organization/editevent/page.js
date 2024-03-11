@@ -3,10 +3,12 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import "../../../../components/global/orgpage.css";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useGetEventQuery, useSendDataMutation } from "../../../../store/api/api.js";
+import Notification from "../../../../components/global/Notification.js";
 
 const page = () => {
   const router = useRouter();
@@ -14,13 +16,61 @@ const page = () => {
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
     schedule: new Date(),
-    public: false,
-    eventType: "",
-    positions: [{ id: uuidv4(), text: "" }],
-    candidates: [],
-    pollQuestions: [{ id: uuidv4(), text: "" }],
+    isPublic: false,
   });
   const [slideNum, setSlideNum] = useState(1);
+  const searchParams = useSearchParams();
+  const id = String(searchParams.get("id"));
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+    show: false,
+  });
+
+  const [editEvent, { isLoading, reset }] = useSendDataMutation();
+
+  //CHECK IF VALUES ARE EITHER EMPTY, NULL OR UNDEFINED
+  function areValuesEmpty(obj) {
+    return Object.values(obj).some(
+      (value) => value === "" || value === null || value === undefined
+    );
+  }
+
+  async function edit() {
+    const isDataEmpty = areValuesEmpty(eventDetails);
+    if (isDataEmpty) {
+      setNotification({
+        message: "Empty Fields",
+        status: "error",
+        show: true,
+      });
+      return;
+    }
+    const request = await editEvent({
+      url: `organization/editEvent/${id}`,
+      data: eventDetails,
+      type: "PATCH",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+      setTimeout(() => {
+        router.push(`/dashboard/organization/singleevent?id=${id}`);
+      }, 3000);
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
 
   function nextSlide() {
     if (slideNum < 5) {
@@ -47,6 +97,21 @@ const page = () => {
 
   return (
     <section className="org-main-page">
+      {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
+      {notification.show ? (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          switchShowOff={() => {
+            setNotification((prev) => {
+              return { ...prev, show: false };
+            });
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <div className="new-event-section" id="myElement" ref={myElementRef}>
         {/* set name section */}
         <div className="flow set-name">
@@ -84,25 +149,23 @@ const page = () => {
           <div className="option-sec">
             <h3>Edit event to be public or private</h3>
             <small>
-              Events set to public are visible to everyone(this includes people
-              who are not members of your Organization). Every user can
-              participate and view your event process when it is live.
+              Events set to public are visible to everyone(this includes people who are not members
+              of your Organization). Every user can participate and view your event process when it
+              is live.
             </small>{" "}
             <div className="checkbox">
               <input
                 type="checkbox"
                 id="isPublic"
                 name="public"
-                checked={eventDetails.public}
+                checked={eventDetails.isPublic}
                 onChange={(e) => {
                   setEventDetails((prev) => {
-                    return { ...prev, public: e.target.checked };
+                    return { ...prev, isPublic: e.target.checked };
                   });
                 }}
               />
-              <label htmlFor="isPublic">
-                Yes, I want this Event to be Public
-              </label>
+              <label htmlFor="isPublic">Yes, I want this Event to be Public</label>
             </div>
           </div>
           <button
@@ -113,12 +176,7 @@ const page = () => {
                 ? { color: "var(--black-a30)" }
                 : { color: "var(--blue-70)" }
             }
-            disabled={
-              eventDetails.eventName === "" || eventDetails.schedule === ""
-                ? true
-                : false
-            }
-          >
+            disabled={eventDetails.eventName === "" || eventDetails.schedule === "" ? true : false}>
             NEXT {">"}
           </button>
         </div>
@@ -128,9 +186,8 @@ const page = () => {
           <div>
             <h4>Good job Making an Edit to your event!</h4>
             <small>
-              When you click on submit, you can view this event and make changes
-              to it in the future. Completed events become history and can't be
-              edited.
+              When you click on submit, you can view this event and make changes to it in the
+              future. Completed events become history and can't be edited.
             </small>
           </div>
           <span className="material-symbols-outlined image">task_alt</span>
@@ -142,11 +199,12 @@ const page = () => {
                   myElementRef.current.style.transform = `translateX(-212%)`;
                   setSlideNum((prev) => prev - 2);
                 } else prevSlide();
-              }}
-            >
+              }}>
               back
             </button>
-            <button className="btn">submit</button>
+            <button className="btn" disabled={isLoading ? true : false} onClick={edit}>
+              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "submit"}
+            </button>
           </div>
         </div>
       </div>

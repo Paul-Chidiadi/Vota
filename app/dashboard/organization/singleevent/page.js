@@ -110,7 +110,9 @@ const Page = () => {
               </span>
             </p>
             {event.status === "future" ? (
-              <button className="btn" onClick={() => {}}>
+              <button
+                className="btn"
+                onClick={() => router.push(`/dashboard/organization/editevent?id=${event._id}`)}>
                 EDIT
               </button>
             ) : event.status === "ongoing" ? (
