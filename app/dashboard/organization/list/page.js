@@ -3,14 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { useGetAllElectorQuery } from "../../../../store/api/api.js";
+import { useGetAllElectorQuery, useSendDataMutation } from "../../../../store/api/api.js";
 import { getDataFromLocalStorage } from "../../../../utils/localStorage";
+import Notification from "../../../../components/global/Notification.js";
 
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const userId = getDataFromLocalStorage("id");
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+    show: false,
+  });
 
   const { data: listData, isLoading: listIsLoading, error: listError } = useGetAllElectorQuery();
   const listOfElectors = listData?.data;
@@ -23,8 +29,49 @@ export default function Page() {
       return item.fullName.toLowerCase().includes(query.toLowerCase());
     });
 
+  const [makeRequest, { isLoading, reset }] = useSendDataMutation();
+
+  //REQUEST TO INVITE A MEMBER
+  async function inviteMember(inviteId) {
+    const request = await makeRequest({
+      url: `organization/addMemberRequest/${inviteId}`,
+      type: "POST",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
   return (
     <section className="org-main-page">
+      {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
+      {notification.show ? (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          switchShowOff={() => {
+            setNotification((prev) => {
+              return { ...prev, show: false };
+            });
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <div className="notification-section">
         <h1 className="section-title">Search Result for Members</h1>
         <small className="small">Click add and invite them to join your organization </small>
@@ -66,8 +113,11 @@ export default function Page() {
                     <div className="actions">
                       {item.organizations.length === 0 ||
                       item.organizations.some((orgs) => orgs._id !== userId) ? (
-                        <button className="btn" onClick={() => {}}>
-                          invite
+                        <button
+                          className="btn"
+                          disabled={isLoading ? true : false}
+                          onClick={() => inviteMember(item._id)}>
+                          {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                         </button>
                       ) : (
                         ""
@@ -125,8 +175,11 @@ export default function Page() {
                   <div className="actions">
                     {item.organizations.length === 0 ||
                     item.organizations.some((orgs) => orgs._id !== userId) ? (
-                      <button className="btn" onClick={() => {}}>
-                        invite
+                      <button
+                        className="btn"
+                        disabled={isLoading ? true : false}
+                        onClick={() => inviteMember(item._id)}>
+                        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                       </button>
                     ) : (
                       ""
