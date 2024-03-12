@@ -5,7 +5,7 @@ import Image from "next/image";
 import "../../../../components/global/orgpage.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import Notification from "../../../../components/global/Notification.js";
-import { useGetEventQuery } from "../../../../store/api/api.js";
+import { useGetEventQuery, useSendDataMutation } from "../../../../store/api/api.js";
 import { v4 as uuidv4 } from "uuid";
 
 const Page = () => {
@@ -76,6 +76,35 @@ const Page = () => {
       ? "Election"
       : "Election Results";
 
+  const [cancel, { isLoading, reset }] = useSendDataMutation();
+
+  //CAST VOTE
+  async function cancelEvent() {
+    const request = await cancel({
+      url: `organization/cancelEvent/${id}`,
+      type: "DELETE",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+      setTimeout(() => {
+        router.push("/dashboard/organization/events");
+      }, 3000);
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
   return (
     <section className="org-main-page">
       {/* top section */}
@@ -116,8 +145,8 @@ const Page = () => {
                 EDIT
               </button>
             ) : event.status === "ongoing" ? (
-              <button className="btn" onClick={() => {}}>
-                CANCEL
+              <button className="btn" disabled={isLoading ? true : false} onClick={cancelEvent}>
+                {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "CANCEL"}
               </button>
             ) : (
               // if events status is history show nothing
@@ -191,11 +220,11 @@ const Page = () => {
                               <h1>{cand?.candidateId?.fullName}</h1>
                               <small>{cand?.candidateId?.email}</small>
                               <h4>{event.status === "future" ? "..." : cand?.voteCount}</h4>
-                              {event.status === "ongoing" && (
+                              {/* {event.status === "ongoing" && (
                                 <button className="vote-btn" onClick={() => {}}>
                                   vote
                                 </button>
-                              )}
+                              )} */}
                             </div>
                           ) : (
                             ""

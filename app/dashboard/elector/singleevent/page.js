@@ -5,7 +5,7 @@ import Image from "next/image";
 import "../../../../components/global/orgpage.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import Notification from "../../../../components/global/Notification.js";
-import { useGetEventQuery } from "../../../../store/api/api.js";
+import { useGetEventQuery, useSendDataMutation } from "../../../../store/api/api.js";
 import { v4 as uuidv4 } from "uuid";
 
 const Page = () => {
@@ -75,6 +75,33 @@ const Page = () => {
       : event && event.status === "future"
       ? "Election"
       : "Election Results";
+
+  const [vote, { isLoading, reset }] = useSendDataMutation();
+
+  //CAST VOTE
+  async function castVote(voteId) {
+    const request = await vote({
+      url: `elector/vote/${id}`,
+      data: event && event.eventType === "Poll" ? { questionId: voteId } : { positionId: voteId },
+      type: "PATCH",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
 
   return (
     <section className="org-main-page">
@@ -148,8 +175,11 @@ const Page = () => {
                       <h6>{item.question}</h6>
                       <h1> {event && event.status === "future" ? "..." : item.voteCount}</h1>
                       {event && event.status === "ongoing" && (
-                        <button className="vote-btn" onClick={() => {}}>
-                          vote
+                        <button
+                          className="vote-btn"
+                          disabled={isLoading ? true : false}
+                          onClick={() => castVote(item._id)}>
+                          {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "vote"}
                         </button>
                       )}
                     </div>
@@ -183,8 +213,15 @@ const Page = () => {
                               <small>{cand?.candidateId?.email}</small>
                               <h4>{event.status === "future" ? "..." : cand?.voteCount}</h4>
                               {event.status === "ongoing" && (
-                                <button className="vote-btn" onClick={() => {}}>
-                                  vote
+                                <button
+                                  className="vote-btn"
+                                  disabled={isLoading ? true : false}
+                                  onClick={() => castVote(item._id)}>
+                                  {isLoading ? (
+                                    <i className="bx bx-loader-alt bx-spin"></i>
+                                  ) : (
+                                    "vote"
+                                  )}
                                 </button>
                               )}
                             </div>
