@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Events from "/components/global/Events.js";
 import React, { useState, useEffect } from "react";
-import { useGetOrganizationQuery } from "../../../store/api/api.js";
+import { useGetOrganizationQuery, useGetAllElectorQuery } from "../../../store/api/api.js";
 import { getDataFromLocalStorage } from "../../../utils/localStorage";
 
 export default function Page() {
@@ -19,6 +19,9 @@ export default function Page() {
   } = useGetOrganizationQuery(userId);
   const organizationsMembers = organizationData?.data?.organization?.members;
   const organizationsEvents = organizationData?.data?.arrayOfEvents;
+
+  const { data: listData, isLoading: listIsLoading, error: listError } = useGetAllElectorQuery();
+  const listOfElectors = listData?.data;
 
   return (
     <section className="org-main-page">
@@ -122,6 +125,68 @@ export default function Page() {
             <small>You have no members yet</small>
           </div>
         )}
+      </div>
+
+      <div className="notification-section">
+        <h1 className="section-title">Members You may know</h1>
+        <small className="small">Click add and invite them to join your organization </small>
+        {/* LIST OF MEMBERS IN SEARCH */}
+        <div className="list-of-notifications">
+          {listIsLoading ? (
+            // IF FETCH IS STILL LOADING
+            <i className="bx bx-loader-alt bx-spin" style={{ color: "var(--cool-gray-60)" }}></i>
+          ) : listError ? (
+            //IF THEIR IS AN ERROR FETCHING
+            <>
+              <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
+              <small style={{ color: "var(--cool-gray-80)" }}>NetworkError</small>
+            </>
+          ) : listOfElectors && listOfElectors.length !== 0 ? (
+            listOfElectors.map((item) => {
+              return (
+                <div className="notify-item" key={item._id}>
+                  <div className="content">
+                    <Image
+                      className="img prof"
+                      src={`https://vota.onrender.com/${item.displayPicture}`}
+                      width={80}
+                      height={80}
+                      alt={item.fullName[0] + item.fullName[1]}
+                      onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}
+                    />
+                    <div className="text">
+                      <h1
+                        onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}>
+                        {item.fullName}
+                      </h1>
+                      <small>{item.email}</small>
+                    </div>
+                  </div>
+                  <div className="actions">
+                    {item.organizations.length === 0 ||
+                    item.organizations.some((orgs) => orgs._id !== userId) ? (
+                      <button
+                        className="btn"
+                        disabled={listIsLoading ? true : false}
+                        onClick={() => inviteMember(item._id)}>
+                        {listIsLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="empty-list">
+              <i className="bx bxs-binoculars bx-tada"></i>
+              <small>
+                No elector <br /> available yet
+              </small>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
