@@ -163,17 +163,17 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="actions">
-                    {item.organizations.length === 0 ||
+                    {/* {item.organizations.length === 0 ||
                     item.organizations.some((orgs) => orgs._id !== userId) ? (
                       <button
                         className="btn"
-                        disabled={listIsLoading ? true : false}
+                        disabled={isLoading ? true : false}
                         onClick={() => inviteMember(item._id)}>
-                        {listIsLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
+                        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                       </button>
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </div>
                 </div>
               );
