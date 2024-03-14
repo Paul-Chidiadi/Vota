@@ -39,9 +39,9 @@ const Orgpage = ({ userRole }) => {
   const [makeRequest, { isLoading, reset }] = useSendDataMutation();
 
   //REQUEST TO JOIN ORGANIZATION
-  async function joinOrganization() {
+  async function joinOrganization(joinId) {
     const request = await makeRequest({
-      url: `elector/joinOrganizationRequest/${id}`,
+      url: `elector/joinOrganizationRequest/${joinId}`,
       type: "POST",
     });
     if (request?.data) {
@@ -63,9 +63,9 @@ const Orgpage = ({ userRole }) => {
   }
 
   //REQUEST TO INVITE A MEMBER
-  async function inviteMember() {
+  async function inviteMember(inviteId) {
     const request = await makeRequest({
-      url: `organization/addMemberRequest/${id}`,
+      url: `organization/addMemberRequest/${inviteId}`,
       type: "POST",
     });
     if (request?.data) {
@@ -136,7 +136,7 @@ const Orgpage = ({ userRole }) => {
                 <button
                   className="btn"
                   disabled={isLoading ? true : false}
-                  onClick={joinOrganization}>
+                  onClick={() => joinOrganization(user._id)}>
                   {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                 </button>
               </div>
@@ -451,7 +451,10 @@ const Orgpage = ({ userRole }) => {
                 <p>
                   <i className="bx bx-poll"></i> <span>5</span> events ongoing
                 </p>
-                <button className="btn" disabled={isLoading ? true : false} onClick={inviteMember}>
+                <button
+                  className="btn"
+                  disabled={isLoading ? true : false}
+                  onClick={() => inviteMember(user._id)}>
                   {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                 </button>
               </div>
