@@ -217,7 +217,11 @@ export default function Page() {
           <div className="org-single-top">
             <Image
               className="img prof"
-              src={`https://vota.onrender.com/${user && user.displayPicture}`}
+              src={
+                user && (user.displayPicture === undefined || user.displayPicture === "nil")
+                  ? "/images/profile.jpeg"
+                  : `https://vota.onrender.com/${user && user.displayPicture}`
+              }
               width={150}
               height={150}
               alt={user && user.fullName ? user.fullName[0] + user.fullName[1] : ""}

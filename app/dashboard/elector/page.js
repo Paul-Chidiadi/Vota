@@ -109,7 +109,7 @@ export default function Page() {
                   className="list-cards"
                   onClick={() => router.push(`/dashboard/elector/orgs?id=${item._id}`)}>
                   <Image
-                    className="img prof"
+                    className="img list"
                     src={`https://vota.onrender.com/${item.logo}`}
                     width={65}
                     height={65}
@@ -160,7 +160,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.logo}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.logo}`
+                      }
                       width={80}
                       height={80}
                       alt={item.companyName[0] + item.companyName[1]}

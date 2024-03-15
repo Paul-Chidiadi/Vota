@@ -49,11 +49,13 @@ export default function Page() {
                     className="list-cards"
                     onClick={() => router.push(`/dashboard/elector/orgs?id=${item._id}`)}>
                     <Image
-                      className="img"
-                      src={`https://vota.onrender.com/${item.logo}`}
+                      className="img list"
+                      src={`https://vota.onrender.com/${item && item.logo}`}
                       width={65}
                       height={65}
-                      alt="orgs image"
+                      alt={
+                        item && item.companyName ? item.companyName[0] + item.companyName[1] : ""
+                      }
                     />
                     <div>
                       <h4>{item.companyName}</h4>

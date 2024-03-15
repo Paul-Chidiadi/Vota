@@ -135,7 +135,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item?.senderId?.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item?.senderId?.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
@@ -167,7 +171,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.senderId.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.senderId.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
@@ -199,7 +207,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.senderId.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.senderId.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
@@ -227,7 +239,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.senderId.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.senderId.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
@@ -264,7 +280,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.senderId.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.senderId.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
@@ -295,7 +315,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.senderId.image}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.senderId.image}`
+                      }
                       width={80}
                       height={80}
                       alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}

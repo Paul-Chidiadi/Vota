@@ -222,7 +222,11 @@ export default function Page() {
           <div className="org-single-top">
             <Image
               className="img prof"
-              src={`https://vota.onrender.com/${user && user.logo}`}
+              src={
+                user && (user.logo === undefined || user.logo === "nil")
+                  ? "/images/profile.jpeg"
+                  : `https://vota.onrender.com/${user && user.logo}`
+              }
               width={150}
               height={150}
               alt={user && user.companyName ? user.companyName[0] + user.companyName[1] : ""}

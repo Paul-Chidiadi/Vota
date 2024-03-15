@@ -106,11 +106,15 @@ export default function Page() {
                   className="member-cards"
                   onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}>
                   <Image
-                    className="img prof"
-                    src={`https://vota.onrender.com/${item.displayPicture}`}
+                    className="img list"
+                    src={
+                      item && (item.logo === undefined || item.logo === "nil")
+                        ? "/images/profile.jpeg"
+                        : `https://vota.onrender.com/${item.displayPicture}`
+                    }
                     width={65}
                     height={65}
-                    alt={item.fullName[0] + item.fullName[1]}
+                    alt={item && item.fullName[0] + item.fullName[1]}
                   />
                   <div>
                     <h4>{item.fullName}</h4>
@@ -149,7 +153,11 @@ export default function Page() {
                   <div className="content">
                     <Image
                       className="img prof"
-                      src={`https://vota.onrender.com/${item.displayPicture}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item.displayPicture}`
+                      }
                       width={80}
                       height={80}
                       alt={item.fullName[0] + item.fullName[1]}

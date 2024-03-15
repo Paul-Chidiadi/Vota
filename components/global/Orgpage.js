@@ -555,13 +555,11 @@ const Orgpage = ({ userRole }) => {
                   return (
                     <div className="list-cards" key={item._id}>
                       <Image
-                        className="img prof"
-                        src={`https://vota.onrender.com/${item && item.logo}`}
+                        className="img list"
+                        src={`https://vota.onrender.com/${item.logo}`}
                         width={65}
                         height={65}
-                        alt={
-                          item && item.companyName ? item.companyName[0] + item.companyName[1] : ""
-                        }
+                        alt={item.companyName[0] + item.companyName[1]}
                       />
                       <div>
                         <h4>{item.companyName}</h4>
