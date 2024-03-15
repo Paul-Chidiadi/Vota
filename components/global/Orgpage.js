@@ -10,6 +10,7 @@ import {
   useGetOrganizationQuery,
   useSendDataMutation,
 } from "../../store/api/api.js";
+import { getDataFromLocalStorage } from "../../utils/localStorage";
 
 const Orgpage = ({ userRole }) => {
   const [ongoing, setOngoing] = useState(true);
@@ -20,6 +21,7 @@ const Orgpage = ({ userRole }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = String(searchParams.get("id"));
+  const userId = getDataFromLocalStorage("id");
   const [notification, setNotification] = useState({
     message: "",
     status: "",
@@ -62,11 +64,59 @@ const Orgpage = ({ userRole }) => {
     }
   }
 
+  //REQUEST TO LEAVE ORGANIZATION
+  async function leaveOrganization(leaveId) {
+    const request = await makeRequest({
+      url: `elector/leaveOrganization/${leaveId}`,
+      type: "PATCH",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
   //REQUEST TO INVITE A MEMBER
   async function inviteMember(inviteId) {
     const request = await makeRequest({
       url: `organization/addMemberRequest/${inviteId}`,
       type: "POST",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
+  //REQUEST TO REMOVE A MEMBER
+  async function removeMember(inviteId) {
+    const request = await makeRequest({
+      url: `organization/removeMember/${inviteId}`,
+      type: "PATCH",
     });
     if (request?.data) {
       const { data, message, success } = request?.data;
@@ -133,12 +183,21 @@ const Orgpage = ({ userRole }) => {
                 <p>
                   <i className="bx bx-poll"></i> <span>5</span> events ongoing
                 </p>
-                <button
-                  className="btn"
-                  disabled={isLoading ? true : false}
-                  onClick={() => joinOrganization(user._id)}>
-                  {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
-                </button>
+                {user.members.length === 0 || user.members.some((mem) => mem._id !== userId) ? (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => joinOrganization(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
+                  </button>
+                ) : (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => leaveOrganization(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -451,12 +510,22 @@ const Orgpage = ({ userRole }) => {
                 <p>
                   <i className="bx bx-poll"></i> <span>5</span> events ongoing
                 </p>
-                <button
-                  className="btn"
-                  disabled={isLoading ? true : false}
-                  onClick={() => inviteMember(user._id)}>
-                  {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
-                </button>
+                {user.organizations.length === 0 ||
+                user.organizations.some((mem) => mem._id !== userId) ? (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => inviteMember(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
+                  </button>
+                ) : (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => removeMember(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "remove"}
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -482,31 +551,31 @@ const Orgpage = ({ userRole }) => {
               </div>
             ) : organizationList && organizationList.length !== 0 ? (
               <div className="list-of-orgs">
-                <div className="list-of-orgs">
-                  {organizationList.map((item) => {
-                    return (
-                      <div className="list-cards" key={item._id}>
-                        <Image
-                          className="img"
-                          src={`https://vota.onrender.com/${item.logo}`}
-                          width={65}
-                          height={65}
-                          alt="orgs image"
-                        />
-                        <div>
-                          <h4>{item.companyName}</h4>
-                          <small>
-                            {item.email}
-                            <i className="bx bx-poll">
-                              {" "}
-                              <span>{item.companyName[0] + item.companyName[1]}</span>
-                            </i>
-                          </small>
-                        </div>
+                {organizationList.map((item) => {
+                  return (
+                    <div className="list-cards" key={item._id}>
+                      <Image
+                        className="img prof"
+                        src={`https://vota.onrender.com/${item && item.logo}`}
+                        width={65}
+                        height={65}
+                        alt={
+                          item && item.companyName ? item.companyName[0] + item.companyName[1] : ""
+                        }
+                      />
+                      <div>
+                        <h4>{item.companyName}</h4>
+                        <small>
+                          {item.email}
+                          <i className="bx bx-poll">
+                            {" "}
+                            <span>{item.companyName[0] + item.companyName[1]}</span>
+                          </i>
+                        </small>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               // when member's organization list is empty

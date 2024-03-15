@@ -59,6 +59,30 @@ export default function Page() {
     }
   }
 
+  //REQUEST TO LEAVE ORGANIZATION
+  async function leaveOrganization(leaveId) {
+    const request = await makeRequest({
+      url: `elector/leaveOrganization/${leaveId}`,
+      type: "PATCH",
+    });
+    if (request?.data) {
+      const { data, message, success } = request?.data;
+      setNotification({
+        message: message,
+        status: "success",
+        show: true,
+      });
+    } else {
+      setNotification({
+        message: request?.error?.data?.error
+          ? request?.error?.data?.error
+          : "Check Internet Connection and try again",
+        status: "error",
+        show: true,
+      });
+    }
+  }
+
   return (
     <section className="org-main-page">
       {/* DISPLAY NOTIFICATION TO USER IF IT EXISTS */}
@@ -112,8 +136,7 @@ export default function Page() {
                       </div>
                     </div>
                     <div className="actions">
-                      {item.members.length === 0 ||
-                      item.members.some((mem) => mem._id !== userId) ? (
+                      {item.members.length === 0 || item.members.some((mem) => mem !== userId) ? (
                         <button
                           className="btn"
                           disabled={isLoading ? true : false}
@@ -121,7 +144,12 @@ export default function Page() {
                           {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                         </button>
                       ) : (
-                        ""
+                        <button
+                          className="btn"
+                          disabled={isLoading ? true : false}
+                          onClick={() => leaveOrganization(item._id)}>
+                          {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                        </button>
                       )}
                     </div>
                   </div>
@@ -173,7 +201,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="actions">
-                    {item.members.length === 0 || item.members.some((mem) => mem._id !== userId) ? (
+                    {item.members.length === 0 || item.members.some((mem) => mem !== userId) ? (
                       <button
                         className="btn"
                         disabled={isLoading ? true : false}
@@ -181,7 +209,12 @@ export default function Page() {
                         {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                       </button>
                     ) : (
-                      ""
+                      <button
+                        className="btn"
+                        disabled={isLoading ? true : false}
+                        onClick={() => leaveOrganization(item._id)}>
+                        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                      </button>
                     )}
                   </div>
                 </div>

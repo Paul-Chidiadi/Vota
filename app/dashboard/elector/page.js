@@ -102,11 +102,12 @@ export default function Page() {
           </div>
         ) : electorsOrganizations && electorsOrganizations.length !== 0 ? (
           <div className="list-of-orgs">
-            {electorsOrganizations.map((item) => {
+            {electorsOrganizations.map((item, index) => {
               return (
                 <div
+                  key={index}
                   className="list-cards"
-                  onClick={() => router.push(`/dashboard/elector/orgs?${item._id}`)}>
+                  onClick={() => router.push(`/dashboard/elector/orgs?id=${item._id}`)}>
                   <Image
                     className="img prof"
                     src={`https://vota.onrender.com/${item.logo}`}

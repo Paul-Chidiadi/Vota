@@ -99,9 +99,10 @@ export default function Page() {
           </div>
         ) : organizationsMembers && organizationsMembers.length !== 0 ? (
           <div className="list-of-orgs">
-            {organizationsMembers.map((item) => {
+            {organizationsMembers.map((item, index) => {
               return (
                 <div
+                  key={index}
                   className="member-cards"
                   onClick={() => router.push(`/dashboard/organization/elect?id=${item._id}`)}>
                   <Image
@@ -112,7 +113,7 @@ export default function Page() {
                     alt={item.fullName[0] + item.fullName[1]}
                   />
                   <div>
-                    <h4>{item.fulName}</h4>
+                    <h4>{item.fullName}</h4>
                     <small>{item.email}</small>
                   </div>
                 </div>
