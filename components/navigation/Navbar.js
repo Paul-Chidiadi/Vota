@@ -27,7 +27,6 @@ const Navbar = ({ userRole }) => {
     error: userError,
   } = userRole === "elector" ? useGetElectorQuery(userId) : useGetOrganizationQuery(userId);
   const user = userRole === "elector" ? userData?.data?.elector : userData?.data?.organization;
-  console.log(user);
 
   function toggleMenu() {
     setMenu((prev) => {

@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { ref, onChildAdded } from "firebase/database";
+import firebaseDB from "../../../../utils/firebase";
 import Link from "next/link";
 import Image from "next/image";
 import "../../../../components/global/orgpage.css";
@@ -12,11 +14,15 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = String(searchParams.get("id"));
+  const [fbData, setFbData] = useState([]);
   const [notification, setNotification] = useState({
     message: "",
     status: "",
     show: false,
   });
+
+  //GET THIS PARTICULAR EVENT FROM FIRBASE DATA BY IT'S
+  const particularEvent = fbData.filter((item) => item.id === id);
 
   const { data: eventData, isLoading: eventIsLoading, error: eventError } = useGetEventQuery(id);
   const event = eventData?.data;
@@ -103,6 +109,20 @@ const Page = () => {
     }
   }
 
+  useEffect(() => {
+    const eventsRef = ref(firebaseDB, "events");
+
+    const eventsAddedListener = onChildAdded(eventsRef, (snapshot) => {
+      const eventData = snapshot.val();
+      setFbData((prevData) => {
+        return [...prevData, eventData];
+      });
+    });
+    return () => {
+      eventsAddedListener();
+    };
+  }, []);
+
   return (
     <section className="org-main-page">
       {/* top section */}
@@ -168,8 +188,8 @@ const Page = () => {
           <>
             <h4 style={{ marginBottom: "10px" }}>{title}</h4>
             <div className="poll-view">
-              {event &&
-                event.pollQuestions.map((item) => {
+              {particularEvent[0] &&
+                JSON.parse(particularEvent[0].pollQuestions).map((item) => {
                   return (
                     <div key={item._id}>
                       <h6>{item.question}</h6>
@@ -201,12 +221,19 @@ const Page = () => {
                             <div className="candidate-card" key={uuidv4()}>
                               <Image
                                 className="cand-pic prof"
-                                src={`https://vota.onrender.com/${cand?.candidateId?.displayPicture}`}
+                                src={
+                                  cand &&
+                                  (cand?.candidateId?.displayPicture === undefined ||
+                                    cand?.candidateId?.displayPicture === "nil")
+                                    ? "/images/profile.jpeg"
+                                    : `https://vota.onrender.com/${cand?.candidateId?.displayPicture}`
+                                }
                                 width={60}
                                 height={60}
                                 alt={
-                                  cand?.candidateId &&
-                                  `${cand?.candidateId?.fullName[0]}${cand?.candidateId?.fullName[1]}`
+                                  cand?.candidateId
+                                    ? `${cand?.candidateId?.fullName[0]}${cand?.candidateId?.fullName[1]}`
+                                    : ""
                                 }
                               />
                               <h1>{cand?.candidateId?.fullName}</h1>
@@ -275,8 +302,9 @@ const Page = () => {
                             width={60}
                             height={60}
                             alt={
-                              item?.candidateId &&
-                              `${item?.candidateId?.fullName[0]}${item?.candidateId?.fullName[1]}`
+                              item?.candidateId
+                                ? `${item?.candidateId?.fullName[0]}${item?.candidateId?.fullName[1]}`
+                                : ""
                             }
                           />
                           <h1>{item?.candidateId?.fullName}</h1>
