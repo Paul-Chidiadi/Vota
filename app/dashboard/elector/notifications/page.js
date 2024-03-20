@@ -166,6 +166,42 @@ export default function Page() {
                     </button>
                   </div>
                 </div>
+              ) : item.notificationType === "Event Started" ? (
+                <div className="notify-item" key={index}>
+                  <div className="content">
+                    <Image
+                      className="img prof"
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item?.senderId?.image}`
+                      }
+                      width={80}
+                      height={80}
+                      alt={item.senderId.name && item.senderId.name[0] + item.senderId.name[1]}
+                      onClick={() => router.push(`/dashboard/elector/orgs?id=${item?.senderId.id}`)}
+                    />
+                    <div className="text">
+                      <h1
+                        onClick={() =>
+                          router.push(`/dashboard/elector/orgs?id=${item?.senderId.id}`)
+                        }>
+                        {item?.senderId?.name}
+                      </h1>
+                      <p>{item.notificationMessage}</p>
+                      <small>{item?.senderId?.email}</small>
+                    </div>
+                  </div>
+                  <div className="actions">
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        router.push(`/dashboard/elector/orgs?id=${item?.senderId.id}`)
+                      }>
+                      view event
+                    </button>
+                  </div>
+                </div>
               ) : item.notificationType === "Edit Event" ? (
                 <div className="notify-item" key={index}>
                   <div className="content">

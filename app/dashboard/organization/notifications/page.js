@@ -26,6 +26,7 @@ export default function Page() {
         item.notificationType !== "Edit Event" &&
         item.notificationType !== "Cancel Event" &&
         item.notificationType !== "Create Event" &&
+        item.notificationType !== "Event Started" &&
         (item.recipientId === userId || item.recipientId === "undefined")
       );
     })
