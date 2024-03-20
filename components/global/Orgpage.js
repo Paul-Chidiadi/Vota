@@ -437,7 +437,7 @@ const Orgpage = ({ userRole }) => {
                     <div className="empty-list">
                       <i className="bx bxs-binoculars bx-tada"></i>
                       <small>
-                        Organization has <br /> no ongoing event
+                        Organization has <br /> no future event
                       </small>
                     </div>
                   )}
@@ -489,7 +489,7 @@ const Orgpage = ({ userRole }) => {
                     <div className="empty-list">
                       <i className="bx bxs-binoculars bx-tada"></i>
                       <small>
-                        Organization has <br /> no ongoing event
+                        Organization has <br /> no history event
                       </small>
                     </div>
                   )}
