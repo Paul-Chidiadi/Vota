@@ -169,7 +169,11 @@ const Orgpage = ({ userRole }) => {
             <div className="org-single-top">
               <Image
                 className="img prof"
-                src={`https://vota.onrender.com/${user && user.logo}`}
+                src={
+                  user && (user?.logo === undefined || user?.logo === "nil")
+                    ? "/images/profile.jpeg"
+                    : `https://vota.onrender.com/${user && user.logo}`
+                }
                 width={50}
                 height={50}
                 alt={user && user.companyName ? user.companyName[0] + user.companyName[1] : ""}
@@ -496,7 +500,11 @@ const Orgpage = ({ userRole }) => {
             <div className="org-single-top">
               <Image
                 className="img prof"
-                src={`https://vota.onrender.com/${user && user.displayPicture}`}
+                src={
+                  user && (user?.displayPicture === undefined || user?.displayPicture === "nil")
+                    ? "/images/profile.jpeg"
+                    : `https://vota.onrender.com/${user && user.displayPicture}`
+                }
                 width={50}
                 height={50}
                 alt={user && user.fullName ? user.fullName[0] + user.fullName[1] : ""}

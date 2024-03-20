@@ -59,24 +59,30 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "request",
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["Elector", "Electors", "Organization", "Organizations", "Events"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
     getElector: builder.query({
       query: (id) => `elector/${id}`,
+      providesTags: ["Elector"],
     }),
     getAllElector: builder.query({
       query: (id) => `elector/getElector`,
+      providesTags: ["Electors"],
     }),
     getOrganization: builder.query({
       query: (id) => `organization/${id}`,
+      providesTags: ["Organization"],
     }),
     getAllOrganization: builder.query({
       query: (id) => `organization/getOrganization`,
+      providesTags: ["Organizations"],
     }),
     getEvent: builder.query({
       query: (id) => `global/getEvent/${id}`,
+      providesTags: ["Events"],
     }),
     sendData: builder.mutation({
       query: ({ url, data, type }) => ({
@@ -84,7 +90,7 @@ export const api = createApi({
         method: type,
         body: data,
       }),
-      invalidatesTags: [],
+      invalidatesTags: ["Elector", "Electors", "Organization", "Organizations", "Events"],
       transformResponse: (response) => {
         return response;
       },

@@ -167,19 +167,19 @@ body {
 }
 .img.prof {
   border-radius: 50%;
-  background-color: orange !important;
+  background-color: var(--extra) !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--white);
+  color: var(--black);
   text-transform: uppercase;
 }
 .img.list {
-  background-color: orange !important;
+  background-color: var(--extra) !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--white);
+  color: var(--black);
   text-transform: uppercase;
 }
 @media screen and (max-width: 800px) {
@@ -565,7 +565,7 @@ section {
 }
 @media screen and (max-width: 450px) {
   .forms {
-    width: fit-content;
+    width: 300px;
     gap: 13px;
     padding: 6px;
   }
@@ -573,6 +573,16 @@ section {
     height: 40px;
     padding: 5px 10px;
     border-radius: 20px;
+  }
+}
+@media screen and (max-width: 350px) {
+  .forms {
+    width: 250px;
+  }
+}
+@media screen and (max-width: 290px) {
+  .forms {
+    width: fit-content;
   }
 }
 
