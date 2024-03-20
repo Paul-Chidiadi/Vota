@@ -7,6 +7,13 @@ import { useRouter } from "next/navigation";
 const Events = ({ data, isLoading, error, role }) => {
   const router = useRouter();
 
+  //SET CURRENT TIME TO USE FOR CHECKING TIME FOR ONGOING EVENTS
+  // Get the current date and time
+  const currentDateTime = new Date();
+
+  // Get the TIME part from the current date and time
+  const currentDateTimeString = currentDateTime.toISOString();
+
   return (
     <>
       <div className="ongoing-event">
@@ -29,10 +36,14 @@ const Events = ({ data, isLoading, error, role }) => {
               <i className="bx bx-wifi" style={{ color: "var(--cool-gray-60)" }}></i>
               <small>NetworkError</small>
             </div>
-          ) : data && data.length !== 0 && data.some((item) => item.status === "ongoing") ? (
+          ) : data &&
+            data.length !== 0 &&
+            data.some(
+              (item) => item.status === "ongoing" && item.schedule <= currentDateTimeString
+            ) ? (
             data.map((item) => {
               //if events are ongoing then display them
-              return item.status === "ongoing" ? (
+              return item.status === "ongoing" && item.schedule <= currentDateTimeString ? (
                 <div
                   key={item._id}
                   className="event-item"

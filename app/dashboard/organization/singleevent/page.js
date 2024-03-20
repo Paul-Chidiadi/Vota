@@ -24,6 +24,13 @@ const Page = () => {
   //GET THIS PARTICULAR EVENT FROM FIRBASE DATA BY IT'S
   const particularEvent = fbData.filter((item) => item.id === id);
 
+  //SET CURRENT TIME TO USE FOR CHECKING TIME FOR ONGOING EVENTS
+  // Get the current date and time
+  const currentDateTime = new Date();
+
+  // Get the TIME part from the current date and time
+  const currentDateTimeString = currentDateTime.toISOString();
+
   const { data: eventData, isLoading: eventIsLoading, error: eventError } = useGetEventQuery(id);
   const event = eventData?.data;
 
@@ -151,9 +158,10 @@ const Page = () => {
             <p>
               <i className="bx bx-poll"></i>{" "}
               <span>
-                {event.status === "future"
+                {event.status === "future" ||
+                (event.status === "ongoing" && event.schedule > currentDateTimeString)
                   ? "Pending"
-                  : event.status === "ongoing"
+                  : event.status === "ongoing" && event.schedule <= currentDateTimeString
                   ? "Ongoing"
                   : "Completed"}
               </span>
@@ -209,7 +217,13 @@ const Page = () => {
                   return (
                     <div key={item._id}>
                       <h6>{item.question}</h6>
-                      <h1> {event && event.status === "future" ? "..." : item.voteCount}</h1>
+                      <h1>
+                        {" "}
+                        {(event && event.status === "future") ||
+                        (event.status === "ongoing" && event.schedule > currentDateTimeString)
+                          ? "..."
+                          : item.voteCount}
+                      </h1>
                     </div>
                   );
                 })}

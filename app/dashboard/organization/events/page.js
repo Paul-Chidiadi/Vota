@@ -23,6 +23,13 @@ const Orgpage = () => {
   } = useGetOrganizationQuery(userId);
   const events = organizationData?.data?.arrayOfEvents;
 
+  //SET CURRENT TIME TO USE FOR CHECKING TIME FOR ONGOING EVENTS
+  // Get the current date and time
+  const currentDateTime = new Date();
+
+  // Get the TIME part from the current date and time
+  const currentDateTimeString = currentDateTime.toISOString();
+
   return (
     <section className="org-main-page">
       {/* top section */}
@@ -120,10 +127,12 @@ const Orgpage = () => {
                 </div>
               ) : events &&
                 events.length !== 0 &&
-                events.some((item) => item.status === "ongoing") ? (
+                events.some(
+                  (item) => item.status === "ongoing" && item.schedule <= currentDateTimeString
+                ) ? (
                 events.map((item) => {
                   //if events are ongoing then display them
-                  return item.status === "ongoing" ? (
+                  return item.status === "ongoing" && item.schedule <= currentDateTimeString ? (
                     <div
                       key={item._id}
                       className="event-item"
@@ -223,10 +232,15 @@ const Orgpage = () => {
                 </div>
               ) : events &&
                 events.length !== 0 &&
-                events.some((item) => item.status === "future") ? (
+                events.some(
+                  (item) =>
+                    item.status === "future" ||
+                    (item.status === "ongoing" && item.schedule > currentDateTimeString)
+                ) ? (
                 events.map((item) => {
                   //if events are future then display them
-                  return item.status === "future" ? (
+                  return item.status === "future" ||
+                    (item.status === "ongoing" && item.schedule > currentDateTimeString) ? (
                     <div
                       key={item._id}
                       className="event-item"
