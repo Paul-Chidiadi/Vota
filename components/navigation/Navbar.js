@@ -93,6 +93,7 @@ const Navbar = ({ userRole }) => {
             onKeyPress={(event) => {
               if (event.key === "Enter") {
                 searchText !== "" ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : "";
+                toggleMenu();
               }
             }}
           />
@@ -216,6 +217,7 @@ const Navbar = ({ userRole }) => {
             onKeyPress={(event) => {
               if (event.key === "Enter") {
                 searchText !== "" ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : "";
+                toggleMenu();
               }
             }}
           />
