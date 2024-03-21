@@ -90,6 +90,11 @@ const Navbar = ({ userRole }) => {
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                searchText !== "" ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : "";
+              }
+            }}
           />
         </div>
         {userRole === "elector" ? (
@@ -207,6 +212,11 @@ const Navbar = ({ userRole }) => {
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
+            }}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                searchText !== "" ? router.push(`/dashboard/${userRole}/list?q=${searchText}`) : "";
+              }
             }}
           />
         </div>
