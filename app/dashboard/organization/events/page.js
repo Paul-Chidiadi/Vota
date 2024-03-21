@@ -263,7 +263,7 @@ const Orgpage = () => {
                 <div className="empty-list">
                   <i className="bx bxs-binoculars bx-tada"></i>
                   <small>
-                    You have <br /> no ongoing event
+                    You have <br /> no future event
                   </small>
                 </div>
               )}
@@ -315,7 +315,7 @@ const Orgpage = () => {
                 <div className="empty-list">
                   <i className="bx bxs-binoculars bx-tada"></i>
                   <small>
-                    You have <br /> no ongoing event
+                    You have <br /> no history event
                   </small>
                 </div>
               )}
