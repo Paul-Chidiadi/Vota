@@ -50,7 +50,11 @@ export default function Page() {
                     onClick={() => router.push(`/dashboard/elector/orgs?id=${item._id}`)}>
                     <Image
                       className="img list"
-                      src={`https://vota.onrender.com/${item && item.logo}`}
+                      src={
+                        item && (item.logo === undefined || item.logo === "nil")
+                          ? "/images/profile.jpeg"
+                          : `https://vota.onrender.com/${item && item.logo}`
+                      }
                       width={65}
                       height={65}
                       alt={
