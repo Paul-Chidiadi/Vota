@@ -189,10 +189,10 @@ const Orgpage = ({ userRole }) => {
                 <h1>{user && user.companyName}</h1>
                 <small>{user && user.email}</small>
                 <p>
-                  <i className="bx bx-poll"></i> <span>20</span> events conducted
+                  <i className="bx bx-poll"></i> <span>0</span> events conducted
                 </p>
                 <p>
-                  <i className="bx bx-poll"></i> <span>5</span> events ongoing
+                  <i className="bx bx-poll"></i> <span>0</span> events ongoing
                 </p>
                 {user.members.length === 0 || user.members.some((mem) => mem._id !== userId) ? (
                   <button
@@ -527,10 +527,10 @@ const Orgpage = ({ userRole }) => {
                 <h1>{user && user.fullName}</h1>
                 <small>{user && user.email}</small>
                 <p>
-                  <i className="bx bx-poll"></i> <span>20</span> events conducted
+                  <i className="bx bx-poll"></i> <span>0</span> events conducted
                 </p>
                 <p>
-                  <i className="bx bx-poll"></i> <span>5</span> events ongoing
+                  <i className="bx bx-poll"></i> <span>0</span> events ongoing
                 </p>
                 {user.organizations.length === 0 ||
                 user.organizations.some((mem) => mem._id !== userId) ? (

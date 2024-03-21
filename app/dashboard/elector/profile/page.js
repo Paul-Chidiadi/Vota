@@ -230,10 +230,10 @@ export default function Page() {
               <h1>{user && user.fullName}</h1>
               <small>{user && user.email}</small>
               <p>
-                <i className="bx bx-poll"></i> <span>20</span> events engaged
+                <i className="bx bx-poll"></i> <span>0</span> events engaged
               </p>
               <p>
-                <i className="bx bx-poll"></i> <span>5</span> events ongoing
+                <i className="bx bx-poll"></i> <span>0</span> events ongoing
               </p>
               <i
                 className="bx bxs-camera"
