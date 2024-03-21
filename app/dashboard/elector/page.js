@@ -69,6 +69,11 @@ export default function Page() {
               onChange={(e) => {
                 setSearchText(e.target.value);
               }}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  searchText !== "" ? router.push(`/dashboard/elector/list?q=${searchText}`) : "";
+                }
+              }}
             />
           </div>
         </div>
