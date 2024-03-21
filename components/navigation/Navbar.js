@@ -175,9 +175,15 @@ const Navbar = ({ userRole }) => {
               toggleMenu();
             }}
             className="img prof"
-            src={`https://vota.onrender.com/${
-              (user && user.displayPicture) || (user && user.logo)
-            }`}
+            src={
+              (user && (user.logo === undefined || user.logo === "nil")) ||
+              user.logo === undefined ||
+              user.logo === "nil"
+                ? "/images/profile.jpeg"
+                : `https://vota.onrender.com/${
+                    (user && user.displayPicture) || (user && user.logo)
+                  }`
+            }
             width={50}
             height={50}
             alt={
