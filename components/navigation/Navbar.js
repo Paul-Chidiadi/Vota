@@ -177,8 +177,8 @@ const Navbar = ({ userRole }) => {
             className="img prof"
             src={
               (user && (user.logo === undefined || user.logo === "nil")) ||
-              user.logo === undefined ||
-              user.logo === "nil"
+              user.displayPicture === undefined ||
+              user.display === "nil"
                 ? "/images/profile.jpeg"
                 : `https://vota.onrender.com/${
                     (user && user.displayPicture) || (user && user.logo)
