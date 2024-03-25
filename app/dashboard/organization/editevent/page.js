@@ -15,7 +15,7 @@ const page = () => {
   const myElementRef = useRef(null);
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
-    schedule: new Date(),
+    schedule: new Date(new Date().setDate(new Date().getDate() + 1)),
     isPublic: false,
   });
   const [slideNum, setSlideNum] = useState(1);
@@ -143,7 +143,7 @@ const page = () => {
               timeIntervals={15}
               dateFormat="MMMM d, yyyy h:mm aa"
               timeCaption="Time"
-              minDate={new Date()}
+              minDate={new Date(new Date().setDate(new Date().getDate() + 1))}
             />
           </div>
           <div className="option-sec">

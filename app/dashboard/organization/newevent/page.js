@@ -16,7 +16,7 @@ const page = () => {
   const myElementRef = useRef(null);
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
-    schedule: new Date(),
+    schedule: new Date(new Date().setDate(new Date().getDate() + 1)),
     public: false,
     eventType: "",
     positions: [{ id: uuidv4(), text: "" }],
@@ -236,7 +236,7 @@ const page = () => {
               timeIntervals={15}
               dateFormat="MMMM d, yyyy h:mm aa"
               timeCaption="Time"
-              minDate={new Date()}
+              minDate={new Date(new Date().setDate(new Date().getDate() + 1))} // Add one day to current date
             />
           </div>
           <div className="option-sec">
