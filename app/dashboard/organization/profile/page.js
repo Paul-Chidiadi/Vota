@@ -226,7 +226,7 @@ export default function Page() {
               className="img prof"
               src={
                 user && (user.logo === undefined || user.logo === "nil")
-                  ? "/images/profile.jpeg"
+                  ? "/images/organ.jpg"
                   : `https://vota.onrender.com/${user && user.logo}`
               }
               width={150}

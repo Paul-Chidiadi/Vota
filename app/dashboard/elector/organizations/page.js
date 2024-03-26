@@ -52,7 +52,7 @@ export default function Page() {
                       className="img list"
                       src={
                         item && (item.logo === undefined || item.logo === "nil")
-                          ? "/images/profile.jpeg"
+                          ? "/images/organ.jpg"
                           : `https://vota.onrender.com/${item && item.logo}`
                       }
                       width={65}

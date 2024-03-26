@@ -143,7 +143,7 @@ const Navbar = ({ userRole }) => {
                 className="img prof"
                 src={
                   user && (user?.logo === undefined || user?.logo === "nil")
-                    ? "/images/profile.jpeg"
+                    ? "/images/organ.jpg"
                     : `https://vota.onrender.com/${user && user.logo}`
                 }
                 width={50}
@@ -178,7 +178,9 @@ const Navbar = ({ userRole }) => {
             src={
               (user && (user.logo === undefined || user.logo === "nil")) ||
               (user && (user.displayPicture === undefined || user.displayPicture === "nil"))
-                ? "/images/profile.jpeg"
+                ? userRole === "elector"
+                  ? "/images/profile.jpeg"
+                  : "/images/organ.jpg"
                 : `https://vota.onrender.com/${
                     (user && user.displayPicture) || (user && user.logo)
                   }`
