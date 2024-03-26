@@ -194,19 +194,19 @@ const Orgpage = ({ userRole }) => {
                 <p>
                   <i className="bx bx-poll"></i> <span>0</span> events ongoing
                 </p>
-                {user.members.length === 0 || user.members.some((mem) => mem._id !== userId) ? (
-                  <button
-                    className="btn"
-                    disabled={isLoading ? true : false}
-                    onClick={() => joinOrganization(user._id)}>
-                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
-                  </button>
-                ) : (
+                {user.members.length !== 0 && user.members.some((mem) => mem._id === userId) ? (
                   <button
                     className="btn"
                     disabled={isLoading ? true : false}
                     onClick={() => leaveOrganization(user._id)}>
                     {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                  </button>
+                ) : (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => joinOrganization(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                   </button>
                 )}
               </div>
@@ -532,20 +532,20 @@ const Orgpage = ({ userRole }) => {
                 <p>
                   <i className="bx bx-poll"></i> <span>0</span> events ongoing
                 </p>
-                {user.organizations.length === 0 ||
-                user.organizations.some((mem) => mem._id !== userId) ? (
-                  <button
-                    className="btn"
-                    disabled={isLoading ? true : false}
-                    onClick={() => inviteMember(user._id)}>
-                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
-                  </button>
-                ) : (
+                {user.organizations.length !== 0 &&
+                user.organizations.some((mem) => mem._id === userId) ? (
                   <button
                     className="btn"
                     disabled={isLoading ? true : false}
                     onClick={() => removeMember(user._id)}>
                     {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "remove"}
+                  </button>
+                ) : (
+                  <button
+                    className="btn"
+                    disabled={isLoading ? true : false}
+                    onClick={() => inviteMember(user._id)}>
+                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                   </button>
                 )}
               </div>

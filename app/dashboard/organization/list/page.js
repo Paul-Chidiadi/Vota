@@ -115,16 +115,16 @@ export default function Page() {
                       </div>
                     </div>
                     <div className="actions">
-                      {item.organizations.length === 0 ||
-                      item.organizations.some((orgs) => orgs._id !== userId) ? (
+                      {item.organizations.length !== 0 &&
+                      item.organizations.some((orgs) => orgs === userId) ? (
+                        ""
+                      ) : (
                         <button
                           className="btn"
                           disabled={isLoading ? true : false}
                           onClick={() => inviteMember(item._id)}>
                           {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                         </button>
-                      ) : (
-                        ""
                       )}
                     </div>
                   </div>
@@ -181,16 +181,16 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="actions">
-                    {item.organizations.length === 0 ||
-                    item.organizations.some((orgs) => orgs._id !== userId) ? (
+                    {item.organizations.length !== 0 &&
+                    item.organizations.some((orgs) => orgs === userId) ? (
+                      ""
+                    ) : (
                       <button
                         className="btn"
                         disabled={isLoading ? true : false}
                         onClick={() => inviteMember(item._id)}>
                         {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "invite"}
                       </button>
-                    ) : (
-                      ""
                     )}
                   </div>
                 </div>
