@@ -16,6 +16,7 @@ export default function Activate() {
     show: false,
   });
   const [userAuth, { isLoading, reset }] = useSendDataMutation();
+  const [sendOTP, { isLoading: otpLoad, reset: otpReset }] = useSendDataMutation();
 
   //CHECK IF VALUES ARE EITHER EMPTY, NULL OR UNDEFINED
   function areValuesEmpty(obj) {
@@ -94,7 +95,7 @@ export default function Activate() {
 
   async function resendOTP(e) {
     e.preventDefault();
-    const request = await userAuth({
+    const request = await sendOTP({
       url: "auth/resendOTP",
       data: {
         email: userData.email,
@@ -158,8 +159,8 @@ export default function Activate() {
                 });
               }}
             />
-            <button onClick={resendOTP} className="btn" disabled={isLoading ? true : false}>
-              {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Resend OTP "}
+            <button onClick={resendOTP} className="btn" disabled={otpLoad ? true : false}>
+              {otpLoad ? <i className="bx bx-loader-alt bx-spin"></i> : "Resend OTP "}
             </button>
             <button onClick={activateUser} className="btn" disabled={isLoading ? true : false}>
               {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Activate"}

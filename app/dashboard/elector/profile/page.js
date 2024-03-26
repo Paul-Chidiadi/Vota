@@ -16,6 +16,9 @@ export default function Page() {
   const userId = getDataFromLocalStorage("id");
 
   const [editUser, { isLoading, reset }] = useSendDataMutation();
+  const [accountEdit, { isLoading: accountLoading, reset: mailReset }] = useSendDataMutation();
+  const [resendOtp, { isLoading: otpLoading, reset: passReset }] = useSendDataMutation();
+
   const { data: userData, isLoading: userIsLoading, error: userError } = useGetElectorQuery(userId);
   const user = userData?.data?.elector;
   const [editProfileData, setEditProfileData] = useState({
@@ -52,7 +55,7 @@ export default function Page() {
   //SEND OTP FUNCTION
   async function sendOTP(e) {
     e.preventDefault();
-    const request = await editUser({
+    const request = await resendOtp({
       url: "auth/resendOTP",
       data: {
         email: user && user.email,
@@ -132,7 +135,7 @@ export default function Page() {
     e.preventDefault();
     if (edit === "email") {
       //MAKE EDIT EMAIL REQUEST
-      const request = await editUser({
+      const request = await accountEdit({
         url: "global/editEmail",
         data: {
           email: editEmailData.email,
@@ -163,7 +166,7 @@ export default function Page() {
       }
     } else if (edit === "password") {
       //MAKE EDIT PASSWORD REQUEST
-      const request = await editUser({
+      const request = await accountEdit({
         url: "global/editPassword",
         data: {
           email: user && user.email,
@@ -362,8 +365,8 @@ export default function Page() {
                 }
               }}
               className="btn edits"
-              disabled={isLoading ? true : false}>
-              {isLoading ? (
+              disabled={otpLoading ? true : false}>
+              {otpLoading ? (
                 <i className="bx bx-loader-alt bx-spin"></i>
               ) : (
                 <>
@@ -432,8 +435,8 @@ export default function Page() {
                 }
               }}
               className="btn edits"
-              disabled={isLoading ? true : false}>
-              {isLoading ? (
+              disabled={otpLoading ? true : false}>
+              {otpLoading ? (
                 <i className="bx bx-loader-alt bx-spin"></i>
               ) : (
                 <>
@@ -471,8 +474,11 @@ export default function Page() {
                       setOtpData({ OTP: e.target.value });
                     }}
                   />{" "}
-                  <button onClick={editAccount} className="btn" disabled={isLoading ? true : false}>
-                    {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Confirm"}
+                  <button
+                    onClick={editAccount}
+                    className="btn"
+                    disabled={accountLoading ? true : false}>
+                    {accountLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "Confirm"}
                   </button>
                 </form>
               </>

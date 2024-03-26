@@ -140,19 +140,19 @@ export default function Page() {
                       </div>
                     </div>
                     <div className="actions">
-                      {item.members.length === 0 || item.members.some((mem) => mem !== userId) ? (
-                        <button
-                          className="btn"
-                          disabled={isLoading ? true : false}
-                          onClick={() => joinOrganization(item._id)}>
-                          {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
-                        </button>
-                      ) : (
+                      {item.members.length !== 0 && item.members.some((mem) => mem === userId) ? (
                         <button
                           className="btn"
                           disabled={isLoading ? true : false}
                           onClick={() => leaveOrganization(item._id)}>
                           {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                        </button>
+                      ) : (
+                        <button
+                          className="btn"
+                          disabled={isLoading ? true : false}
+                          onClick={() => joinOrganization(item._id)}>
+                          {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                         </button>
                       )}
                     </div>
@@ -209,19 +209,19 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="actions">
-                    {item.members.length === 0 || item.members.some((mem) => mem !== userId) ? (
-                      <button
-                        className="btn"
-                        disabled={isLoading ? true : false}
-                        onClick={() => joinOrganization(item._id)}>
-                        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
-                      </button>
-                    ) : (
+                    {item.members.length !== 0 && item.members.some((mem) => mem === userId) ? (
                       <button
                         className="btn"
                         disabled={isLoading ? true : false}
                         onClick={() => leaveOrganization(item._id)}>
                         {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "LEAVE"}
+                      </button>
+                    ) : (
+                      <button
+                        className="btn"
+                        disabled={isLoading ? true : false}
+                        onClick={() => joinOrganization(item._id)}>
+                        {isLoading ? <i className="bx bx-loader-alt bx-spin"></i> : "JOIN"}
                       </button>
                     )}
                   </div>
